@@ -1,0 +1,15 @@
+<!-- <button mat-button>{{mesa.numero}} - #{{mesa.codigoQr}}</button> -->
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>MESA {{mesa.numero}}
+        </mat-card-title>
+        <mat-card-subtitle># {{mesa.codigoQr}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{mesa.estado}} </p>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+        <button mat-button *ngIf="pedido.estado == 'preparado'">ENTREGAR</button>
+    </mat-card-actions> -->
+</mat-card>

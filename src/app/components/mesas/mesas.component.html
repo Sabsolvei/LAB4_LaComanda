@@ -1,0 +1,41 @@
+<div>
+  <div class="container-fluid" style="background : rgb(184, 177, 197);">
+    <div class="row">
+      <!-- <div class="col-md-9 col-md-offset-3"> -->
+      <div class="col-md-4">
+        <mat-grid-list cols="9" gutterSize=1px>
+          <div *ngFor="let m of mesas">
+            <mat-grid-tile>
+              <app-mesa [mesa]="m"></app-mesa>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="m.numero%3 == 0" colspan="6"></mat-grid-tile>
+          </div>
+        </mat-grid-list>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <button mat-button>NUEVO PEDIDO</button>
+          <button mat-button>FACTURAR</button>
+          <button mat-button>ASOCIAR CLIENTE</button>
+        </div>
+        <div class="row">
+          <div *ngFor="let pe of pedidos">
+            <app-pedido [pedido]='pe'></app-pedido>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <mat-grid-tile colspan="4">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-12">
+                       <input placeholder="Tu respuesta..." type="text" style="padding: 5px 30px 5px 30px; border-radius:6px;" [(ngModel)]="nuevoJuego.palabraUsuario"
+                        [ngModelOptions]="{standalone: true}"> 
+                    </div>
+                  </div>
+                </div>
+              </mat-grid-tile> -->

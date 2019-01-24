@@ -1,0 +1,114 @@
+
+.myfab {
+    width: 90px;
+    height: 90px;
+    line-height: 14px;
+    font-size: 14px;
+
+    &::ng-deep .mat-button-wrapper{
+        line-height: 14px;
+        padding: 0;
+
+         .mat-icon {
+             font-size: 14px;
+             padding-right: 4px;
+             padding-top: 4px;
+         }
+   }
+}
+
+.example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+
+  .mat-elevation-z10 {
+    box-shadow: 3px 4px 3px 2px rgb(61, 29, 75);
+    background-color: #2980B9 ;
+    color: white;
+    font-weight: bolder;
+    border-style: solid;
+    border-color: white; 
+    border-width: 1.5px;
+    transform: translateY(-2px);
+  }
+
+  .mat-elevation-z0 {
+    box-shadow: 2px 2px 3px 1px #8E44AD;
+    background-color: rgb(34, 102, 148);
+    color: white;
+    font-weight: bolder;
+    border-style: solid;
+    border-color: white; 
+    border-width: 1.5px;
+  }
+
+  .errorClass
+  {
+    background-color: rgb(245, 65, 65);
+  }
+
+  .correctoClass
+  {
+    background-color: #4CAF50;
+  }
+
+  .pasapalabraClass
+  {
+    background-color: #F5B041;
+  }
+
+  .aunNoJugoClass
+  {
+    background-color: rgb(34, 102, 148);
+  }
+
+
+  .buttonVerificar {
+    width:120px;
+    /* height: 20px; */
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    border: none;
+    background-color:#4CAF50;   
+    border-radius:6px;
+    box-shadow: 0 6px rgb(47, 107, 49);
+    padding: 7px; 
+  }
+  .buttonVerificar:hover {background-color: #3e8e41}
+  .buttonVerificar:active {
+    background-color: #3e8e41;
+    box-shadow: 0 3px #1b3f1c;
+    transform: translateY(3px);
+  }
+  .buttonPasapalabra {
+    width:100px;
+    /* height: 20px; */
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    border: none;
+    background-color:#F5B041;   
+    border-radius:6px;
+    box-shadow: 0 6px rgb(180, 128, 45);
+    padding: 7px; 
+  }
+  .buttonPasapalabra:hover {background-color: rgb(223, 160, 59)}
+  .buttonPasapalabra:active {
+    background-color: #F5B041;
+    box-shadow: 0 3px rgb(153, 103, 24);
+    transform: translateY(3px);
+  }
+
