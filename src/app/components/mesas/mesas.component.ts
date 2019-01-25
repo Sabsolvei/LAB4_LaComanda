@@ -92,6 +92,10 @@ export class MesasComponent implements OnInit {
 
   }
 
+  public abrirMenuCarta() {
+    this.router.navigate(['/menu-carta']);
+  }
+
   // enviarResultados() {
   //   this.enviarJuego.emit(this.nuevoJuego);
   // }
