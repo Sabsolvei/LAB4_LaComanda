@@ -3,7 +3,7 @@ import { IComandaPedido } from "./IComandaPedido";
 
 export interface IComanda {
 
-    idComanda: number;
+    id: number;
     cliente: string;
     fechaHora: number;
     mesa: number;

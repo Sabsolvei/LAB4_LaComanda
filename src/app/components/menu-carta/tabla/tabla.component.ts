@@ -1,7 +1,8 @@
-import { PeriodicElement } from './../menu-carta.component';
+import { IProducto } from './../../../clases/IProducto';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { ISubpedidoItem } from 'src/app/clases/ISubpedidoItem';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-tabla',
@@ -10,17 +11,19 @@ import { ISubpedidoItem } from 'src/app/clases/ISubpedidoItem';
 })
 export class TablaComponent implements OnInit {
 
-
-  @Input() datos: PeriodicElement[];
-  public displayedColumns: string[] = ['position', 'nombre', 'precio', 'tiempo', 'cantidad'];
+  @Input() datos: IProducto[];
+  public displayedColumns: string[] = ['tiempo', 'nombre', 'descripcion', 'precio', 'cantidad'];
   public dataSource = new MatTableDataSource(this.datos);
   public subTotal: number = 0;
 
-  constructor() { 
+  constructor() {
+
   }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.datos);
+    console.log("TABLA DATOS");
+    console.log(this.datos);
   }
 
   public applyFilter(filterValue: string) {

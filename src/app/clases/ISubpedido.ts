@@ -1,5 +1,5 @@
 export interface ISubpedido {
 
-    idSubpedido: number;
+    id: number;
     estado: string; //pendiente, en preparacion, preparado 
 }

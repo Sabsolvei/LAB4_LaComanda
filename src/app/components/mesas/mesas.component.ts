@@ -72,9 +72,9 @@ export class MesasComponent implements OnInit {
 
   public pedidos: IComandaPedido[] =
     [
-      { "idComandaPedido": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "idSubpedido": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "idProductoBebida": 333104 }, { "cantidad": 2, "idProductoBebida": 333104 }] } },
-      { "idComandaPedido": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "idSubpedido": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "idProductoBebida": 480844 },{ "cantidad": 2, "idProductoBebida": 480844 },{ "cantidad": 2, "idProductoBebida": 480844 }] } },
-      { "idComandaPedido": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "idSubpedido": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "idProductoBebida": 4366576 },{ "cantidad": 2, "idProductoBebida": 4366576 }] } }
+      { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
+      { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 },{ "cantidad": 2, "bebidaID": 480844 },{ "cantidad": 2, "bebidaID": 480844 }] } },
+      { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 },{ "cantidad": 2, "bebidaID": 4366576 }] } }
     ];
 
 
