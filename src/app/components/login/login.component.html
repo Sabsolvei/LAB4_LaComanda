@@ -1,0 +1,20 @@
+<div class="col-md-6 col-md-offset-3">
+  <h2>Login</h2>
+
+  <div>
+    <label for="username">Username</label>
+    <input type="text" [(ngModel)]="usuario" required />
+    
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" [(ngModel)]="pass" required />
+    
+  </div>
+  <div>
+    <button [disabled]="loading" (click)='ingresar()'>Login</button>
+
+    <button [disabled]="loading" (click)='registrar()'>Registrar</button>
+  </div>
+
+</div>

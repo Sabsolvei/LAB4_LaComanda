@@ -3,7 +3,7 @@ export interface IProducto {
     //preparacionFoto: string;
     //preparadoFoto: string;
     nombre: string;
-    idProducto: number;
+    id: number;
     tiempoEstimado: number;
     importe: number;
     descripcion: string;
