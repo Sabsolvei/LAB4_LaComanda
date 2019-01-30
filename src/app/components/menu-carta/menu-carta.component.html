@@ -1,4 +1,4 @@
-<button mat-raised-button color="primary" (click)="cargarPedido()">AGREGAR PEDIDO</button>
+<button mat-raised-button color="primary" (click)="agregarPedido()">AGREGAR PEDIDO</button>
 <mat-tab-group>
 
   <mat-tab label="ENTRADAS">
@@ -19,7 +19,13 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab label="BEBIDAS Y TRAGOS">
+  <mat-tab label="BEBIDAS">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lBebidas'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="TRAGOS">
     <ng-template matTabContent>
       <app-tabla [datos]='lTragos'></app-tabla>
     </ng-template>

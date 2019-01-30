@@ -22,8 +22,8 @@ export class TablaComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.datos);
-    console.log("TABLA DATOS");
-    console.log(this.datos);
+    // console.log("TABLA DATOS");
+    // console.log(this.datos);
   }
 
   public applyFilter(filterValue: string) {
