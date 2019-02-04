@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MesasComponent } from './components/mesas/mesas.component';
 import { MesaComponent } from './components/principal/mesa/mesa.component';
 import { PedidoComponent } from './components/Principal/pedido/pedido.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PedidoComponent } from './components/Principal/pedido/pedido.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
