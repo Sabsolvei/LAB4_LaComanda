@@ -1,0 +1,84 @@
+<button mat-raised-button color="primary" (click)="agregarPedido()">AGREGAR PEDIDO</button>
+<mat-tab-group>
+
+  <mat-tab label="ENTRADAS">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lMinutas'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="PRINCIPAL">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lCalientes'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="POSTRES">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lPostres'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="BEBIDAS">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lBebidas'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="TRAGOS">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lTragos'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="CERVEZAS">
+    <ng-template matTabContent>
+      <app-tabla [datos]='lCervezas'></app-tabla>
+    </ng-template>
+  </mat-tab>
+
+</mat-tab-group>
+
+<!-- <mat-tab label="CERVEZAS">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tiempo">
+        <th mat-header-cell *matHeaderCellDef> Tiempo </th>
+        <td mat-cell *matCellDef="let element"> {{element.tiempo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)='restarCantidad(element, -1)'>
+            <mat-icon class='md-light'>remove_circle_outline</mat-icon>
+          </button>
+          {{element.cantidad}}
+          <button mat-icon-button (click)='sumarCantidad(element, 1)'>
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-tab> -->

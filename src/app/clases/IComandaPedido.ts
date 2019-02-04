@@ -3,9 +3,9 @@ import { ISubpedidoBebida } from "./ISubpedidoBebida";
 import { ISubpedidoCerveza } from "./ISubpedidoCerveza";
 
 export interface IComandaPedido {
-  idComandaPedido: number;
+  id: number;
   estado: string; //pendiente, derivado, entregado
-  codigoPedido: string;
+  codigoPedido?: string;
   subPedidosComida?: ISubpedidoComida;
   subPedidosBebida?: ISubpedidoBebida;
   subPedidosCerveza?: ISubpedidoCerveza;
