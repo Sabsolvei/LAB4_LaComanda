@@ -1,41 +1,19 @@
-<div>
-  <div class="container-fluid" style="background : rgb(184, 177, 197);">
-    <div class="row">
-      <!-- <div class="col-md-9 col-md-offset-3"> -->
-      <div class="col-md-4">
-        <mat-grid-list cols="9" gutterSize=1px>
-          <div *ngFor="let m of mesas">
-            <mat-grid-tile>
-              <app-mesa [mesa]="m"></app-mesa>
-            </mat-grid-tile>
-            <mat-grid-tile *ngIf="m.numero%3 == 0" colspan="6"></mat-grid-tile>
-          </div>
-        </mat-grid-list>
-      </div>
-      <div class="col-md-6">
-        <div class="row">
-          <button mat-button (click)="abrirMenuCarta()">NUEVO PEDIDO</button>
-          <button mat-button>FACTURAR</button>
-          <button mat-button>ASOCIAR CLIENTE</button>
+<div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+
+    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" fxLayoutGap="32px" style="background-color: blue; padding:4px;" fxLayout="row wrap">
+        <div *ngFor="let m of mesas">
+            <div fxFlex="20%" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" style="padding:10px; padding-left: 5px; padding-top:10px;" fxLayoutAlign="start center">
+                <app-mesa [mesa]='m'></app-mesa>
+            </div>
         </div>
-        <div class="row">
-          <div *ngFor="let pe of pedidos">
+    </div>
+    <div fxFlex="40%" fxFlexFill style="background-color: green; padding:4px;">
+        <div *ngFor="let pe of pedidos">
             <app-pedido [pedido]='pe'></app-pedido>
             <br>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<!-- <mat-grid-tile colspan="4">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-12">
-                       <input placeholder="Tu respuesta..." type="text" style="padding: 5px 30px 5px 30px; border-radius:6px;" [(ngModel)]="nuevoJuego.palabraUsuario"
-                        [ngModelOptions]="{standalone: true}"> 
-                    </div>
-                  </div>
-                </div>
-              </mat-grid-tile> -->
+<!-- 33.3% - 32px -->
+<!-- fxFlex.lt-md="0 1 calc(50% - 32px)" -->
