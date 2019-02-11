@@ -26,14 +26,6 @@
                                 <button mat-button>ASOCIAR CLIENTE</button>
                             </div>
                         </div>
-                        <!-- <div fxFlex="30%" style="background-color: blue; padding:4px;" fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayout.xs="column">
-        <div *ngFor="let m of mesas">
-            <div fxFlex="25%" style="padding:10px; padding-left: 25px; padding-top:15px;" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
-
-                <img mat-card-image src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/8V46UZCS0V.jpg">
-            </div>
-        </div>
-    </div> -->
                         <div fxFlex="40%" style="background-color:chartreuse; padding:10px; padding-left: 25px; padding-top:15px;">
                             <div *ngFor="let pe of pedidos">
                                 <app-pedido [pedido]='pe'></app-pedido>
@@ -45,15 +37,6 @@
                     <div class="container" fxLayout.xs="columns" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
                         <div fxFlex="60%">
 
-                            <!--
-        <mat-grid-list cols="9" gutterSize=1px>
-            <div *ngFor="let m of mesas">
-                <mat-grid-tile>
-                    <app-mesa [mesa]="m"></app-mesa>
-                </mat-grid-tile>
-                <mat-grid-tile *ngIf="m.numero%3 == 0" colspan="6"></mat-grid-tile>
-            </div>
-        </mat-grid-list> -->
                         </div>
                         <div fxFlex="40%">
                             <div class="row">
@@ -61,21 +44,3 @@
                             </div>
                         </div>
                     </div>
-
-                    <!--
-<div>
-    <div class="container-fluid" style="background : rgb(184, 177, 197);">
-        <div class="row">
-            <div class="col-md-4">
-
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <button mat-button>NUEVO PEDIDO</button>
-                    <button mat-button>FACTURAR</button>
-                    <button mat-button>ASOCIAR CLIENTE</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

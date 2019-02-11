@@ -2,7 +2,7 @@ export interface Iusuario{
     nombre:string;
     apellido:string;
     dni:number;
-    foto:string
+    foto?:string
     perfil:string;
     email:string;
     cuil?:number;

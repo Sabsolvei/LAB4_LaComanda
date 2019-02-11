@@ -1,0 +1,82 @@
+<div class="col-md-6 col-md-offset-3">
+  <h2>Alta empleado</h2>
+  <form name="form" (ngSubmit)="registrar()" novalidate>
+    <div class="form-group">
+      <mat-form-field [floatLabel]="'auto'">
+        <input matInput type="text" class="form-control" name="nombre" [(ngModel)]="model.nombre" #nombre="ngModel"
+          placeholder="Nombre" required />
+      </mat-form-field>
+      <div *ngIf="!nombre.valid" class="help-block"></div>
+    </div>
+    <div class="form-group">
+      <mat-form-field [floatLabel]="'auto'">
+        <input matInput type="text" class="form-control" name="apellido" [(ngModel)]="model.apellido" #apellido="ngModel"
+          placeholder="Apellido" placeholder="Apellido" required />
+      </mat-form-field>
+      <!-- <div *ngIf="!lastName.valid" class="help-block">El Apellido es requerido</div> -->
+    </div>
+    <div class="form-group">
+      <mat-form-field [floatLabel]="'auto'">
+        <input matInput type="text" class="form-control" name="documento" [(ngModel)]="model.documento" #documento="ngModel" placeholder="Documento"
+          required />
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field [floatLabel]="'auto'">
+        <input matInput type="text" class="form-control" name="cuil" [(ngModel)]="model.cuil" #cuil="ngModel"
+          placeholder="Cuil" required />
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field [floatLabel]="'auto'">
+        <input matInput type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel"
+          placeholder="Email" required />
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-select placeholder="Perfil"  [(ngModel)]="model.perfil" name="perfil">
+        <mat-option *ngFor="let perfil of perfiles" [value]="perfil.value">
+          {{perfil.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-group">
+      <button mat-raised-button color="primary" class="btn btn-primary">Registrarme</button>
+      <a [routerLink]="['/login']" class="btn btn-link">Cancelar</a>
+    </div>
+
+  </form>
+</div>
+
+
+<!-- <div class="example-container">
+  <form class="example-container" [formGroup]="options">
+    <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox>
+    <div>
+      <label>Float label: </label>
+      <mat-radio-group formControlName="floatLabel">
+        <mat-radio-button value="auto">Auto</mat-radio-button>
+        <mat-radio-button value="always">Always</mat-radio-button>
+        <mat-radio-button value="never">Never</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </form>
+  <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel">
+    <input matInput placeholder="Simple placeholder" required>
+  </mat-form-field>
+
+  <mat-form-field [floatLabel]="options.value.floatLabel">
+    <mat-label>Both a label and a placeholder</mat-label>
+    <input matInput placeholder="Simple placeholder">
+  </mat-form-field>
+
+  <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel">
+    <mat-select required>
+      <mat-option>-- None --</mat-option>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+    <mat-label>
+      <mat-icon>favorite</mat-icon> <b> Fancy</b> <i> label</i>
+    </mat-label>
+  </mat-form-field>
+</div> -->

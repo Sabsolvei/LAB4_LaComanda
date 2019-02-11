@@ -25,23 +25,21 @@ export class AuthProvider {
 
     //**Registro de usuario. Si logra crear el usuario envia el mail de verificacion */
     registerUser(email: string, password: string) {
-        return this.afAuth.auth
-            .createUserWithEmailAndPassword(email, password)
-            .catch(err => Promise.reject(err))
-            .then(
-                () => {
-                    // El usuario se ha creado correctamente.
-                    // envio el mail para confirmar el mail
-                    let user = firebase.auth().currentUser;
-
-                    user
-                        .sendEmailVerification()
-                        .then(user => Promise.resolve(user))
-                        .catch(error => Promise.reject(error));
-                },
-
-                () => Promise.reject("Reintente por favor")
-            );
+        return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+        // .catch(err => Promise.reject(err))
+        // .then(
+        //     () => {
+        //         console.log("TERMINO DE CREAR USUARIO: ");
+        //         console.log(firebase.auth().currentUser);
+        //         console.log(firebase.auth().currentUser.uid);
+        //         Promise.resolve(firebase.auth().currentUser.uid);
+        //user
+        //   .sendEmailVerification()
+        //  .then(user => Promise.resolve(user))
+        //  .catch(error => Promise.reject(error));
+        // },
+        // () => Promise.reject("Reintente por favor")
+        //   );
     }
 
     //**Login al sistema. Valida que el mail haya sido verificado. Si encuentra el usuario lo envia como respuesta */
@@ -160,4 +158,4 @@ export class AuthProvider {
     //   public obtenerEmailUsuarioActual() {
     //     return this.afAuth.auth.currentUser.email;
     //   }
- }
+}

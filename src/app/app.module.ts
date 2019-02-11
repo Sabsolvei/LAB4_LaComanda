@@ -1,19 +1,18 @@
+
+import { UsuarioService } from './providers/usuarios/usuario.service';
 import { BebidasService } from './providers/bebidas/bebidas.service';
 import { PlatosService } from './providers/platos/platos.service';
 import { AuthProvider } from './providers/auth/auth';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
-import { FirebaseModule, FirebaseProvider } from 'angular-firebase';
-
+// import { FirebaseModule, FirebaseProvider } from 'angular-firebase';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-
 import { AngularFireModule } from 'angularfire2';
 // for AngularFireDatabase
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-
 // for AngularFireAuth
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -27,6 +26,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuCartaComponent } from './components/menu-carta/menu-carta.component';
 import { TablaComponent } from './components/menu-carta/tabla/tabla.component';
 import { LoginComponent } from './components/login/login.component';
+import { ConsultaClienteComponent } from './components/consulta-cliente/consulta-cliente.component';
+import { AltaEmpleadoComponent } from './components/alta-empleado/alta-empleado.component';
 
 
 export const firebaseConfig = {
@@ -46,7 +47,9 @@ export const firebaseConfig = {
     PedidoComponent,
     MenuCartaComponent,
     TablaComponent,
-    LoginComponent
+    LoginComponent,
+    ConsultaClienteComponent,
+    AltaEmpleadoComponent
   ],
   imports: [
     BrowserModule,
@@ -55,17 +58,19 @@ export const firebaseConfig = {
     FlexLayoutModule,
     FormsModule,
     MaterialModule,
-    FirebaseModule,
+    ReactiveFormsModule,
+    // FirebaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule
   ],
   providers: [
-    FirebaseProvider,
+    // FirebaseProvider,
     AuthProvider,
     PlatosService,
-    BebidasService
+    BebidasService,
+    UsuarioService
 
   ],
   bootstrap: [AppComponent]
