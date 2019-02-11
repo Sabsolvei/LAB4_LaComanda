@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
 import { IMesa } from 'src/app/clases/IMesa';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido'
+import { MesaService } from '../../providers/mesa/mesa.service';
 
 
 
@@ -54,21 +55,21 @@ export class MesasComponent implements OnInit {
   repetidor: any;
 
 
-  public mesas: IMesa[] =
-    [
-      { "idMesa": 1, "numero": 1, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "cerrada", "comanda": 1 },
-      { "idMesa": 2, "numero": 2, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "comiendo", "comanda": 1 },
-      { "idMesa": 3, "numero": 3, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "comiendo", "comanda": 1 },
-      { "idMesa": 4, "numero": 4, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "cerrada", "comanda": 1 },
-      { "idMesa": 5, "numero": 5, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "comiendo", "comanda": 1 },
-      { "idMesa": 6, "numero": 6, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "pagando", "comanda": 1 },
-      { "idMesa": 7, "numero": 7, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "libre", "comanda": 0 },
-      { "idMesa": 8, "numero": 8, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "comiendo", "comanda": 1 },
-      { "idMesa": 9, "numero": 9, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "comiendo", "comanda": 1 },
-      { "idMesa": 10, "numero": 10, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "libre", "comanda": 0 },
-      { "idMesa": 11, "numero": 11, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "esperando", "comanda": 1 },
-      { "idMesa": 12, "numero": 12, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "pagando", "comanda": 1 },
-    ];
+   public mesas: IMesa[] = [];
+  //   [
+  //     { "idMesa": 1, "numero": 1, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "cerrada", "comanda": 1 },
+  //     { "idMesa": 2, "numero": 2, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "comiendo", "comanda": 1 },
+  //     { "idMesa": 3, "numero": 3, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "comiendo", "comanda": 1 },
+  //     { "idMesa": 4, "numero": 4, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "cerrada", "comanda": 1 },
+  //     { "idMesa": 5, "numero": 5, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "comiendo", "comanda": 1 },
+  //     { "idMesa": 6, "numero": 6, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "pagando", "comanda": 1 },
+  //     { "idMesa": 7, "numero": 7, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "libre", "comanda": 0 },
+  //     { "idMesa": 8, "numero": 8, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "comiendo", "comanda": 1 },
+  //     { "idMesa": 9, "numero": 9, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "comiendo", "comanda": 1 },
+  //     { "idMesa": 10, "numero": 10, "capacidad": '6', "codigoQr": 'AB123', "tipo": "normal", "estado": "libre", "comanda": 0 },
+  //     { "idMesa": 11, "numero": 11, "capacidad": '4', "codigoQr": 'AC123', "tipo": "discapacitados", "estado": "esperando", "comanda": 1 },
+  //     { "idMesa": 12, "numero": 12, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "pagando", "comanda": 1 },
+  //   ];
 
   public pedidos: IComandaPedido[] =
     [
@@ -84,12 +85,15 @@ export class MesasComponent implements OnInit {
     }, 1)
   }
   constructor(
+    private _mesa: MesaService,
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
   ) {
     this.tiempo = -1;
-
+    _mesa.traerMesas().subscribe((data: IMesa[]) => {
+      this.mesas = data;
+    });
   }
 
   public abrirMenuCarta() {

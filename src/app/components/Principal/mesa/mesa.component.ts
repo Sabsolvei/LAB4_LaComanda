@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IMesa } from 'src/app/clases/IMesa';
+import { MesaService } from '../../../providers/mesa/mesa.service';
 
 @Component({
   selector: 'app-mesa',
@@ -8,9 +9,9 @@ import { IMesa } from 'src/app/clases/IMesa';
 })
 export class MesaComponent implements OnInit {
   @Input() public mesa: IMesa;
-  
 
-  constructor() { }
+
+  constructor(public _mesa: MesaService) { }
 
   ngOnInit() {
   }

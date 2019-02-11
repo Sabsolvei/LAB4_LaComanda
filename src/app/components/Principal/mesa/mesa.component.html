@@ -9,7 +9,7 @@
     <mat-card-content>
         <p>{{mesa.estado}} </p>
     </mat-card-content>
-    <!-- <mat-card-actions>
-        <button mat-button *ngIf="pedido.estado == 'preparado'">ENTREGAR</button>
-    </mat-card-actions> -->
+    <mat-card-actions>
+        <button text-center mat-button *ngIf="mesa.estado == 'Libre'">Abrir</button>
+    </mat-card-actions>
 </mat-card>
