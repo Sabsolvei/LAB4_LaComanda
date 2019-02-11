@@ -16,7 +16,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 // for AngularFireAuth
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
-//import { environment } from '../environments/environment';
+// import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { MesasComponent } from './components/mesas/mesas.component';
@@ -58,7 +58,6 @@ export const firebaseConfig = {
     FlexLayoutModule,
     FormsModule,
     MaterialModule,
-    ReactiveFormsModule,
     // FirebaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
