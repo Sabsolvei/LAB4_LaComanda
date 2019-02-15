@@ -13,6 +13,7 @@ import { ISubpedidoBebida } from 'src/app/clases/ISubpedidoBebida';
 import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
 import { IMesa } from '../../clases/IMesa';
 import { MesaComponent } from '../Principal/mesa/mesa.component';
+// import { ISubpedidoComida } from 'src/app/clases/ISubPedidoComida';
 
 
 @Component({
@@ -356,7 +357,7 @@ export class MenuCartaComponent implements OnInit {
     else estadoBebida = "Nada";
     if (this.itemsCerveza.length > 0) estadoCerveza = "Pendiente";
     else estadoCerveza = "Nada";
-    const subCocina: ISubpedidoComida = {
+    const subCocina: ISubpedidoCocina = {
       id: new Date().valueOf(),
       estado: estadoCocina,
       items: this.itemsCocina

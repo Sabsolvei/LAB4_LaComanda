@@ -19,6 +19,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AltaComandaComponent } from '../alta-comanda/alta-comanda.component';
 import { MenuCartaComponent } from '../menu-carta/menu-carta.component';
 import { AuthProvider } from '../../providers/auth/auth';
+import { AsignarClienteComponent } from '../Principal/asignar-cliente/asignar-cliente.component';
 
 @Component({
   selector: 'app-mesas',
@@ -116,6 +117,23 @@ export class MesasComponent implements OnInit {
       // Abrir comanda
       this.abrirComanda(event);
     }
+  }
+
+  asignarMesa(mesa: IMesa) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      mesa: mesa
+    };
+
+    const dialogRef = this.dialog.open(AsignarClienteComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   abrirComanda(mesa: IMesa) {

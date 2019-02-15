@@ -43,6 +43,8 @@ export class ClienteService {
 
 
   buscarDNI(dni: string): Promise<ICliente> {
+
+    console.log("CLIENTE");
     const promesa = new Promise<ICliente>((resolve, reject) => {
 
       this.afDB
@@ -56,10 +58,12 @@ export class ClienteService {
         .subscribe(
           (cli: any) => {
 
+            console.log("Encontro");
+            console.log(cli);
             if (cli.length > 0) {
               resolve(cli[0]);
             } else {
-              reject();
+              resolve(null);
             }
           },
           err => {
