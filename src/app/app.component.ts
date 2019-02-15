@@ -29,32 +29,13 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    
-
     this._auth.Session.subscribe(_session => {
-
-      if (!_session) { //si no esta logueado
-        //   console.log("no esta logueado");
+      if (!_session) { 
         this._router.navigate(['../login']);
       } else {
         //    console.log("esta logueado");
       }
     });
-
-
-    // if (this._auth.Session) {
-    //   this._auth.getUser().subscribe(user => {
-    //     this._auth.corroborarUsuario(user)
-    //       .catch(err => Promise.reject(err))
-    //       .then((user: Iusuario) => {
-    //         this._auth.cargarLocalStorage(user);
-    //         this._auth.redireccionar(user);
-    //       });
-    //   });
-    // }
-    // else {
-    //   this._router.navigate(['../login']);
-    // }
   }
 
   salir() {

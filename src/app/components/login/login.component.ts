@@ -21,31 +21,33 @@ export class LoginComponent implements OnInit {
   public pass;
 
   constructor(
-    public auth: AuthProvider,
+    public _auth: AuthProvider,
     private route: ActivatedRoute,
-    private router: Router) {
+    private _router: Router) {
 
   }
-
 
   ngOnInit() {
-    // if (this.auth.isLoggedIn) {
-    //   this.auth.getUser().subscribe(user => {
-    //     this.auth.corroborarUsuario(user)
-    //       .catch(err => Promise.reject(err))
-    //       .then((user: Iusuario) => {
-    //         this.cargarLocalStorage(user);
-    //         this.redireccionar(user);
-    //       });
-    //   });
-    // }
-    // else {
-    //   localStorage.clear();
-    // }
+    this._auth.Session.subscribe(_session => {
+      if (!_session) {
+        this._router.navigate(['../login']);
+      } else {
+        this._auth.getUser().subscribe(user => {
+          this._auth.corroborarUsuario(user)
+            .catch(err => Promise.reject(err))
+            .then((user: Iusuario) => {
+              this._auth.cargarLocalStorage(user);
+              this._auth.redireccionar(user);
+            });
+        });
+      }
+    });
   }
 
+
+
   registrar() {
-    return this.auth.registerUser(this.usuario, this.pass)
+    return this._auth.registerUser(this.usuario, this.pass)
       .catch(err => Promise.reject(err))
       .then(
         () => {
@@ -66,14 +68,14 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresar() {
-    this.auth.loginUser(this.usuario, this.pass)
+    this._auth.loginUser(this.usuario, this.pass)
       .catch(err => Promise.reject(err))
       .then((user: Iusuario) => {
-        this.auth.cargarLocalStorage(user);
-        this.auth.redireccionar(user);
+        this._auth.cargarLocalStorage(user);
+        this._auth.redireccionar(user);
       });
   }
 
- 
+
 
 }
