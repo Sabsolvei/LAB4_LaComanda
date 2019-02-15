@@ -1,15 +1,18 @@
+import { IComanda } from './../../clases/IComanda';
 import { ISubpedidoCerveza } from './../../clases/ISubpedidoCerveza';
 import { merge } from 'rxjs';
 import { ComandasService } from './../../providers/comandas/comandas.service';
 import { BebidasService } from './../../providers/bebidas/bebidas.service';
 import { PlatosService } from './../../providers/platos/platos.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ISubpedidoItem } from 'src/app/clases/ISubpedidoItem';
 import { IProducto } from 'src/app/clases/IProducto';
-import { IComanda } from 'src/app/clases/IComanda';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
 import { ISubpedidoComida } from 'src/app/clases/ISubpedidoComida';
 import { ISubpedidoBebida } from 'src/app/clases/ISubpedidoBebida';
+import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
+import { IMesa } from '../../clases/IMesa';
+import { MesaComponent } from '../Principal/mesa/mesa.component';
 
 
 @Component({
@@ -29,12 +32,12 @@ export class MenuCartaComponent implements OnInit {
 
   public comanda: IComanda;
   public menu = [];
-  public mesa: any;
+  public mesa: IMesa;
   public tipomenu: any;
   public pedidoACargar: ISubpedidoItem[] = [];
   public cant: number;
   public platos: any;
-  //CAMPOS COMANDA
+  // CAMPOS COMANDA
   public itemsCocina: { cantidad: number; platoID: number }[] = [];
   public itemsBebida: { cantidad: number; bebidaID: number }[] = [];
   public itemsCerveza: { cantidad: number; bebidaID: number }[] = [];
@@ -46,21 +49,37 @@ export class MenuCartaComponent implements OnInit {
   public pedidoBartender: any[];
   public pedidoCerveza: any[];
 
+  private pedidoID: number;
+  private comandaID: number;
+  private pedidoCodigo: string;
+
   constructor(
+    private dialogRef: MatDialogRef<MenuCartaComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: MatSnackBar,
     public _platos: PlatosService,
     public _bebidas: BebidasService,
-    public _comandas: ComandasService) {
+    public _comandas: ComandasService,
+    ) {
+      this.comandaID = data.comandaID;
+      this.pedidoID = data.pedidoID;
+      this.mesa = data.mesa;
 
-    //this._platos.traerPlatos('postres');
     this.traerEntradas();
     this.traerPrincipal();
     this.traerPostres();
     this.traerBebidas();
     this.traerTragos();
 
-    //this.mesa = this.navParams.get("mesa");
-    //this.comanda = this.navParams.get("comanda");
+    // this.mesa = this.navParams.get("mesa");
+    // this.comanda = this.navParams.get("comanda");
     this.tipomenu = "minutas";
+
+    // pedido nuevo
+    if (this.pedidoID == 0) {
+      // habria que prepararlo para guardar el pedido
+
+    }
   }
 
   ngOnInit() {
@@ -73,7 +92,7 @@ export class MenuCartaComponent implements OnInit {
   }
 
   cargarLista(item: IProducto, cantidad: number): ISubpedidoItem {
-    let pedido: ISubpedidoItem = {
+    const pedido: ISubpedidoItem = {
       nombre: item.nombre,
       id: item.id,
       tiempoEstimado: item.tiempoEstimado,
@@ -298,9 +317,28 @@ export class MenuCartaComponent implements OnInit {
   }
 
   agregarPedido() {
-    let estadoCocina: string = "";
-    let estadoBebida: string = "";
-    let estadoCerveza: string = "";
+
+    if (this.comandaID == 0) {
+
+      this.comanda = {
+        id: new Date().getTime(),
+        cliente: "",
+        fechaHora: Date.now(),
+        mesa: this.mesa.idMesa,
+        nombreCliente: "",
+        fotoCliente: "",
+        userID: localStorage.getItem("userID"),
+        estado: "Abierta",
+        ClienteId: "",
+        MozoId: "",
+        importeTotal: 0,
+        porcentajePropina: 10
+      };
+    }
+
+    let estadoCocina: string;
+    let estadoBebida: string;
+    let estadoCerveza: string;
     let comandaPedido: IComandaPedido;
     let comandaPedidos: IComandaPedido[];
     this.cargarItemsSubpedidos(this.lMinutas);
@@ -309,32 +347,37 @@ export class MenuCartaComponent implements OnInit {
     this.cargarItemsSubpedidos(this.lPostres);
     this.cargarItemsSubpedidos(this.lBebidas);
     this.cargarItemsSubpedidos(this.lCervezas);
-    //Aca tengo cargados los items categorizados
-    //Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
+    // Aca tengo cargados los items categorizados
+    // Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
+
     if (this.itemsCocina.length > 0) estadoCocina = "Pendiente";
     else estadoCocina = "Nada";
     if (this.itemsBebida.length > 0) estadoBebida = "Pendiente";
     else estadoBebida = "Nada";
     if (this.itemsCerveza.length > 0) estadoCerveza = "Pendiente";
     else estadoCerveza = "Nada";
-    let subCocina: ISubpedidoComida = {
+    const subCocina: ISubpedidoComida = {
       id: new Date().valueOf(),
       estado: estadoCocina,
       items: this.itemsCocina
     };
-    let subBebida: ISubpedidoBebida = {
+    const subBebida: ISubpedidoBebida = {
       id: new Date().valueOf(),
       estado: estadoBebida,
       items: this.itemsBebida
     };
-    let subCerveza: ISubpedidoCerveza = {
+    const subCerveza: ISubpedidoCerveza = {
       id: new Date().valueOf(),
       estado: estadoCerveza,
       items: this.itemsCerveza
     };
-    let tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
+
+
+    // const tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
+    const tiempoMayorEstimado = 10;
     comandaPedido = {
       id: new Date().valueOf(),
+      codigoPedido: this.generarAlfanumerico(),
       estado: "Pendiente",
       subPedidosBebida: subBebida,
       subPedidosComida: subCocina,
@@ -346,16 +389,42 @@ export class MenuCartaComponent implements OnInit {
     } else {
       comandaPedidos = [comandaPedido];
       this.comanda.pedidos = comandaPedidos;
+      console.log("PEDIDOS");
+      console.log(this.comanda.pedidos );
     }
     this._comandas.actualizarComanda(this.comanda).then(
-      () => { },
+      () => {
+        this.openSnackBar("Código de Pedido: " , this.pedidoCodigo);
+       },
       () => {//  this.UtilProvider.mostrarMensaje("Reintente por favor");
       });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    }).afterDismissed().subscribe(() => {
+      console.log("AFTER DISMISS");
+      this.dialogRef.close(true);
+    });
+  }
+
+  generarAlfanumerico(): string {
+    let text = "";
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    this.pedidoCodigo = text.toUpperCase();
+
+    return this.pedidoCodigo;
   }
 
   cargarSubpedidos() { }
 
   cargarItemsSubpedidos(itemsSeleccionados: ISubpedidoItem[]) {
+
     itemsSeleccionados
       .filter(item => item.cantidad > 0)
       .forEach((i: ISubpedidoItem) => {

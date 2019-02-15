@@ -1,11 +1,11 @@
 export interface Iusuario{
     nombre:string;
     apellido:string;
-    dni:number;
-    foto?:string
+    dni: string;
+    foto?:string;
     perfil:string;
     email:string;
-    cuil?:number;
+    cuil?:string;
     id?:any;
 }
 

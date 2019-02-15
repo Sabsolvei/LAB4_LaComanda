@@ -47,7 +47,10 @@ export class AuthProvider {
 
         return new Promise((resolve, reject) => {
             this.afAuth.auth.signInWithEmailAndPassword(email, password)
-                .then(datoUsuario => resolve(datoUsuario),
+                .then(datoUsuario => {
+                  localStorage.setItem("userID", datoUsuario.user.uid);
+                  resolve(datoUsuario);
+                },
                     err => reject(err));
         });
 

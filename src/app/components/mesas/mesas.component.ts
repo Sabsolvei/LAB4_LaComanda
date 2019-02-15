@@ -2,50 +2,28 @@ import { IProducto } from './../../clases/IProducto';
 import { Component, OnInit, Input, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { Subscription } from "rxjs";
 import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+// import {
+//   trigger,
+//   state,
+//   style,
+//   animate,
+//   transition
+// } from '@angular/animations';
 
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup } from '@angular/forms';
 import { IMesa } from 'src/app/clases/IMesa';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido'
 import { MesaService } from '../../providers/mesa/mesa.service';
-
-
-
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AltaComandaComponent } from '../alta-comanda/alta-comanda.component';
+import { MenuCartaComponent } from '../menu-carta/menu-carta.component';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
   selector: 'app-mesas',
   templateUrl: './mesas.component.html',
-  styleUrls: ['./mesas.component.scss']// ,
-  // animations: [
-  //   trigger('buttonState', [
-  //     state('inactive', style({ transform: 'translateX(0) scale(1)' })),
-  //     state('active', style({ transform: 'translateX(0) scale(1)' })),
-  //     transition('inactive => active', animate('300ms ease-in')),
-  //     transition('active => inactive', animate('200ms ease-out')),
-  //     transition('void => inactive', [
-  //       style({ transform: 'translateX(-100%) scale(1)' }),
-  //       animate(100)
-  //     ]),
-  //     transition('inactive => void', [
-  //       animate(100, style({ transform: 'translateX(100%) scale(1)' }))
-  //     ]),
-  //     transition('void => active', [
-  //       style({ transform: 'translateX(0) scale(0)' }),
-  //       animate(200)
-  //     ]),
-  //     transition('active => void', [
-  //       animate(200, style({ transform: 'translateX(0) scale(0)' }))
-  //     ])
-  //   ])
-  // ]
-
+  styleUrls: ['./mesas.component.scss']
 
 })
 export class MesasComponent implements OnInit {
@@ -80,41 +58,29 @@ export class MesasComponent implements OnInit {
 
 
   ngOnInit() {
-    setTimeout(() => {  //The setTimeout() method calls a function or evaluates an expression after a specified number of milliseconds.
-
-    }, 1)
   }
+
   constructor(
     private _mesa: MesaService,
     private route: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog,
+    public auth: AuthProvider
   ) {
     this.tiempo = -1;
     _mesa.traerMesas().subscribe((data: IMesa[]) => {
       this.mesas = data;
     });
+
+    console.log(this.auth.Session.subscribe(u => {
+      console.log(u); }
+      ));
   }
 
-  public abrirMenuCarta() {
-    this.router.navigate(['/menu-carta']);
-  }
-
-  // enviarResultados() {
-  //   this.enviarJuego.emit(this.nuevoJuego);
+  // public abrirMenuCarta() {
+  //   this.router.navigate(['/menu-carta']);
   // }
-
-  NuevoJuego() {
-    this.tiempo = 200;
-    this.repetidor = setInterval(() => {
-
-      this.tiempo--;
-      if (this.tiempo == 0) {
-        clearInterval(this.repetidor);
-      }
-    }, 900);
-  }
-
 
   getClass(estado: string): string | any {
     let clases = [];
@@ -142,5 +108,32 @@ export class MesasComponent implements OnInit {
       //return this.sanitizer.bypassSecurityTrustStyle(estilo);
     }
     return clases;
+  }
+
+  verMesa(event: IMesa) {
+
+    if (event.estado === "Libre") {
+      // Abrir comanda
+      this.abrirComanda(event);
+    }
+  }
+
+  abrirComanda(mesa: IMesa) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      comandaID: 0,
+      pedidoID: 0, // si viene por este lado, no tiene pedido creado
+      mesa: mesa
+    };
+
+    const dialogRef = this.dialog.open(MenuCartaComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
