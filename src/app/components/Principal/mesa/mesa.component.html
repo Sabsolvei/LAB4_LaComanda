@@ -7,9 +7,11 @@
         <mat-card-subtitle># {{mesa.codigoQr}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>{{mesa.estado}} </p>
+        <p>{{mesa.estado}}</p>
+        <div *ngIf="mesa.clienteID != 0">{{mesa.clienteNombre}}</div>
     </mat-card-content>
     <mat-card-actions>
-        <button text-center mat-button *ngIf="mesa.estado == 'Libre'">Abrir</button>
+        <button mat-button (click)="asignarCliente()" *ngIf="mesa.clienteID == null">Asignar Cliente</button>
+        <button text-center mat-button (click)="seleccionarMesa()" *ngIf="mesa.estado == 'Libre'">{{cambiarNombreBoton()}}</button>
     </mat-card-actions>
 </mat-card>

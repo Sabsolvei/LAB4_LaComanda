@@ -1,12 +1,7 @@
-export class ICliente{
-
-    idCliente:number;
-    nombre:string;
-    apellido:string;
-    email:string;
-    tipoDocu:number;
-    numeroDocu:string;
-    password?:string;
-    foto?:string;
-    key?:string;
+export class ICliente {
+    nombre: string;
+    apellido: string;
+    email: string;
+    dni: string;
+    password?: string;
 }

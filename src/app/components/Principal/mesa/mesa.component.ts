@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IMesa } from 'src/app/clases/IMesa';
 import { MesaService } from '../../../providers/mesa/mesa.service';
 
@@ -9,11 +9,43 @@ import { MesaService } from '../../../providers/mesa/mesa.service';
 })
 export class MesaComponent implements OnInit {
   @Input() public mesa: IMesa;
+  @Input() public estado: string;
+  // @Output() public estadoCambiado: EventEmitter<any>;
+  @Output() public verMesa: EventEmitter<IMesa>;
+  @Output() public asignarMesa: EventEmitter<IMesa>;
 
+  constructor(public _mesa: MesaService) {
 
-  constructor(public _mesa: MesaService) { }
+    this.verMesa = new EventEmitter();
+    this.asignarMesa = new EventEmitter();
+  }
 
   ngOnInit() {
   }
+
+  cambiarNombreBoton(): string {
+    let es: string;
+
+    switch (this.mesa.estado) {
+      case "Libre":
+        es = "Abrir comanda";
+        break;
+      case "Comiendo":
+      case "Esperando":
+      case "Comiendo":
+        es = "Ver comanda";
+        break;
+    }
+
+    return es;
+  }
+
+seleccionarMesa() {
+  this.verMesa.emit(this.mesa);
+}
+
+asignarCliente() {
+  this.asignarMesa.emit(this.mesa);
+}
 
 }

@@ -30,6 +30,9 @@ import { TablaComponent } from './components/menu-carta/tabla/tabla.component';
 import { LoginComponent } from './components/login/login.component';
 import { ConsultaClienteComponent } from './components/consulta-cliente/consulta-cliente.component';
 import { AltaEmpleadoComponent } from './components/alta-empleado/alta-empleado.component';
+import { AltaComandaComponent } from './components/alta-comanda/alta-comanda.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { AsignarClienteComponent } from './components/Principal/asignar-cliente/asignar-cliente.component';
 import { PedidosPorSectorComponent } from './components/pedidos-por-sector/pedidos-por-sector.component';
 import { PedidoSectorComponent } from './components/pedido-sector/pedido-sector.component';
 
@@ -54,6 +57,8 @@ export const firebaseConfig = {
     LoginComponent,
     ConsultaClienteComponent,
     AltaEmpleadoComponent,
+    AltaComandaComponent,
+    AsignarClienteComponent,
     PedidosPorSectorComponent,
     PedidoSectorComponent
   ],
@@ -70,12 +75,17 @@ export const firebaseConfig = {
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule
   ],
+  entryComponents: [
+    AltaComandaComponent,
+    MenuCartaComponent
+  ],
   providers: [
     // FirebaseProvider,
     AuthProvider,
     PlatosService,
     BebidasService,
     UsuarioService,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
     MesaService,
     ComandasService
 

@@ -90,6 +90,8 @@ export class AuthProvider {
             this.afAuth.auth
                 .signInWithEmailAndPassword(email.toLowerCase(), password)
                 .then(data => {
+                  localStorage.setItem("userID", data.user.uid);
+
                     let user = firebase.auth().currentUser;
                     this.corroborarUsuario(user).then((us: Iusuario) => {
                         resolve(us);

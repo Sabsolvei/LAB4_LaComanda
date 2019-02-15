@@ -126,7 +126,7 @@ export class ComandasService {
 
   public actualizarComanda(comanda: IComanda): Promise<Boolean> {
     let promesa = new Promise<Boolean>((resolve, reject) => {
-      //Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
+      // Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
       this.afDB
         .object("/mesa_comandas/" + comanda.id)
