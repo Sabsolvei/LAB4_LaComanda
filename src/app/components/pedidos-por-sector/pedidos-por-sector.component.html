@@ -1,0 +1,60 @@
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+
+  <mat-step [completed]="false">
+    <ng-template matStepLabel>PENDIENTES</ng-template>
+    <!-- <button (click)='verPedidos()'>VER PEDIDOS</button> -->
+    <div *ngIf="listaPedidosPendientes">
+      <div *ngFor="let pe of listaPedidosPendientes">
+        <app-pedido-sector [itemPedido]='pe' (estadoCambiado)="cambiarEstadoPedido($event)"></app-pedido-sector>
+        <br>
+      </div>
+    </div>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+
+  <mat-step [completed]="false">
+    <ng-template matStepLabel>EN PREPARACION</ng-template>
+    <div *ngIf="listaPedidosEnPreparacion">
+      <div *ngFor="let pe of listaPedidosEnPreparacion">
+        <app-pedido-sector [itemPedido]='pe' (estadoCambiado)="cambiarEstadoPedido($event)"></app-pedido-sector>
+        <br>
+      </div>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+
+  <mat-step [completed]="false">
+    <ng-template matStepLabel>¡LISTOS!</ng-template>
+    <div *ngIf="listaPedidosListos">
+      <div *ngFor="let pe of listaPedidosListos">
+        <app-pedido-sector [itemPedido]='pe'></app-pedido-sector>
+        <br>
+      </div>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+
+
+</mat-horizontal-stepper>
+
+<!-- <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+  <div fxFlex="100%" fxFlexFill style="background-color: green; padding:4px;">
+    <div *ngFor="let pe of pedidos">
+      <app-pedido [pedido]='pe'></app-pedido>
+      <br>
+    </div>
+  </div>
+</div> -->

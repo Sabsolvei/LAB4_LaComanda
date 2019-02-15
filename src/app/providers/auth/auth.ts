@@ -1,3 +1,4 @@
+import { UsuarioService } from './../usuarios/usuario.service';
 import { Iusuario } from "./../../clases/usuario";
 //import { UsuariosProvider } from "./../usuarios/usuarios";
 import { AngularFireAuth } from "angularfire2/auth";
@@ -7,6 +8,7 @@ import { Observable, BehaviorSubject } from "rxjs";
 //import { of } from "rxjs/observable/of";
 
 import * as firebase from "firebase";
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthProvider {
@@ -15,12 +17,53 @@ export class AuthProvider {
     public perfil$ = new BehaviorSubject("");
 
     constructor(
-        private afAuth: AngularFireAuth
-        // public _usuario: UsuariosProvider
+        private afAuth: AngularFireAuth,
+        public _usuario: UsuarioService,
+        public router: Router
     ) { }
 
     loginGoogle() {
         return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }
+
+
+
+    buscarDestino(perfil: string): string {
+        let destinoPage: string;
+        this.perfil$.next(perfil);
+
+        switch (perfil) {
+
+            case "Cliente":
+                destinoPage = "consulta";
+                break;
+
+            case "Anonimo":
+                destinoPage = "registroEmpleados";
+                break;
+
+            case "mozo":
+                destinoPage = "mesas";
+                break;
+
+            case "Bartender":
+                destinoPage = "pedidos";
+                break;
+
+            case "Cocinero":
+                destinoPage = "pedidos";
+                break;
+
+            case "Cervecero":
+                destinoPage = "pedidos";
+                break;
+
+            default:
+                destinoPage = "login";
+                break;
+        }
+
+        return destinoPage;
     }
 
     //**Registro de usuario. Si logra crear el usuario envia el mail de verificacion */
@@ -42,58 +85,66 @@ export class AuthProvider {
         //   );
     }
 
-    //**Login al sistema. Valida que el mail haya sido verificado. Si encuentra el usuario lo envia como respuesta */
     loginUser(email: string, password: string): Promise<any> {
-
-        return new Promise((resolve, reject) => {
-            this.afAuth.auth.signInWithEmailAndPassword(email, password)
-                .then(datoUsuario => resolve(datoUsuario),
-                    err => reject(err));
+        let promesa = new Promise((resolve, reject) => {
+            this.afAuth.auth
+                .signInWithEmailAndPassword(email.toLowerCase(), password)
+                .then(data => {
+                    let user = firebase.auth().currentUser;
+                    this.corroborarUsuario(user).then((us: Iusuario) => {
+                        resolve(us);
+                    });
+                });
         });
+        return promesa;
+    }
 
-        // let promesa = new Promise((resolve, reject) => {
-        //   console.log(email);
-        //   console.log(password);
-        //   this.afAuth.auth
-        //     .signInWithEmailAndPassword(email.toLowerCase(), password)
-        //     .then(data => {
-        //       console.log(data.uid);
-        //       this.uid = data.uid;
-        //       let user = firebase.auth().currentUser;
-        //       // Busco el usuario x mail y lo devuelvo
-        //       this._usuario
-        //         .buscarUsuarioxMail(user.email)
-        //         .catch(() => {
-        //           reject("Usuario inexistente");
-        //         })
-        //         .then((u: Iusuario) => {
-        //           if (u.perfil == "Cliente") {
-        //             if (user.emailVerified) {
-        //               u.id = this.uid;
-        //               resolve(u);
-        //               ``;
-        //             } else {
-        //               reject("Email no verificado");
-        //             }
-        //           } else {
-        //             resolve(u);
-        //           }
-        //         });
-        //     });
-        // });
-        // return promesa;
+    public corroborarUsuario(user: firebase.User): Promise<any> {
+        let promesa = new Promise((resolve, reject) => {
+            this._usuario
+                .buscarUsuarioxMail(user.email)
+                .catch(() => {
+                    reject("Usuario inexistente");
+                })
+                .then((u: Iusuario) => {
+                    resolve(u);
+                    console.log('DENTRO DE CORROBORAR USUARIO');
+                });
+        })
+        return promesa;
     }
     // Devuelve la session
-    get Session() {
-        return this.afAuth.authState;
-
+    public get Session() {
+       return this.afAuth.authState;
     }
+
+
     // Logout de usuario
     logout() {
-        this.afAuth.auth.signOut().then(() => {
-            // hemos salido
-        });
+        //   console.log(this.afAuth.user.subscribe(user => { console.log(user.email); }));
+        return this.afAuth.auth.signOut();
     }
+
+    public cargarLocalStorage(user: Iusuario) {
+      //  console.log(user);
+        localStorage.setItem("perfil", user.perfil);
+        localStorage.setItem("userID", user.id.toString());
+        localStorage.setItem("email", user.email.toString());
+        localStorage.setItem("nombre", user.nombre.toString().toUpperCase());
+    }
+
+    public redireccionar(user: Iusuario) {
+        console.log('REDIRECCIONAR');
+        let destinoPage: string;
+        destinoPage = this.buscarDestino(user.perfil);
+        console.log(destinoPage);
+        this.router.navigate(['/' + destinoPage]);
+    }
+
+    public getUser(): Observable<firebase.User> {
+        return this.afAuth.user;
+    }
+
 
     //   buscarPerfil(): Observable<String> {
     //     return this.perfil$.asObservable();

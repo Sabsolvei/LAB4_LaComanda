@@ -14,7 +14,8 @@ import {
   MatInputModule,
   MatRadioModule,
   MatOptionModule,
-  MatSelectModule
+  MatSelectModule,
+  MatStepperModule
 } from '@angular/material';
 
 @NgModule({
@@ -34,7 +35,8 @@ import {
     MatInputModule,
     MatRadioModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule
 
 
   ],
@@ -52,7 +54,8 @@ import {
     MatInputModule,
     MatRadioModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule
   ],
 })
 export class MaterialModule { }

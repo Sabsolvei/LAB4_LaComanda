@@ -8,7 +8,7 @@ import { ISubpedidoItem } from 'src/app/clases/ISubpedidoItem';
 import { IProducto } from 'src/app/clases/IProducto';
 import { IComanda } from 'src/app/clases/IComanda';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
-import { ISubpedidoComida } from 'src/app/clases/ISubpedidoComida';
+import { ISubpedidoCocina } from 'src/app/clases/ISubpedidoCocina';
 import { ISubpedidoBebida } from 'src/app/clases/ISubpedidoBebida';
 
 
@@ -317,7 +317,7 @@ export class MenuCartaComponent implements OnInit {
     else estadoBebida = "Nada";
     if (this.itemsCerveza.length > 0) estadoCerveza = "Pendiente";
     else estadoCerveza = "Nada";
-    let subCocina: ISubpedidoComida = {
+    let subCocina: ISubpedidoCocina = {
       id: new Date().valueOf(),
       estado: estadoCocina,
       items: this.itemsCocina
@@ -337,7 +337,7 @@ export class MenuCartaComponent implements OnInit {
       id: new Date().valueOf(),
       estado: "Pendiente",
       subPedidosBebida: subBebida,
-      subPedidosComida: subCocina,
+      subPedidosCocina: subCocina,
       subPedidosCerveza: subCerveza,
       tiempoMayorEstimado: tiempoMayorEstimado
     };

@@ -8,11 +8,14 @@ import { IComandaPedido } from 'src/app/clases/IComandaPedido';
 })
 export class PedidoComponent implements OnInit {
 
-  @Input() public pedido: IComandaPedido; 
+  @Input() public pedido: IComandaPedido;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    console.log("PEDIDO");
+    console.log(this.pedido);
   }
 
 }
