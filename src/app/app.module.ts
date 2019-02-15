@@ -1,3 +1,5 @@
+import { ComandasService } from './providers/comandas/comandas.service';
+import { MesaService } from './providers/mesa/mesa.service';
 
 import { UsuarioService } from './providers/usuarios/usuario.service';
 import { BebidasService } from './providers/bebidas/bebidas.service';
@@ -28,6 +30,8 @@ import { TablaComponent } from './components/menu-carta/tabla/tabla.component';
 import { LoginComponent } from './components/login/login.component';
 import { ConsultaClienteComponent } from './components/consulta-cliente/consulta-cliente.component';
 import { AltaEmpleadoComponent } from './components/alta-empleado/alta-empleado.component';
+import { PedidosPorSectorComponent } from './components/pedidos-por-sector/pedidos-por-sector.component';
+import { PedidoSectorComponent } from './components/pedido-sector/pedido-sector.component';
 
 
 export const firebaseConfig = {
@@ -49,7 +53,9 @@ export const firebaseConfig = {
     TablaComponent,
     LoginComponent,
     ConsultaClienteComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    PedidosPorSectorComponent,
+    PedidoSectorComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +75,9 @@ export const firebaseConfig = {
     AuthProvider,
     PlatosService,
     BebidasService,
-    UsuarioService
+    UsuarioService,
+    MesaService,
+    ComandasService
 
   ],
   bootstrap: [AppComponent]
