@@ -1,9 +1,11 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill>
 
     <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" fxLayoutGap="32px" style="background-color: blue; padding:4px;" fxLayout="row wrap">
-        <div *ngFor="let m of mesas">
+        <div *ngFor="let mesa of mesas">
             <div fxFlex="20%" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" style="padding:10px; padding-left: 5px; padding-top:10px;" fxLayoutAlign="start center">
-                <app-mesa (verMesa)="verMesa($event)" [mesa]='m'></app-mesa>
+
+                <app-mesa (verMesa)="verMesa($event)" (asignarMesa)="asignarMesa($event)" [mesa]='mesa'></app-mesa>
+
             </div>
         </div>
     </div>

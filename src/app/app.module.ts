@@ -77,7 +77,8 @@ export const firebaseConfig = {
   ],
   entryComponents: [
     AltaComandaComponent,
-    MenuCartaComponent
+    MenuCartaComponent,
+    AsignarClienteComponent
   ],
   providers: [
     // FirebaseProvider,
