@@ -1,3 +1,5 @@
+import { ComandasService } from './providers/comandas/comandas.service';
+import { MesaService } from './providers/mesa/mesa.service';
 
 import { UsuarioService } from './providers/usuarios/usuario.service';
 import { BebidasService } from './providers/bebidas/bebidas.service';
@@ -31,6 +33,8 @@ import { AltaEmpleadoComponent } from './components/alta-empleado/alta-empleado.
 import { AltaComandaComponent } from './components/alta-comanda/alta-comanda.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { AsignarClienteComponent } from './components/Principal/asignar-cliente/asignar-cliente.component';
+import { PedidosPorSectorComponent } from './components/pedidos-por-sector/pedidos-por-sector.component';
+import { PedidoSectorComponent } from './components/pedido-sector/pedido-sector.component';
 
 
 export const firebaseConfig = {
@@ -54,7 +58,9 @@ export const firebaseConfig = {
     ConsultaClienteComponent,
     AltaEmpleadoComponent,
     AltaComandaComponent,
-    AsignarClienteComponent
+    AsignarClienteComponent,
+    PedidosPorSectorComponent,
+    PedidoSectorComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +85,9 @@ export const firebaseConfig = {
     PlatosService,
     BebidasService,
     UsuarioService,
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
+    MesaService,
+    ComandasService
 
   ],
   bootstrap: [AppComponent]

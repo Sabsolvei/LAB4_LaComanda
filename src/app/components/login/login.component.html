@@ -1,20 +1,22 @@
-<div class="col-md-6 col-md-offset-3">
-  <h2>Login</h2>
-
+<div>
+  <h2>INGRESAR</h2>
   <div>
-    <label for="username">Username</label>
-    <input type="text" [(ngModel)]="usuario" required />
-    
+    <mat-form-field class="inputLargo">
+      <input matInput placeholder='Email' type="text" [(ngModel)]="usuario" required />
+    </mat-form-field>
+    <mat-form-field class="inputLargo">
+      <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
+    </mat-form-field>
   </div>
-  <div>
-    <label for="password">Password</label>
-    <input type="password" [(ngModel)]="pass" required />
-    
+  <div class='separar'>
+    <button mat-raised-button color="primary" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
+    <a [routerLink]="['/registroEmpleados']">Registrar</a>
   </div>
-  <div>
-    <button [disabled]="loading" (click)='ingresar()'>Login</button>
-
-    <button [disabled]="loading" (click)='registrar()'>Registrar</button>
+  <br>
+  <div class='separar'>
+    <button mat-mini-fab color="primary" (click)="agregar('sabrinaveiga@hotmail.com')">A</button>
+    <button mat-mini-fab color="accent" (click)="agregar('sebillac@hotmail.com')">M</button>
+    <button mat-mini-fab color="warn" (click)="agregar('maria@hotmail.com')">B</button>
+    <button mat-mini-fab color="basic" (click)="agregar('juan@hotmail.com')">C</button>
   </div>
-
 </div>

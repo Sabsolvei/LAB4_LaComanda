@@ -52,6 +52,21 @@ export class UsuarioService {
     });
   }
 
+  buscarNombreYApellido(id: string): Promise<string> {
+
+    return new Promise<string>((resolve,reject)=>{
+
+      this.afDB
+      .list("/usuarios/", ref => ref.orderByChild("id").equalTo(id))
+      .valueChanges().subscribe((data:Iusuario[])=>{
+        if(data.length > 0) { //encontro una mesa
+          resolve(data[0].nombre + ' ' + data[0].apellido);
+        }else{
+          resolve("");
+        }
+      })
+    })
+  }
 
   public errorAuth(error: any) {
     let errorCode = error.code;

@@ -8,7 +8,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ISubpedidoItem } from 'src/app/clases/ISubpedidoItem';
 import { IProducto } from 'src/app/clases/IProducto';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
-import { ISubpedidoComida } from 'src/app/clases/ISubpedidoComida';
+import { ISubpedidoCocina } from 'src/app/clases/ISubpedidoCocina';
 import { ISubpedidoBebida } from 'src/app/clases/ISubpedidoBebida';
 import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
 import { IMesa } from '../../clases/IMesa';
@@ -380,7 +380,7 @@ export class MenuCartaComponent implements OnInit {
       codigoPedido: this.generarAlfanumerico(),
       estado: "Pendiente",
       subPedidosBebida: subBebida,
-      subPedidosComida: subCocina,
+      subPedidosCocina: subCocina,
       subPedidosCerveza: subCerveza,
       tiempoMayorEstimado: tiempoMayorEstimado
     };

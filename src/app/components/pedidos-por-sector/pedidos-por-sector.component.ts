@@ -1,0 +1,336 @@
+import { UsuarioService } from './../../providers/usuarios/usuario.service';
+import { BebidasService } from './../../providers/bebidas/bebidas.service';
+import { PlatosService } from './../../providers/platos/platos.service';
+import { ComandasService } from './../../providers/comandas/comandas.service';
+import { MesaService } from './../../providers/mesa/mesa.service';
+import { FormGroup } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { IMesa } from 'src/app/clases/IMesa';
+import { IComandaPedido } from 'src/app/clases/IComandaPedido';
+import { IComanda } from 'src/app/clases/IComanda';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-pedidos-por-sector',
+  templateUrl: './pedidos-por-sector.component.html',
+  styleUrls: ['./pedidos-por-sector.component.scss']
+})
+export class PedidosPorSectorComponent implements OnInit {
+
+  isLinear = false;
+  perfil: string = "";
+  mesa: string;
+  estado: string = "pendiente";
+  listaPedidosPendientes: Array<any> = [];
+  listaPedidosEnPreparacion: Array<any> = [];
+  listaPedidosListos: Array<any> = [];
+  comandas: IComanda[][];
+  bebidas: any[];
+  cocina: any[];
+  cerveza: any[];
+  subs: Subscription;
+  automatico: Boolean = true;
+
+  public mesas: IMesa[] = [];
+  public pedidos: IComandaPedido[] =
+    [
+      { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
+      { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }] } },
+      { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 }, { "cantidad": 2, "bebidaID": 4366576 }] } }
+    ];
+
+
+  constructor(
+    public _mesas: MesaService,
+    public _comandas: ComandasService,
+    public _platos: PlatosService,
+    public _bebidas: BebidasService,
+    public _usuarios: UsuarioService
+  ) {
+    //this.perfil = localStorage.getItem("perfil");
+    this.perfil = 'Cocinero';
+
+
+  }
+
+  ngOnInit() {
+    this.automatico = false;
+    this.inicializar();
+    setTimeout(() => {
+      this.automatico = true;
+    }, 4000);
+  }
+
+  verPedidos() {
+
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
+
+
+  inicializar() {
+    this.buscarComanda();
+  }
+
+  buscarComanda() {
+    //Recorro las comandas abiertas
+    this.subs = this._comandas.comandasAbiertas
+      .valueChanges()
+      .subscribe(data => {
+        let comanda: any;
+        this.comandas = data;
+
+        this.listaPedidosPendientes = [];
+        this.listaPedidosEnPreparacion = [];
+        this.listaPedidosListos = [];
+
+        //Recorro las comandas
+        for (let i = 0; i < data.length; i++) {
+          comanda = data[i];
+
+          this.armarListasEstados(comanda).then(() => {
+
+            // if (this.listaPedidosPendientes.length == 0)
+            //   if (this.listaPedidosEnPreparacion.length == 0)
+            //     if (this.listaPedidosEntregados.length > 0)
+            //       this.todoEntregado = true;
+          });
+        }
+      });
+  }
+
+  armarComandaPendiente(mesaID: number, mozoID: string): Promise<any> {
+    return new Promise<any>(resolve => {
+      Promise.all([
+        this._mesas.buscarNroMesa(mesaID),
+        this._usuarios.buscarNombreYApellido(mozoID)
+      ]).then(data => {
+        //Devuelvo la comanda con la mesa y mozo
+        resolve({
+          mesa: data[0],
+          mozo: data[1]
+        });
+      });
+    });
+  }
+
+
+  async armarListasEstados(comanda: IComanda): Promise<any> {
+    let promesa = new Promise(async (resolve, reject) => {
+      let hora: string = "";
+
+      if (comanda.pedidos != null) {
+        await this.armarComandaPendiente(comanda.mesa, comanda.MozoId).then(
+          async data => {
+            //Recorro los pedidos
+            for (let i = 0; i < comanda.pedidos.length; i++) {
+              //hora = this._utils.convertirAHora(this.comanda.pedidos[i].id);
+
+              if (comanda.pedidos[i].estado == "Derivado") {
+                if (this.perfil == "Bartender") {
+
+                  await this.armarListaBebidas(comanda.pedidos[i]).then(() => {
+
+                    let item = {
+                      comandaID: comanda.id,
+                      codigoPedido: comanda.pedidos[i].codigoPedido,
+                      mesa: data.mesa,
+                      mozo: data.mozo,
+                      id: comanda.pedidos[i].id,
+                      hora: hora,
+                      estado: comanda.pedidos[i].estado,
+                      estadoSubpedidosBebida:
+                        comanda.pedidos[i].subPedidosBebida.estado,
+                      tiempoEstimado: comanda.pedidos[i].tiempoMayorEstimado,
+                      horaDerivado: comanda.pedidos[i].horaDerivado,
+                      items: this.bebidas
+                    };
+
+                    if (this.bebidas != null) {
+                      if (comanda.pedidos[i].subPedidosBebida.estado == "Derivado") {
+
+                        this.listaPedidosPendientes.push(item);
+
+                      } else if (comanda.pedidos[i].subPedidosBebida.estado == "En Preparacion") {
+                        this.listaPedidosEnPreparacion.push(item);
+                      }
+                      else if (comanda.pedidos[i].subPedidosBebida.estado == "Preparado") {
+                        this.listaPedidosListos.push(item);
+                      }
+                    }
+                  });
+                } else if (this.perfil == "Cocinero") {
+                  //   console.log(comanda.pedidos[i]);
+                  await this.armarListaComidas(comanda.pedidos[i]).then(() => {
+                    let item = {
+                      comandaID: comanda.id,
+                      codigoPedido: comanda.pedidos[i].codigoPedido,
+                      mesa: data.mesa,
+                      mozo: data.mozo,
+                      id: comanda.pedidos[i].id,
+                      hora: hora,
+                      estado: comanda.pedidos[i].estado,
+                      estadosubPedidosCocina:
+                        comanda.pedidos[i].subPedidosCocina.estado,
+                      tiempoEstimado:
+                        comanda.pedidos[i].tiempoMayorEstimado,
+                      horaDerivado: comanda.pedidos[i].horaDerivado,
+                      items: this.cocina
+                    };
+
+                    if (this.cocina != null) {
+                      if (comanda.pedidos[i].subPedidosCocina.estado == "Derivado") {
+                        this.listaPedidosPendientes.push(item);
+                      } else if (comanda.pedidos[i].subPedidosCocina.estado == "En Preparacion") {
+                        this.listaPedidosEnPreparacion.push(item);
+                      }
+                      else if (comanda.pedidos[i].subPedidosCocina.estado == "Preparado") {
+                        this.listaPedidosListos.push(item);
+                      }
+                    }
+                  });
+                }
+              }
+            }
+          }
+        );
+      }
+      resolve();
+    });
+
+    return promesa;
+  }
+
+
+  async armarListaBebidas(pedido: IComandaPedido): Promise<any> {
+    let promesa = new Promise(async (resolve, reject) => {
+      if (pedido.subPedidosBebida.items != null) {
+        await this.buscarBebidas(pedido.subPedidosBebida.items)
+          .then(lista => {
+            this.bebidas = lista;
+            resolve();
+          })
+          .catch(() => reject());
+      } else {
+        this.bebidas = null;
+        resolve();
+      }
+    });
+    return promesa;
+  }
+
+  async armarListaComidas(pedido: IComandaPedido): Promise<any> {
+    let promesa = new Promise(async (resolve, reject) => {
+
+      if (pedido.subPedidosCocina.items != null) {
+        this.buscarPlatos(pedido.subPedidosCocina.items)
+          .then(lista => {
+            this.cocina = lista;
+            resolve();
+          })
+          .catch(() => reject());
+      } else {
+        this.cocina = null;
+        resolve();
+      }
+    });
+    return promesa;
+  }
+
+  async buscarBebidas(subPedidoBebidas: any) {
+    let lbebidas = [];
+    let promesa = new Promise<any[]>(async (resolve, reject) => {
+      await subPedidoBebidas.forEach(itemBebida => {
+        this._bebidas
+          .traerBebida(itemBebida.bebidaID)
+          .then((b: any) => {
+            lbebidas.push({
+              cantidad: itemBebida.cantidad,
+              bebida: b,
+              precio: Number(b.importe) * Number(itemBebida.cantidad)
+            });
+            resolve(lbebidas);
+          })
+          .catch(() => {
+            reject();
+          });
+      });
+    });
+    return promesa;
+  }
+
+  async buscarPlatos(subpedidoCocina: any) {
+    let lPlatos = [];
+    let promesa = new Promise<any[]>(async (resolve, reject) => {
+      await subpedidoCocina.forEach(itemPlato => {
+        this._platos
+          .traerPlato(itemPlato.platoID)
+          .then((p: any) => {
+            lPlatos.push({
+              cantidad: itemPlato.cantidad,
+              plato: p,
+              precio: Number(p.importe) * Number(itemPlato.cantidad)
+            });
+            resolve(lPlatos);
+          })
+          .catch(() => {
+            reject();
+          });
+      });
+    });
+    return promesa;
+  }
+
+  public cambiarEstadoPedido(event: any) {
+    console.log(event);
+    console.log(this.perfil);
+    this.automatico = false;
+    let prom: any;
+    let encontro: boolean = false;
+    // this._utils.presentLoading("Cambiando estado...");
+    for (let i = 0; i < this.comandas.length; i++) {
+      prom = this.comandas[i];
+      if (prom.id == event.idComanda) {
+        for (let j = 0; j < prom.pedidos.length; j++) {
+          if (prom.pedidos[j].id == event.idPedido) {
+            encontro = true;
+            if (this.perfil == "Bartender") {
+              prom.pedidos[j].subPedidosBebida.estado = event.estadoPedido;
+            }
+            if (this.perfil == "Cocinero") {
+              console.log("ESTADO ANTES ");
+              console.log(prom.pedidos[j].subPedidosCocina.estado);
+              prom.pedidos[j].subPedidosCocina.estado = event.estadoPedido;
+              console.log("ESTADO DESPUES ");
+              console.log(prom.pedidos[j].subPedidosCocina.estado);
+            }
+            if (this.perfil == "Cervecero") {
+              prom.pedidos[j].subPedidosCerveza.estado = event.estadoPedido;
+            }
+            break;
+          }
+        }
+      }
+      if (encontro)
+        break;
+    }
+    this._comandas.actualizarComanda(prom).then(
+      () => {
+        console.log("Se derivó el pedido");
+
+        //this.inicializar();
+        setTimeout(() => {
+          this.automatico = true;
+        }, 2000);
+      },
+      () => {
+        console.log("Reintente");
+      }
+    );
+  }
+}
+
