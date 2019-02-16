@@ -55,6 +55,20 @@ export class UsuarioService {
     });
   }
 
+  public guardarUsuarioConFoto(us: Iusuario) {
+    return this.afDB.list("usuarios").push({
+      nombre: us.nombre,
+      apellido: us.apellido,
+      dni: us.dni,
+      perfil: us.perfil,
+      email: us.email,
+      cuil: us.cuil,
+      id: us.id,
+      foto: us.foto
+    });
+  }
+
+
   buscarNombreYApellido(id: string): Promise<string> {
 
     return new Promise<string>((resolve,reject)=>{
