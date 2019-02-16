@@ -113,7 +113,9 @@ export class MesasComponent implements OnInit {
   //   return clases;
   // }
 
-  verMesa(event: IMesa) {
+
+  cargarPedido(event: IMesa) {
+
 
     if (event.estado === "Libre") {
       // Abrir comanda
@@ -157,7 +159,7 @@ export class MesasComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      comandaID: 0,
+      comandaID: mesa.comanda,
       pedidoID: 0, // si viene por este lado, no tiene pedido creado
       mesa: mesa
     };
