@@ -111,7 +111,7 @@ export class PedidosPorSectorComponent implements OnInit {
     let promesa = new Promise(async (resolve, reject) => {
       let hora: string = "";
       if (comanda.pedidos != null) {
-        await this.armarComandaPendiente(comanda.mesa, comanda.MozoId).then(
+        await this.armarComandaPendiente(comanda.mesa, comanda.mozoId).then(
           async data => {
             //Recorro los pedidos
             for (let i = 0; i < comanda.pedidos.length; i++) {
@@ -178,7 +178,7 @@ export class PedidosPorSectorComponent implements OnInit {
                   }
                 }
                 //});
-              
+
 
               else if (this.perfil == "cervecero") {
                 //await this.armarListaComidas(comanda.pedidos[i]).then(() => {

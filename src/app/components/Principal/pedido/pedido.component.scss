@@ -1,5 +1,15 @@
 .example-card {
-    max-width: 400px;
+    max-width: 300px;
+}
+
+.mat-list-item {
+    height: 35px !important;
+}
+
+mat-card-actions {
+    text-align: center !important;
+    align-items: center !important;
+    vertical-align: center !important;
 }
 
 .example-header-image {

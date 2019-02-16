@@ -59,7 +59,7 @@ export class MenuCartaComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<MenuCartaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackBar: MatSnackBar,
+    // private snackBar: MatSnackBar,
     public _platos: PlatosService,
     public _bebidas: BebidasService,
     public _comandas: ComandasService,
@@ -416,14 +416,14 @@ export class MenuCartaComponent implements OnInit {
       });
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 3000,
-    }).afterDismissed().subscribe(() => {
-      // this.creado = true;
-      this.dialogRef.close(true);
-    });
-  }
+  // openSnackBar(message: string, action: string) {
+  //   this.snackBar.open(message, action, {
+  //     duration: 3000,
+  //   }).afterDismissed().subscribe(() => {
+  //     // this.creado = true;
+  //     this.dialogRef.close(true);
+  //   });
+  // }
 
   generarAlfanumerico(): string {
     let text = "";

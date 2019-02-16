@@ -6,9 +6,14 @@
         <input matInput placeholder="" [(ngModel)]="dniCliente">
         <!-- <mat-hint>Hint</mat-hint> -->
     </mat-form-field>
-    <button mat-button (click)="buscarCliente()">Buscar</button>
+    <button mat-mini-fab color="primary" (click)="buscarCliente()">
+          <mat-icon>search</mat-icon>
+      </button>
+    <button mat-mini-fab color="accent" mat-dialog-close>
+            <mat-icon>close</mat-icon>
+      </button>
 
-    <div *ngIf="encontrado">
+    <div *ngIf="encontrado && buscado else noExiste">
         <div class="example-full-width">
             <mat-label placeholder="Color"> {{cliente.nombre}}</mat-label>
         </div>
@@ -24,8 +29,7 @@
         <button mat-raised-button [mat-dialog-close]="asignado" color="primary" class="btn btn-primary" (click)="asignar()">Asignar</button>
     </div>
 
-    <div *ngIf="!encontrado && buscado">
-
+    <ng-template *ngIf="buscado" #noExiste>
         <mat-form-field class="example-full-width" hintLabel="Max 20 caracteres">
             <input matInput #nombre maxlength="20" placeholder="Ingrese el nombre" [(ngModel)]="cliente.nombre">
             <mat-hint align="end">{{nombre.value?.length || 0}}/20</mat-hint>
@@ -46,7 +50,9 @@
             <button mat-raised-button [mat-dialog-close]="asignado" color="primary" class="btn btn-primary" (click)="registrar()">Registrar y asignar</button>
             <button mat-raised-button mat-dialog-close color="warn" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
         </div>
+    </ng-template>
 
-        <!-- </mat-form-field> -->
-    </div>
+    <!-- <div *ngIf="!encontrado && buscado">
+
+    </div> -->
 </div>
