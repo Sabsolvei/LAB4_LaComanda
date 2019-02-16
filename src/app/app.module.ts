@@ -37,10 +37,11 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { AsignarClienteComponent } from './components/Principal/asignar-cliente/asignar-cliente.component';
 import { PedidosPorSectorComponent } from './components/pedidos-por-sector/pedidos-por-sector.component';
 import { PedidoSectorComponent } from './components/pedido-sector/pedido-sector.component';
-import { FileDropModule } from 'ngx-file-drop';
+// import { FileDropModule } from 'ngx-file-drop';
 import { UploadFilesFormComponent } from './components/upload/upload-files-form/upload-files-form.component';
 import { DetailsUploadComponent } from './components/upload/details-upload/details-upload.component';
 import { ListUploadComponent } from './components/upload/list-upload/list-upload.component';
+import { VerComandaComponent } from './components/ver-comanda/ver-comanda/ver-comanda.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -68,7 +69,8 @@ export const firebaseConfig = {
     PedidoSectorComponent,
     UploadFilesFormComponent,
     DetailsUploadComponent,
-    ListUploadComponent
+    ListUploadComponent,
+    VerComandaComponent
   ],
   imports: [
     BrowserModule,
@@ -81,8 +83,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    AngularFireDatabaseModule,
-    FileDropModule
+    AngularFireDatabaseModule //,
+    // FileDropModule
   ],
   entryComponents: [
     AltaComandaComponent,
@@ -100,7 +102,7 @@ export const firebaseConfig = {
     ComandasService,
     UplodadFilesService,
     AngularFireStorage
-    
+
 
   ],
   bootstrap: [AppComponent]

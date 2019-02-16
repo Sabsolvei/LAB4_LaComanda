@@ -3,7 +3,8 @@ import { ISubpedido } from "./ISubpedido";
 export interface ISubpedidoCerveza extends ISubpedido {
 
     items: {
-        cantidad:number;
-        bebidaID:number;
-    }[]
+        cantidad: number;
+        bebidaID: number;
+        bebidaNombre: string;
+    }[];
 }

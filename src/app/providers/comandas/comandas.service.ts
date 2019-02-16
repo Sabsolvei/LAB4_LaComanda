@@ -153,7 +153,7 @@ export class ComandasService {
         .then(
           () => {
             //CAMBIO EL ESTADO DE LA MESA A OCUPADA
-    
+
             let ref = firebase.database().ref("/mesas/" + mesaKey);
 
             ref.ref.update({ estado: "Ocupada", comanda: comanda.id }).then(
@@ -173,7 +173,7 @@ export class ComandasService {
       // // this.lista.push(comanda).then(
       // //   () => {
       // //     //CAMBIO EL ESTADO DE LA MESA A OCUPADA
- 
+
       // //     let ref = firebase.database().ref("/mesas/" + mesaKey);
 
       // //     ref.ref.update({ estado: "Ocupada", comanda: comanda.id }).then(
@@ -198,6 +198,23 @@ export class ComandasService {
     return this.lista;
   }
 
+    buscarComanda(idComanda: number): Promise<IComanda> {
+
+      return new Promise<IComanda>((resolve, reject) => {
+
+        const obs = this.afDB
+        .object("/mesa_comandas/" + idComanda.toString())
+        .valueChanges().subscribe((com: IComanda) => {
+          resolve(com);
+        });
+
+        setTimeout(() => {
+          obs.unsubscribe();
+        }, 500);
+
+      });
+    }
+
   public verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
     let promesa = new Promise<IComanda>((resolve, reject) => {
       let userID: string = localStorage.getItem("userID");
@@ -208,8 +225,8 @@ export class ComandasService {
           for (let i = 0; i < comandas.length; i++) {
             if (comandas[i].id == comandaID) {
               if (
-                comandas[i].MozoId == userID ||
-                comandas[i].ClienteId == userID
+                comandas[i].mozoId == userID ||
+                comandas[i].clienteId == userID
               ) {
                 resolve(comandas[i]);
                 encontro = true;

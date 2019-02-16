@@ -1,0 +1,14 @@
+<div *ngIf="comanda != null else noComanda">
+    <div *ngFor="let pedido of comanda.pedidos">
+        <app-pedido [pedido]='pedido'></app-pedido>
+    </div>
+    <div>
+        <p>Total: {{comanda.importeTotal | currency}}</p>
+        <p>Estado: {{comanda.estado}}</p>
+        <button mat-fab color="primary"> {{nombreBoton()}} </button>
+    </div>
+</div>
+
+<ng-template #noComanda>
+    <p>No hay comanda seleccionada</p>
+</ng-template>
