@@ -95,12 +95,13 @@ export class PedidosPorSectorComponent implements OnInit {
     return new Promise<any>(resolve => {
       Promise.all([
         this._mesas.buscarNroMesa(mesaID),
-        this._usuarios.buscarNombreYApellido(mozoID)
+        this._usuarios.buscarNombreYApellido(mozoID),
+        this._usuarios.buscarFoto(mozoID)
       ]).then(data => {
-        //Devuelvo la comanda con la mesa y mozo
         resolve({
           mesa: data[0],
-          mozo: data[1]
+          mozo: data[1],
+          fotoMozo: data[2]
         });
       });
     });
@@ -117,8 +118,6 @@ export class PedidosPorSectorComponent implements OnInit {
             for (let i = 0; i < comanda.pedidos.length; i++) {
               //hora = this._utils.convertirAHora(this.comanda.pedidos[i].id);
               if (comanda.pedidos[i].estado == "Derivado") {
-
-
                 if (this.perfil == "bartender") {
                   //await this.armarListaBebidas(comanda.pedidos[i]).then(() => {
                   let item = {
@@ -126,17 +125,18 @@ export class PedidosPorSectorComponent implements OnInit {
                     codigoPedido: comanda.pedidos[i].codigoPedido,
                     mesa: data.mesa,
                     mozo: data.mozo,
+                    fotoMozo: data.fotoMozo,
                     id: comanda.pedidos[i].id,
                     hora: hora,
                     estado: comanda.pedidos[i].estado,
-                    estadoSubpedidosBebida:
+                    estadoSubpedido:
                       comanda.pedidos[i].subPedidosBebida.estado,
                     tiempoEstimado: comanda.pedidos[i].tiempoMayorEstimado,
                     horaDerivado: comanda.pedidos[i].horaDerivado,
                     productos: comanda.pedidos[i].subPedidosBebida
                   };
                   //if (comanda.pedidos[i].subPedidosBebida != null) {
-                  if (comanda.pedidos[i].subPedidosBebida.estado == "Derivado") {
+                  if (comanda.pedidos[i].subPedidosBebida.estado == "Pendiente") {
                     this.listaPedidosPendientes.push(item);
                   } else if (comanda.pedidos[i].subPedidosBebida.estado == "En Preparacion") {
                     this.listaPedidosEnPreparacion.push(item);
@@ -157,10 +157,11 @@ export class PedidosPorSectorComponent implements OnInit {
                     codigoPedido: comanda.pedidos[i].codigoPedido,
                     mesa: data.mesa,
                     mozo: data.mozo,
+                    fotoMozo: data.fotoMozo,
                     id: comanda.pedidos[i].id,
                     hora: hora,
                     estado: comanda.pedidos[i].estado,
-                    estadosubPedidosCocina:
+                    estadoSubpedido:
                       comanda.pedidos[i].subPedidosCocina.estado,
                     tiempoEstimado:
                       comanda.pedidos[i].tiempoMayorEstimado,
@@ -168,7 +169,7 @@ export class PedidosPorSectorComponent implements OnInit {
                     productos: comanda.pedidos[i].subPedidosCocina
                   };
                   // if (this.cocina != null) {
-                  if (comanda.pedidos[i].subPedidosCocina.estado == "Derivado") {
+                  if (comanda.pedidos[i].subPedidosCocina.estado == "Pendiente") {
                     this.listaPedidosPendientes.push(item);
                   } else if (comanda.pedidos[i].subPedidosCocina.estado == "En Preparacion") {
                     this.listaPedidosEnPreparacion.push(item);
@@ -180,172 +181,198 @@ export class PedidosPorSectorComponent implements OnInit {
                 //});
 
 
-              else if (this.perfil == "cervecero") {
-                //await this.armarListaComidas(comanda.pedidos[i]).then(() => {
-                let item = {
-                  comandaID: comanda.id,
-                  codigoPedido: comanda.pedidos[i].codigoPedido,
-                  mesa: data.mesa,
-                  mozo: data.mozo,
-                  id: comanda.pedidos[i].id,
-                  hora: hora,
-                  estado: comanda.pedidos[i].estado,
-                  estadosubPedidosCerveza: comanda.pedidos[i].subPedidosCerveza.estado,
-                  tiempoEstimado: comanda.pedidos[i].tiempoMayorEstimado,
-                  horaDerivado: comanda.pedidos[i].horaDerivado,
-                  productos: comanda.pedidos[i].subPedidosCerveza
-                };
-                //if (this.cerveza != null) {
-                if (comanda.pedidos[i].subPedidosCerveza.estado == "Derivado") {
-                  this.listaPedidosPendientes.push(item);
-                } else if (comanda.pedidos[i].subPedidosCerveza.estado == "En Preparacion") {
-                  this.listaPedidosEnPreparacion.push(item);
+                else if (this.perfil == "cervecero") {
+                  //await this.armarListaComidas(comanda.pedidos[i]).then(() => {
+                  let item = {
+                    comandaID: comanda.id,
+                    codigoPedido: comanda.pedidos[i].codigoPedido,
+                    mesa: data.mesa,
+                    mozo: data.mozo,
+                    fotoMozo: data.fotoMozo,
+                    id: comanda.pedidos[i].id,
+                    hora: hora,
+                    estado: comanda.pedidos[i].estado,
+                    estadoSubpedido: comanda.pedidos[i].subPedidosCerveza.estado,
+                    tiempoEstimado: comanda.pedidos[i].tiempoMayorEstimado,
+                    horaDerivado: comanda.pedidos[i].horaDerivado,
+                    productos: comanda.pedidos[i].subPedidosCerveza
+                  };
+                  //if (this.cerveza != null) {
+                  if (comanda.pedidos[i].subPedidosCerveza.estado == "Pendiente") {
+                    this.listaPedidosPendientes.push(item);
+                  } else if (comanda.pedidos[i].subPedidosCerveza.estado == "En Preparacion") {
+                    this.listaPedidosEnPreparacion.push(item);
+                  }
+                  else if (comanda.pedidos[i].subPedidosCerveza.estado == "Preparado") {
+                    this.listaPedidosListos.push(item);
+                  }
+                  // }
+                  //});
                 }
-                else if (comanda.pedidos[i].subPedidosCerveza.estado == "Preparado") {
-                  this.listaPedidosListos.push(item);
-                }
-                // }
-                //});
               }
-
-
             }
           }
-          }
         );
-  }
-  resolve();
-});
-
-return promesa;
-  }
-
-
-async armarListaBebidas(pedido: IComandaPedido): Promise < any > {
-  let promesa = new Promise(async (resolve, reject) => {
-    if (pedido.subPedidosBebida.items != null) {
-      await this.buscarBebidas(pedido.subPedidosBebida.items)
-        .then(lista => {
-          this.bebidas = lista;
-          resolve();
-        })
-        .catch(() => reject());
-    } else {
-      this.bebidas = null;
+      }
       resolve();
-    }
-  });
-  return promesa;
-}
-
-async armarListaComidas(pedido: IComandaPedido): Promise < any > {
-  let promesa = new Promise(async (resolve, reject) => {
-
-    if (pedido.subPedidosCocina.items != null) {
-      this.buscarPlatos(pedido.subPedidosCocina.items)
-        .then(lista => {
-          this.cocina = lista;
-          resolve();
-        })
-        .catch(() => reject());
-    } else {
-      this.cocina = null;
-      resolve();
-    }
-  });
-  return promesa;
-}
-
-async buscarBebidas(subPedidoBebidas: any) {
-  let lbebidas = [];
-  let promesa = new Promise<any[]>(async (resolve, reject) => {
-    await subPedidoBebidas.forEach(itemBebida => {
-      this._bebidas
-        .traerBebida(itemBebida.bebidaID)
-        .then((b: any) => {
-          lbebidas.push({
-            cantidad: itemBebida.cantidad,
-            bebida: b,
-            precio: Number(b.importe) * Number(itemBebida.cantidad)
-          });
-          resolve(lbebidas);
-        })
-        .catch(() => {
-          reject();
-        });
     });
-  });
-  return promesa;
-}
+    return promesa;
+  }
 
-async buscarPlatos(subpedidoCocina: any) {
-  let lPlatos = [];
-  let promesa = new Promise<any[]>(async (resolve, reject) => {
-    await subpedidoCocina.forEach(itemPlato => {
-      this._platos
-        .traerPlato(itemPlato.platoID)
-        .then((p: any) => {
-          lPlatos.push({
-            cantidad: itemPlato.cantidad,
-            plato: p,
-            precio: Number(p.importe) * Number(itemPlato.cantidad)
-          });
-          resolve(lPlatos);
-        })
-        .catch(() => {
-          reject();
-        });
+
+  async armarListaBebidas(pedido: IComandaPedido): Promise<any> {
+    let promesa = new Promise(async (resolve, reject) => {
+      if (pedido.subPedidosBebida.items != null) {
+        await this.buscarBebidas(pedido.subPedidosBebida.items)
+          .then(lista => {
+            this.bebidas = lista;
+            resolve();
+          })
+          .catch(() => reject());
+      } else {
+        this.bebidas = null;
+        resolve();
+      }
     });
-  });
-  return promesa;
-}
+    return promesa;
+  }
+
+  async armarListaComidas(pedido: IComandaPedido): Promise<any> {
+    let promesa = new Promise(async (resolve, reject) => {
+      if (pedido.subPedidosCocina.items != null) {
+        this.buscarPlatos(pedido.subPedidosCocina.items)
+          .then(lista => {
+            this.cocina = lista;
+            resolve();
+          })
+          .catch(() => reject());
+      } else {
+        this.cocina = null;
+        resolve();
+      }
+    });
+    return promesa;
+  }
+
+
 
   public cambiarEstadoPedido(event: any) {
-  console.log(event);
-  console.log(this.perfil);
-  this.automatico = false;
-  let prom: any;
-  let encontro: boolean = false;
-  // this._utils.presentLoading("Cambiando estado...");
-  for (let i = 0; i < this.comandas.length; i++) {
-    prom = this.comandas[i];
-    if (prom.id == event.idComanda) {
-      for (let j = 0; j < prom.pedidos.length; j++) {
-        if (prom.pedidos[j].id == event.idPedido) {
-          encontro = true;
-          if (this.perfil == "Bartender") {
-            prom.pedidos[j].subPedidosBebida.estado = event.estadoPedido;
+    this.automatico = false;
+    let itemComanda: any;
+    let encontro: boolean = false;
+    // this._utils.presentLoading("Cambiando estado...");
+    for (let i = 0; i < this.comandas.length; i++) {
+      itemComanda = this.comandas[i];
+      if (itemComanda.id == event.idComanda) {
+        for (let j = 0; j < itemComanda.pedidos.length; j++) {
+          if (itemComanda.pedidos[j].id == event.idPedido) {
+            encontro = true;
+            if (this.perfil == "bartender") {
+              itemComanda.pedidos[j].subPedidosBebida.estado = event.estadoPedido;
+            }
+            if (this.perfil == "cocinero") {
+              console.log("ESTADO A CAMBIAR: " + event.estadoPedido);
+              itemComanda.pedidos[j].subPedidosCocina.estado = event.estadoPedido;
+            }
+            if (this.perfil == "cervecero") {
+              itemComanda.pedidos[j].subPedidosCerveza.estado = event.estadoPedido;
+            }
+            break;
           }
-          if (this.perfil == "Cocinero") {
-            console.log("ESTADO ANTES ");
-            console.log(prom.pedidos[j].subPedidosCocina.estado);
-            prom.pedidos[j].subPedidosCocina.estado = event.estadoPedido;
-            console.log("ESTADO DESPUES ");
-            console.log(prom.pedidos[j].subPedidosCocina.estado);
-          }
-          if (this.perfil == "Cervecero") {
-            prom.pedidos[j].subPedidosCerveza.estado = event.estadoPedido;
-          }
-          break;
         }
       }
+      if (encontro)
+        break;
     }
-    if (encontro)
-      break;
+    this._comandas.actualizarComanda(itemComanda).then(
+      () => {
+        console.log("Cambió el estado del pedido");
+        //this.inicializar();
+        setTimeout(() => {
+          this.automatico = true;
+        }, 2000);
+      },
+      () => {
+        console.log("Reintente");
+      }
+    );
   }
-  this._comandas.actualizarComanda(prom).then(
-    () => {
-      console.log("Se derivó el pedido");
 
-      //this.inicializar();
-      setTimeout(() => {
-        this.automatico = true;
-      }, 2000);
-    },
-    () => {
-      console.log("Reintente");
+  async buscarBebidas(subPedidoBebidas: any) {
+    let lbebidas = [];
+    let promesa = new Promise<any[]>(async (resolve, reject) => {
+      await subPedidoBebidas.forEach(itemBebida => {
+        this._bebidas
+          .traerBebida(itemBebida.bebidaID)
+          .then((b: any) => {
+            lbebidas.push({
+              cantidad: itemBebida.cantidad,
+              bebida: b,
+              precio: Number(b.importe) * Number(itemBebida.cantidad)
+            });
+            resolve(lbebidas);
+          })
+          .catch(() => {
+            reject();
+          });
+      });
+    });
+    return promesa;
+  }
+
+  async buscarPlatos(subpedidoCocina: any) {
+    let lPlatos = [];
+    let promesa = new Promise<any[]>(async (resolve, reject) => {
+      await subpedidoCocina.forEach(itemPlato => {
+        this._platos
+          .traerPlato(itemPlato.platoID)
+          .then((p: any) => {
+            lPlatos.push({
+              cantidad: itemPlato.cantidad,
+              plato: p,
+              precio: Number(p.importe) * Number(itemPlato.cantidad)
+            });
+            resolve(lPlatos);
+          })
+          .catch(() => {
+            reject();
+          });
+      });
+    });
+    return promesa;
+  }
+
+  public cambiarTiempoEstimado(event: any) {
+    console.log("CAMBIAR TIEMPO ESTIMADO: ");
+    console.log(event);
+    this.automatico = false;
+    let itemComanda: any;
+    let encontro: boolean = false;
+    for (let i = 0; i < this.comandas.length; i++) {
+      itemComanda = this.comandas[i];
+      if (itemComanda.id == event.idComanda) {
+        for (let j = 0; j < itemComanda.pedidos.length; j++) {
+          if (itemComanda.pedidos[j].id == event.idPedido) {
+            encontro = true;
+            itemComanda.pedidos[j].tiempoMayorEstimado = event.tiempo;
+            break;
+          }
+        }
+      }
+      if (encontro)
+        break;
     }
-  );
-}
+    this._comandas.actualizarComanda(itemComanda).then(
+      () => {
+        console.log("Cambió el tiempo del pedido");
+        setTimeout(() => {
+          this.automatico = true;
+        }, 2000);
+      },
+      () => {
+        console.log("Reintente");
+      });
+  }
+
 }
 
