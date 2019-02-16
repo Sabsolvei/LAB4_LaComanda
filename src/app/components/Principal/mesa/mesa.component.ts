@@ -13,11 +13,13 @@ export class MesaComponent implements OnInit {
   // @Output() public estadoCambiado: EventEmitter<any>;
   @Output() public verMesa: EventEmitter<IMesa>;
   @Output() public asignarMesa: EventEmitter<IMesa>;
+  @Output() public ver: EventEmitter<IMesa>;
 
   constructor(public _mesa: MesaService) {
 
     this.verMesa = new EventEmitter();
     this.asignarMesa = new EventEmitter();
+    this.ver = new EventEmitter();
   }
 
   ngOnInit() {
@@ -28,10 +30,12 @@ export class MesaComponent implements OnInit {
 
     switch (this.mesa.estado) {
       case "Libre":
-        es = "Abrir comanda";
+        es = "book";
         break;
       case "Comiendo":
       case "Esperando":
+      es = "search";
+      break;
       case "Comiendo":
         es = "Ver comanda";
         break;
@@ -40,12 +44,16 @@ export class MesaComponent implements OnInit {
     return es;
   }
 
-seleccionarMesa() {
-  this.verMesa.emit(this.mesa);
-}
+  seleccionarMesa() {
+    this.verMesa.emit(this.mesa);
+  }
 
-asignarCliente() {
-  this.asignarMesa.emit(this.mesa);
-}
+  asignarCliente() {
+    this.asignarMesa.emit(this.mesa);
+  }
+
+  verPedidos() {
+    this.ver.emit(this.mesa);
+  }
 
 }

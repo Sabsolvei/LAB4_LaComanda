@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ICliente } from '../../../clases/ICliente';
 import { ClienteService } from '../../../providers/cliente/cliente.service';
 import { MesaService } from '../../../providers/mesa/mesa.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { IMesa } from 'src/app/clases/IMesa';
 
 @Component({
   selector: 'app-asignar-cliente',
@@ -13,7 +15,10 @@ export class AsignarClienteComponent implements OnInit {
 public dniCliente: string;
 public encontrado: boolean = false;
 public buscado: boolean = false;
-public cliente: ICliente= {
+public mesa: IMesa;
+public asignado: boolean = false;
+
+public cliente: ICliente = {
   nombre: "",
   apellido: "",
   dni: "",
@@ -25,17 +30,26 @@ public get cliEncontrado(): boolean {
   return this.cliEncontrado;
 }
 
-  constructor(public _cliente: ClienteService, public _mesa: MesaService) { }
+  constructor(
+    private dialogRef: MatDialogRef<AsignarClienteComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public _cliente: ClienteService, public _mesa: MesaService) {
+      this.mesa = data.mesa;
+    }
 
   ngOnInit() {
   }
 
   asignar() {
+    this.mesa.clienteDni = this.cliente.dni;
+    this.mesa.clienteNombre = this.cliente.nombre;
 
+    this._mesa.actualizarMesa(this.mesa).then(() => this.asignado = true);
   }
 
   registrar() {
-
+    this.cliente.dni = this.dniCliente;
+    this._cliente.registrar(this.cliente).then(() => this.asignar());
   }
   cancelar() {
 
@@ -44,20 +58,10 @@ public get cliEncontrado(): boolean {
   buscarCliente() {
     this.buscado = true;
     this._cliente.buscarDNI(this.dniCliente).then(cli => {
-      console.log("CLIENTE");
-      console.log(cli);
       if (cli != null) {
         this.encontrado = true;
         this.cliente = cli;
       } else {
-        this.cliente = {
-          nombre: "",
-          apellido: "",
-          dni: this.dniCliente,
-          email: "",
-          password: "123456"
-        };
-
         this.encontrado = false;
       }
     }).catch(error=>console.log(error));

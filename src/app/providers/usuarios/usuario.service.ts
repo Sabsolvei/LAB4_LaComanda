@@ -29,6 +29,9 @@ export class UsuarioService {
         )
         .valueChanges()
         .subscribe((user: Iusuario[]) => {
+
+          console.log("USUARIO");
+          console.log(user);
           if (user.length > 0) {
             resolve(user[0]);
           } else {

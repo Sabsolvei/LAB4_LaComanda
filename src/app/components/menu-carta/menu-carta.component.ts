@@ -14,6 +14,7 @@ import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
 import { IMesa } from '../../clases/IMesa';
 import { MesaComponent } from '../Principal/mesa/mesa.component';
 // import { ISubpedidoComida } from 'src/app/clases/ISubPedidoComida';
+import { MesaService } from '../../providers/mesa/mesa.service';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class MenuCartaComponent implements OnInit {
   private pedidoID: number;
   private comandaID: number;
   private pedidoCodigo: string;
+  public creado: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<MenuCartaComponent>,
@@ -61,6 +63,7 @@ export class MenuCartaComponent implements OnInit {
     public _platos: PlatosService,
     public _bebidas: BebidasService,
     public _comandas: ComandasService,
+    public _mesas: MesaService
     ) {
       this.comandaID = data.comandaID;
       this.pedidoID = data.pedidoID;
@@ -81,6 +84,10 @@ export class MenuCartaComponent implements OnInit {
       // habria que prepararlo para guardar el pedido
 
     }
+  }
+
+  cancelar() {
+    this.dialogRef.close(false);
   }
 
   ngOnInit() {
@@ -390,12 +397,18 @@ export class MenuCartaComponent implements OnInit {
     } else {
       comandaPedidos = [comandaPedido];
       this.comanda.pedidos = comandaPedidos;
-      console.log("PEDIDOS");
-      console.log(this.comanda.pedidos );
     }
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
-        this.openSnackBar("Código de Pedido: " , this.pedidoCodigo);
+        this.mesa.comanda = this.comanda.id;
+        this.mesa.estado = "Esperando";
+
+        this._mesas.actualizarMesa(this.mesa).then(() => {
+
+          this.dialogRef.close();
+
+         // this.openSnackBar("Código de Pedido: " , this.pedidoCodigo);
+        });
        },
       () => {//  this.UtilProvider.mostrarMensaje("Reintente por favor");
       });
@@ -405,7 +418,7 @@ export class MenuCartaComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 3000,
     }).afterDismissed().subscribe(() => {
-      console.log("AFTER DISMISS");
+      //this.creado = true;
       this.dialogRef.close(true);
     });
   }
