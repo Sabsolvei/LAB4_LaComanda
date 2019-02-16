@@ -1,2 +1,4 @@
-<a href="{{fileUpload.url}}">{{fileUpload.name}}</a>
-<button (click)='deleteFileUpload(fileUpload)' class="btn btn-danger btn-xs" style="float: right">Delete</button>
+<a href="{{fileUpload.url}}">{{fileUpload.originalName}}</a>
+<button mat-icon-button color='basic' (click)='deleteFileUpload(fileUpload)' style="float: right">
+    <mat-icon>cancel</mat-icon>
+</button>

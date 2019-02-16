@@ -116,7 +116,7 @@ export class AltaEmpleadoComponent implements OnInit {
           foto: this.urlfoto
         }
         console.log(usuarioNuevo);
-        if(this.urlfoto) {
+        if (this.urlfoto) {
           this.usuarioProvider.guardarUsuario(usuarioNuevo);
         }
         else {
