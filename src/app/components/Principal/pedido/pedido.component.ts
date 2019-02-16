@@ -14,8 +14,7 @@ export class PedidoComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("PEDIDO");
-    console.log(this.pedido);
+
   }
 
 }

@@ -1,31 +1,29 @@
 <div class="col-md-6 col-md-offset-3">
     <h2>Asignación de Cliente</h2>
 
-    <mat-form-field class="example-full-width">
-        <textarea matInput [(ngModel)]="dniCliente" placeholder="Ingrese el dni"></textarea>
-        <button mat-button (click)="buscarCliente()">Buscar</button>
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Ingrese el DNI</mat-label>
+        <input matInput placeholder="" [(ngModel)]="dniCliente">
+        <!-- <mat-hint>Hint</mat-hint> -->
     </mat-form-field>
-
-    <!-- <div *ngIf="encontrado" else="carga"> -->
+    <button mat-button (click)="buscarCliente()">Buscar</button>
 
     <div *ngIf="encontrado">
-        <mat-form-field>
+        <div class="example-full-width">
             <mat-label placeholder="Color"> {{cliente.nombre}}</mat-label>
-        </mat-form-field>
+        </div>
 
-        <mat-form-field>
+        <div class="example-full-width">
             <mat-label placeholder="Color"> {{cliente.apellido}}</mat-label>
-        </mat-form-field>
+        </div>
 
-        <mat-form-field>
+        <div class="example-full-width">
             <mat-label placeholder="Color"> {{cliente.email}}</mat-label>
-        </mat-form-field>
+        </div>
 
-        <button mat-raised-button color="primary" class="btn btn-primary" (click)="asignar()">Asignar</button>
+        <button mat-raised-button [mat-dialog-close]="asignado" color="primary" class="btn btn-primary" (click)="asignar()">Asignar</button>
     </div>
-    <!-- </div> -->
 
-    <!-- <ng-template #carga> -->
     <div *ngIf="!encontrado && buscado">
 
         <mat-form-field class="example-full-width" hintLabel="Max 20 caracteres">
@@ -43,12 +41,12 @@
             <mat-hint align="end">{{email.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
 
+        <!-- <mat-form-field class="example-full-width"> -->
+        <div class="example-full-width">
+            <button mat-raised-button [mat-dialog-close]="asignado" color="primary" class="btn btn-primary" (click)="registrar()">Registrar y asignar</button>
+            <button mat-raised-button mat-dialog-close color="warn" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
+        </div>
 
-        <mat-form-field class="example-full-width">
-            <button mat-raised-button color="primary" class="btn btn-primary" (click)="registrar()">Registrar</button>
-            <button mat-raised-button color="warn" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
-        </mat-form-field>
+        <!-- </mat-form-field> -->
     </div>
-    <!-- <a [routerLink]="['/login']" class="btn btn-link">Cancelar</a> -->
-    <!-- </ng-template> -->
 </div>

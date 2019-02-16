@@ -57,9 +57,6 @@ export class ClienteService {
         .valueChanges()
         .subscribe(
           (cli: any) => {
-
-            console.log("Encontro");
-            console.log(cli);
             if (cli.length > 0) {
               resolve(cli[0]);
             } else {
