@@ -20,6 +20,8 @@ import { AltaComandaComponent } from '../alta-comanda/alta-comanda.component';
 import { MenuCartaComponent } from '../menu-carta/menu-carta.component';
 import { AuthProvider } from '../../providers/auth/auth';
 import { AsignarClienteComponent } from '../Principal/asignar-cliente/asignar-cliente.component';
+import { IComanda } from '../../clases/IComanda';
+import { ComandasService } from '../../providers/comandas/comandas.service';
 
 @Component({
   selector: 'app-mesas',
@@ -32,6 +34,7 @@ export class MesasComponent implements OnInit {
 
   tiempo: number;
   repetidor: any;
+  public comanda: IComanda = null;
 
 
    public mesas: IMesa[] = [];
@@ -50,12 +53,12 @@ export class MesasComponent implements OnInit {
   //     { "idMesa": 12, "numero": 12, "capacidad": '2', "codigoQr": 'AC123', "tipo": "vip", "estado": "pagando", "comanda": 1 },
   //   ];
 
-  public pedidos: IComandaPedido[] =
-    [
-      { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
-      { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 },{ "cantidad": 2, "bebidaID": 480844 },{ "cantidad": 2, "bebidaID": 480844 }] } },
-      { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 },{ "cantidad": 2, "bebidaID": 4366576 }] } }
-    ];
+  // public pedidos: IComandaPedido[] =
+  //   [
+  //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
+  //     { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 },{ "cantidad": 2, "bebidaID": 480844 },{ "cantidad": 2, "bebidaID": 480844 }] } },
+  //     { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 },{ "cantidad": 2, "bebidaID": 4366576 }] } }
+  //   ];
 
 
   ngOnInit() {
@@ -63,6 +66,7 @@ export class MesasComponent implements OnInit {
 
   constructor(
     private _mesa: MesaService,
+    private _comanda: ComandasService,
     private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer,
@@ -117,6 +121,16 @@ export class MesasComponent implements OnInit {
       // Abrir comanda
       this.abrirComanda(event);
     }
+  }
+
+  verComanda(mesa: IMesa) {
+    this.buscarComanda(mesa);
+  }
+
+  buscarComanda(mesa: IMesa) {
+    this._comanda.buscarComanda(mesa.comanda).then(com => {
+      this.comanda = com;
+    });
   }
 
   asignarMesa(mesa: IMesa) {

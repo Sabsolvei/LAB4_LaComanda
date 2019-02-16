@@ -27,7 +27,7 @@ export class MesaService {
     return promesa;
   }
 
-  //**Busca la mesa por ID, y devuelve una promesa con el Numero */
+  // **Busca la mesa por ID, y devuelve una promesa con el Numero */
   buscarNroMesa(idMesa: number): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {

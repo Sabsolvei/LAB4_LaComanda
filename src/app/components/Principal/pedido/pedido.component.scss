@@ -1,8 +1,23 @@
 .example-card {
-   max-width: 400px;
-  }
-  
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    max-width: 400px;
+}
+
+.example-header-image {
+    background-image: url('../../../../assets/plato.jpg');
     background-size: cover;
-  }
+}
+
+.cocina {
+    background-image: url('../../../../assets/comida.jpg');
+    background-size: cover;
+}
+
+.bebida {
+    background-image: url('../../../../assets/bebida.png');
+    background-size: cover;
+}
+
+.cerveza {
+    background-image: url('../../../../assets/beer.png');
+    background-size: cover;
+}

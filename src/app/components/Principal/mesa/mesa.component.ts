@@ -10,16 +10,16 @@ import { MesaService } from '../../../providers/mesa/mesa.service';
 export class MesaComponent implements OnInit {
   @Input() public mesa: IMesa;
   @Input() public estado: string;
-  // @Output() public estadoCambiado: EventEmitter<any>;
+
   @Output() public verMesa: EventEmitter<IMesa>;
   @Output() public asignarMesa: EventEmitter<IMesa>;
-  @Output() public ver: EventEmitter<IMesa>;
+  @Output() public verComanda: EventEmitter<IMesa>;
 
   constructor(public _mesa: MesaService) {
 
     this.verMesa = new EventEmitter();
     this.asignarMesa = new EventEmitter();
-    this.ver = new EventEmitter();
+    this.verComanda = new EventEmitter();
   }
 
   ngOnInit() {
@@ -44,6 +44,27 @@ export class MesaComponent implements OnInit {
     return es;
   }
 
+  tomarColor() {
+    let es: string;
+
+    switch (this.mesa.estado) {
+      case "Libre":
+        es = "#a9ec89";
+        break;
+      case "Comiendo":
+        es = "#ec6990";
+        break;
+      case "Esperando":
+        es = "#f5ed79";
+        break;
+      case "Comiendo":
+        es = "Ver comanda";
+        break;
+    }
+
+    return es;
+  }
+
   seleccionarMesa() {
     this.verMesa.emit(this.mesa);
   }
@@ -53,7 +74,7 @@ export class MesaComponent implements OnInit {
   }
 
   verPedidos() {
-    this.ver.emit(this.mesa);
+    this.verComanda.emit(this.mesa);
   }
 
 }
