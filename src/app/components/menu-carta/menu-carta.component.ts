@@ -40,9 +40,9 @@ export class MenuCartaComponent implements OnInit {
   public cant: number;
   public platos: any;
   // CAMPOS COMANDA
-  public itemsCocina: { cantidad: number; platoID: number; platoNombre: string }[] = [];
-  public itemsBebida: { cantidad: number; bebidaID: number; bebidaNombre: string }[] = [];
-  public itemsCerveza: { cantidad: number; bebidaID: number; bebidaNombre: string }[] = [];
+  public itemsCocina: { cantidad: number; platoID: number; nombre: string }[] = [];
+  public itemsBebida: { cantidad: number; bebidaID: number; nombre: string }[] = [];
+  public itemsCerveza: { cantidad: number; bebidaID: number; nombre: string }[] = [];
   public tiemposEstimadosDelPedido = [];
 
   public subTotal: number = 0;
@@ -445,17 +445,17 @@ export class MenuCartaComponent implements OnInit {
       .filter(item => item.cantidad > 0)
       .forEach((i: ISubpedidoItem) => {
         if (i.categoria == "bebida" || i.categoria == 'trago') {
-          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id, bebidaNombre: i.nombre });
+          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
           this.totalComanda += (i.cantidad * i.importe);
         }
         else if (i.categoria == 'cerveza') {
-          this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id, bebidaNombre: i.nombre });
+          this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
           this.totalComanda += (i.cantidad * i.importe);
         }
         else {
-          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id, platoNombre: i.nombre });
+          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id, nombre: i.nombre });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
           this.totalComanda += (i.cantidad * i.importe);
         }

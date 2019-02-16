@@ -15,7 +15,7 @@
             <mat-list-item *ngFor="let item of pedido.subPedidosCocina.items">
                 <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
                 <div mat-card-avatar mat-list-icon class="cocina"></div>
-                <h4 mat-line>{{item.cantidad}} - {{item.platoNombre}}</h4>
+                <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
                 <!-- <p mat-line> {{item.cantidad}} - {{item.platoNombre}} </p> -->
                 <mat-divider></mat-divider>
             </mat-list-item>
@@ -26,7 +26,7 @@
             <mat-list-item *ngFor="let item of pedido.subPedidosBebida.items">
                 <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
                 <div mat-card-avatar mat-list-icon class="bebida"></div>
-                <h4 mat-line>{{item.cantidad}} - {{item.bebidaNombre}}</h4>
+                <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
                 <!-- <p mat-line> {{item.cantidad}} - {{item.bebidaNombre}} </p> -->
                 <mat-divider></mat-divider>
             </mat-list-item>
@@ -36,7 +36,7 @@
             <mat-list-item *ngFor="let item of pedido.subPedidosCerveza.items">
                 <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
                 <div mat-card-avatar mat-list-icon class="cerveza"></div>
-                <h4 mat-line>{{item.cantidad}} - {{item.bebidaNombre}}</h4>
+                <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
                 <!-- <p mat-line> {{item.cantidad}} - {{item.bebidaNombre}} </p> -->
                 <mat-divider></mat-divider>
             </mat-list-item>

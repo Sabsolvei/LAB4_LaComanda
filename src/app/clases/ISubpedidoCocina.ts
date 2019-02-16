@@ -5,6 +5,6 @@ export interface ISubpedidoCocina extends ISubpedido {
     items: {
         cantidad: number;
         platoID: number;
-        platoNombre: string;
+        nombre: string;
     }[];
 }
