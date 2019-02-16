@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import * as firebase from "firebase";
 
 import { Iusuario } from 'src/app/clases/usuario';
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+// import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 
 @Component({
@@ -32,7 +32,7 @@ export class AltaEmpleadoComponent implements OnInit {
     { value: 'cervecero', viewValue: 'Cervecero' },
     { value: 'admin', viewValue: 'Administrador' }
   ];
-  public files: UploadFile[] = [];
+  // public files: UploadFile[] = [];
   public urlfoto: string;
   public realFile: any;
 
@@ -46,26 +46,26 @@ export class AltaEmpleadoComponent implements OnInit {
   }
 
 
-  public dropped(event: UploadEvent) {
-    this.files = event.files;
-    for (const droppedFile of event.files) {
+  // public dropped(event: UploadEvent) {
+  //   this.files = event.files;
+  //   for (const droppedFile of event.files) {
 
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // Here you can access the real file
-          console.log(droppedFile.relativePath);
-          console.log(file);
-          this.realFile = file;
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
-  }
+  //     // Is it a file?
+  //     if (droppedFile.fileEntry.isFile) {
+  //       const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+  //       fileEntry.file((file: File) => {
+  //         // Here you can access the real file
+  //         console.log(droppedFile.relativePath);
+  //         console.log(file);
+  //         this.realFile = file;
+  //       });
+  //     } else {
+  //       // It was a directory (empty directories are added, otherwise only files)
+  //       const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+  //       console.log(droppedFile.relativePath, fileEntry);
+  //     }
+  //   }
+  // }
 
   public guardarFoto() {
     let ref = firebase.database().ref("Uploads");
@@ -103,7 +103,7 @@ export class AltaEmpleadoComponent implements OnInit {
         console.log(idUsuario.user.uid);
         console.log('USUARIO CREADO');
 
-     
+
         let usuarioNuevo: Iusuario =
         {
           nombre: this.model.nombre,
@@ -122,7 +122,7 @@ export class AltaEmpleadoComponent implements OnInit {
         else {
           this.usuarioProvider.guardarUsuarioConFoto(usuarioNuevo);
         }
-        
+
       })
       .catch(error => {
         console.log(this.usuarioProvider.errorAuth(error));

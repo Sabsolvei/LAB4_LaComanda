@@ -40,9 +40,9 @@ export class MenuCartaComponent implements OnInit {
   public cant: number;
   public platos: any;
   // CAMPOS COMANDA
-  public itemsCocina: { cantidad: number; platoID: number }[] = [];
-  public itemsBebida: { cantidad: number; bebidaID: number }[] = [];
-  public itemsCerveza: { cantidad: number; bebidaID: number }[] = [];
+  public itemsCocina: { cantidad: number; platoID: number; nombre: string }[] = [];
+  public itemsBebida: { cantidad: number; bebidaID: number; nombre: string }[] = [];
+  public itemsCerveza: { cantidad: number; bebidaID: number; nombre: string }[] = [];
   public tiemposEstimadosDelPedido = [];
 
   public subTotal: number = 0;
@@ -54,7 +54,7 @@ export class MenuCartaComponent implements OnInit {
   private pedidoID: number;
   private comandaID: number;
   private pedidoCodigo: string;
-  public creado: boolean = false;
+  private totalComanda: number;
 
   constructor(
     private dialogRef: MatDialogRef<MenuCartaComponent>,
@@ -330,17 +330,15 @@ export class MenuCartaComponent implements OnInit {
 
       this.comanda = {
         id: new Date().getTime(),
-        cliente: "",
         fechaHora: Date.now(),
         mesa: this.mesa.idMesa,
-        nombreCliente: "",
+        nombreCliente: this.mesa.clienteNombre,
         fotoCliente: "",
         userID: localStorage.getItem("userID"),
         estado: "Abierta",
-        ClienteId: "",
-        MozoId: "",
-        importeTotal: 0,
-        porcentajePropina: 10
+        clienteId: this.mesa.clienteDni,
+        mozoId: localStorage.getItem("userID") // ,
+        // porcentajePropina: 10
       };
     }
 
@@ -355,15 +353,19 @@ export class MenuCartaComponent implements OnInit {
     this.cargarItemsSubpedidos(this.lPostres);
     this.cargarItemsSubpedidos(this.lBebidas);
     this.cargarItemsSubpedidos(this.lCervezas);
+
+    this.comanda.importeTotal = this.totalComanda;
+
     // Aca tengo cargados los items categorizados
     // Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
 
-    if (this.itemsCocina.length > 0) estadoCocina = "Pendiente";
-    else estadoCocina = "Nada";
-    if (this.itemsBebida.length > 0) estadoBebida = "Pendiente";
-    else estadoBebida = "Nada";
-    if (this.itemsCerveza.length > 0) estadoCerveza = "Pendiente";
-    else estadoCerveza = "Nada";
+    if (this.itemsCocina.length > 0) {estadoCocina = "Pendiente";}
+    else {estadoCocina = "Nada"; }
+    if (this.itemsBebida.length > 0) {estadoBebida = "Pendiente";}
+    else {estadoBebida = "Nada";}
+    if (this.itemsCerveza.length > 0) {estadoCerveza = "Pendiente";}
+    else {estadoCerveza = "Nada";}
+
     const subCocina: ISubpedidoCocina = {
       id: new Date().valueOf(),
       estado: estadoCocina,
@@ -381,8 +383,8 @@ export class MenuCartaComponent implements OnInit {
     };
 
 
-    // const tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
-    const tiempoMayorEstimado = 10;
+    const tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
+    // const tiempoMayorEstimado = 10;
     comandaPedido = {
       id: new Date().valueOf(),
       codigoPedido: this.generarAlfanumerico(),
@@ -418,7 +420,7 @@ export class MenuCartaComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 3000,
     }).afterDismissed().subscribe(() => {
-      //this.creado = true;
+      // this.creado = true;
       this.dialogRef.close(true);
     });
   }
@@ -443,16 +445,19 @@ export class MenuCartaComponent implements OnInit {
       .filter(item => item.cantidad > 0)
       .forEach((i: ISubpedidoItem) => {
         if (i.categoria == "bebida" || i.categoria == 'trago') {
-          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id });
+          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
+          this.totalComanda += (i.cantidad * i.importe);
         }
         else if (i.categoria == 'cerveza') {
-          this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id });
+          this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
+          this.totalComanda += (i.cantidad * i.importe);
         }
         else {
-          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id });
+          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id, nombre: i.nombre });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
+          this.totalComanda += (i.cantidad * i.importe);
         }
         // this.pedidoACargar.push(i);
       });

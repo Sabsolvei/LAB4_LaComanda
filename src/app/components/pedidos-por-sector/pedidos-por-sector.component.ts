@@ -34,12 +34,12 @@ export class PedidosPorSectorComponent implements OnInit {
   automatico: Boolean = true;
 
   public mesas: IMesa[] = [];
-  public pedidos: IComandaPedido[] =
-    [
-      { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
-      { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }] } },
-      { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 }, { "cantidad": 2, "bebidaID": 4366576 }] } }
-    ];
+  // public pedidos: IComandaPedido[] =
+  //   [
+  //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
+  //     { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }] } },
+  //     { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 }, { "cantidad": 2, "bebidaID": 4366576 }] } }
+  //   ];
 
 
   constructor(
@@ -124,7 +124,7 @@ export class PedidosPorSectorComponent implements OnInit {
       let hora: string = "";
 
       if (comanda.pedidos != null) {
-        await this.armarComandaPendiente(comanda.mesa, comanda.MozoId).then(
+        await this.armarComandaPendiente(comanda.mesa, comanda.mozoId).then(
           async data => {
             //Recorro los pedidos
             for (let i = 0; i < comanda.pedidos.length; i++) {
