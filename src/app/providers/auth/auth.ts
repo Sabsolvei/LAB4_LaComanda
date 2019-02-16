@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class AuthProvider {
     //public perfilLogueado: string;
     uid: string;
+    public usuarioLogueado;
     public perfil$ = new BehaviorSubject("");
 
     constructor(
@@ -38,7 +39,7 @@ export class AuthProvider {
                 destinoPage = "consulta";
                 break;
 
-            case "Anonimo":
+            case "admin":
                 destinoPage = "registroEmpleados";
                 break;
 
@@ -46,15 +47,15 @@ export class AuthProvider {
                 destinoPage = "mesas";
                 break;
 
-            case "Bartender":
+            case "bartender":
                 destinoPage = "pedidos";
                 break;
 
-            case "Cocinero":
+            case "cocinero":
                 destinoPage = "pedidos";
                 break;
 
-            case "Cervecero":
+            case "cervecero":
                 destinoPage = "pedidos";
                 break;
 
@@ -90,10 +91,10 @@ export class AuthProvider {
             this.afAuth.auth
                 .signInWithEmailAndPassword(email.toLowerCase(), password)
                 .then(data => {
-                  localStorage.setItem("userID", data.user.uid);
-
-                    let user = firebase.auth().currentUser;
-                    this.corroborarUsuario(user).then((us: Iusuario) => {
+                    localStorage.setItem("userID", data.user.uid);
+                    let usuario = firebase.auth().currentUser;
+                    this.corroborarUsuario(usuario).then((us: Iusuario) => {
+                        this.usuarioLogueado = us;
                         resolve(us);
                     });
                 });
@@ -102,6 +103,7 @@ export class AuthProvider {
     }
 
     public corroborarUsuario(user: firebase.User): Promise<any> {
+ 
         let promesa = new Promise((resolve, reject) => {
             this._usuario
                 .buscarUsuarioxMail(user.email)
@@ -109,26 +111,25 @@ export class AuthProvider {
                     reject("Usuario inexistente");
                 })
                 .then((u: Iusuario) => {
+                    console.log('DENTRO DE CORROBORAR USUARIO. Usuario: ');
                     resolve(u);
-                    console.log('DENTRO DE CORROBORAR USUARIO');
+
                 });
         })
         return promesa;
     }
     // Devuelve la session
     public get Session() {
-       return this.afAuth.authState;
+        return this.afAuth.authState;
     }
-
 
     // Logout de usuario
     logout() {
-        //   console.log(this.afAuth.user.subscribe(user => { console.log(user.email); }));
+        this.usuarioLogueado = null;
         return this.afAuth.auth.signOut();
     }
 
     public cargarLocalStorage(user: Iusuario) {
-      //  console.log(user);
         localStorage.setItem("perfil", user.perfil);
         localStorage.setItem("userID", user.id.toString());
         localStorage.setItem("email", user.email.toString());
@@ -136,77 +137,15 @@ export class AuthProvider {
     }
 
     public redireccionar(user: Iusuario) {
-        console.log('REDIRECCIONAR');
         let destinoPage: string;
         destinoPage = this.buscarDestino(user.perfil);
-        console.log(destinoPage);
+        console.log('REDIRECCIONAR: Pagina destino: ' + destinoPage);
         this.router.navigate(['/' + destinoPage]);
     }
 
     public getUser(): Observable<firebase.User> {
         return this.afAuth.user;
     }
-
-
-    //   buscarPerfil(): Observable<String> {
-    //     return this.perfil$.asObservable();
-    //   }
-
-    //   buscarDestino(perfil: string): string {
-    //     let destinoPage: string;
-    //     this.perfil$.next(perfil);
-
-    //     switch (perfil) {
-    //       case "Dueño":
-    //         destinoPage = "ReservasPage";
-    //         break;
-
-    //       case "Supervisor":
-    //         destinoPage = "ReservasPage";
-    //         break;
-
-    //       case "Cliente":
-    //         destinoPage = "InicioClientePage";
-    //         break;
-
-    //       case "Anonimo":
-    //         destinoPage = "QrEsperaPage";
-    //         break;
-
-    //       case "Cocinero":
-    //         destinoPage = "PedidosCocinaPage";
-    //         break;
-
-    //       case "Bartender":
-    //         destinoPage = "PedidosCocinaPage";
-
-    //         break;
-    //       case "Mozo":
-    //         destinoPage = "MesasPage";
-    //         break;
-
-    //       case "Mestre":
-    //         destinoPage = "ReservasMestrePage"; //"EsperaPage";
-    //         break;
-
-    //       default:
-    //         destinoPage = "LoginPage";
-    //         break;
-    //     }
-
-    //     return destinoPage;
-    //   }
-
-    //   public ingresoAnonimo() {
-    //     return this.afAuth.auth.signInAnonymously();
-    //   }
-
-    //   public esAnonimo() {
-    //     let ay: any;
-    //     ay = this.afAuth.auth.onAuthStateChanged(user => {
-    //       console.log(user);
-    //     });
-    //   }
 
     //   public obtenerEmailUsuarioActual() {
     //     return this.afAuth.auth.currentUser.email;

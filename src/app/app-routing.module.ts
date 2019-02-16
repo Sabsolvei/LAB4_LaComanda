@@ -1,3 +1,4 @@
+import { AccessGuard } from './access.guard';
 import { AppComponent } from './app.component';
 import { PedidosPorSectorComponent } from './components/pedidos-por-sector/pedidos-por-sector.component';
 import { AltaEmpleadoComponent } from './components/alta-empleado/alta-empleado.component';
@@ -11,12 +12,44 @@ import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'registroEmpleados', component: AltaEmpleadoComponent },
-  { path: 'consulta', component: ConsultaClienteComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'mesas', component: MesasComponent, canActivate: [AuthGuard] },
-  { path: 'pedidos', component: PedidosPorSectorComponent },
-  { path: 'menu-carta', component: MenuCartaComponent }
+  {
+    path: 'registroEmpleados', component: AltaEmpleadoComponent
+    ,
+    canActivate: [AuthGuard, AccessGuard],
+    data: {
+      rolesPermitidos: ['admin']
+    }
+  },
+  {
+    path: 'consulta', component: ConsultaClienteComponent,
+    canActivate: [AuthGuard, AccessGuard],
+    data: {
+      rolesPermitidos: ['admin', 'cliente', 'mozo']
+    }
+  },
+  {
+    path: 'mesas',
+    component: MesasComponent,
+    canActivate: [AuthGuard, AccessGuard],
+    data: {
+      rolesPermitidos: ['admin', 'mozo']
+    }
+  },
+  {
+    path: 'pedidos', component: PedidosPorSectorComponent,
+    canActivate: [AuthGuard, AccessGuard],
+    data: {
+      rolesPermitidos: ['admin', 'bartender', 'cocinero', 'cervecero']
+    }
+  },
+  {
+    path: 'menu-carta', component: MenuCartaComponent,
+    canActivate: [AuthGuard, AccessGuard],
+    data: {
+      rolesPermitidos: ['admin', 'mozo']
+    }
+  },
 ];
 
 @NgModule({

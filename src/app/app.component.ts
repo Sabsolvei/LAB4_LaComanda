@@ -29,13 +29,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this._auth.Session.subscribe(_session => {
-      if (!_session) { 
-        this._router.navigate(['../login']);
-      } else {
-        //    console.log("esta logueado");
-      }
-    });
   }
 
   salir() {
