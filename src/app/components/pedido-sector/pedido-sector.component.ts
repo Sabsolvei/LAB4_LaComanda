@@ -1,3 +1,4 @@
+import { ComandasService } from './../../providers/comandas/comandas.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
 
@@ -10,14 +11,16 @@ export class PedidoSectorComponent implements OnInit {
 
   @Input() public itemPedido: any;
   @Output() estadoCambiado = new EventEmitter<any>();
+  @Output() tiempoEstimadoCambiado = new EventEmitter<any>();
   perfil: string = "";
 
-  constructor() {
+  constructor(
+    public _comanda: ComandasService
+  ) {
+
   }
 
   ngOnInit() {
-    console.log("PEDIDO - " + this.itemPedido.estadosubPedidosCocina);
-    console.log(this.itemPedido);
   }
 
   sumarMinutos() {
@@ -31,10 +34,20 @@ export class PedidoSectorComponent implements OnInit {
   }
 
   cambiarEstado(estado: string) {
-    console.log("CAMBIAR ESTADO A EN PREPARACION");
-    console.log(estado);
-    console.log(this.itemPedido);
     this.estadoCambiado.emit({ estadoPedido: estado, idComanda: this.itemPedido.comandaID, idPedido: this.itemPedido.id });
+  }
+
+  sumarCincoMinutos() {
+    this.itemPedido.tiempoEstimado = this.itemPedido.tiempoEstimado + 5;
+    this.tiempoEstimadoCambiado.emit({ tiempo: this.itemPedido.tiempoEstimado,  idComanda: this.itemPedido.comandaID, idPedido: this.itemPedido.id });
+  }
+
+  restarCincoMinutos() {
+    if (this.itemPedido.tiempoEstimado > 5) {
+      this.itemPedido.tiempoEstimado = this.itemPedido.tiempoEstimado - 5;
+      this.tiempoEstimadoCambiado.emit({ tiempo: this.itemPedido.tiempoEstimado,  idComanda: this.itemPedido.comandaID, idPedido: this.itemPedido.id });
+    }
+
   }
 
 }

@@ -36,7 +36,6 @@ export class MesaService {
         .list("/mesas/", ref => ref.orderByChild("idMesa").equalTo(idMesa))
         .valueChanges().subscribe((data: IMesa[]) => {
           if (data.length > 0) { //encontro una mesa
-            console.log(data[0].numero.toString());
             resolve(data[0].numero.toString());
           } else {
             resolve("");

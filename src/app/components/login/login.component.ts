@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this._auth.Session.subscribe(_session => {
       if (!_session) {
-        console.log('SESION CERRADA');
+       // console.log('SESION CERRADA');
       //  this._router.navigate(['../login']);
       } else {
-        console.log('SESION ABIERTA');
+      //  console.log('SESION ABIERTA');
         // this._auth.getUser().subscribe(user => {
         //   this._auth.corroborarUsuario(user)
         //     .catch(err => Promise.reject(err))

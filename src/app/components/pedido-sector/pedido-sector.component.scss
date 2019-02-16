@@ -3,7 +3,7 @@
   }
   
   .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    // background-image: url("https://firebasestorage.googleapis.com/v0/b/lacomanda-b9c2b.appspot.com/o/uploads%2F281233212?alt=media&token=bee72458-f4bb-4202-8883-677fa3cc3400");
     background-size: cover;
   }
 
@@ -12,3 +12,47 @@
     width: 100%;
 
   }
+.botonMasCinco {
+  padding-left: 250%;
+}
+
+.botonMenosCinco {
+  padding-left: 200%;
+}
+
+.iconoMasCinco {
+  font-size: 330%;
+}
+
+.iconoMenosCinco {
+  font-size: 250%;
+}
+
+.tiempoEstimado {
+  font-size: 110%;
+}
+
+.itemProducto {
+  font-size: 150%;
+}
+
+table {
+  width: 100%;
+  box-shadow: 1px 1px 1px #CCCCCC; 
+}
+
+.columnaCantidad {
+  width: 10%;
+  font-size: 118%;
+  font-weight: bold;
+  padding-left: 3%;
+}
+
+.columnaNombre {
+  width: 90%;
+  font-size: 115%;
+}
+
+tr {
+  height: 35px;
+}
