@@ -1,17 +1,31 @@
 <!-- <button mat-button>{{mesa.numero}} - #{{mesa.codigoQr}}</button> -->
-<mat-card class="example-card">
+<mat-card class="card">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>MESA {{mesa.numero}}
+        <mat-card-title>Mesa {{mesa.numero}}
         </mat-card-title>
         <mat-card-subtitle># {{mesa.codigoQr}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>{{mesa.estado}}</p>
-        <div *ngIf="mesa.clienteID != 0">{{mesa.clienteNombre}}</div>
+        <p>Estado: {{mesa.estado}}</p>
+        <div *ngIf="mesa.clienteID != 0">
+            <p>Cliente: {{mesa.clienteNombre}}</p>
+        </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button (click)="asignarCliente()" *ngIf="mesa.clienteID == null">Asignar Cliente</button>
-        <button text-center mat-button (click)="seleccionarMesa()" *ngIf="mesa.estado == 'Libre'">{{cambiarNombreBoton()}}</button>
+        <button mat-fab color="primary" (click)="asignarCliente()" *ngIf="mesa.clienteDni == ''">
+            <mat-icon >face</mat-icon>
+        </button>
+
+        <button mat-fab color="primary" (click)="seleccionarMesa()" *ngIf="mesa.estado =='Libre'">
+            <mat-icon>{{cambiarNombreBoton()}}</mat-icon>
+        </button>
+
+        <button mat-fab color="primary" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando'">
+            <mat-icon>{{cambiarNombreBoton()}}</mat-icon>
+        </button>
+
+        <!-- <button mat-raised-button color="primary " (click)="asignarCliente() " *ngIf="mesa.clienteID==n ull ">Asignar Cliente</button>
+        <button mat-raised-button color="primary " (click)="seleccionarMesa() " *ngIf="mesa.estado=='Libre' ">{{cambiarNombreBoton()}}</button> -->
     </mat-card-actions>
 </mat-card>

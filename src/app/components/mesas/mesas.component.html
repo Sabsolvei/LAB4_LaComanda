@@ -1,21 +1,46 @@
+<!-- <div class="centered">
+
+    <section class="cards">
+
+        <div *ngFor="let mesa of mesas">
+            <app-mesa class="card" (verMesa)="verMesa($event)" (asignarMesa)="asignarMesa($event)" [mesa]='mesa'></app-mesa>
+        </div>
+
+         <article class="card">
+            <p>content for card one</p>
+        </article>
+
+        <article class="card">
+            <p>content for card two</p>
+        </article>
+
+        <article class="card">
+            <p>content for card three</p>
+        </article>
+
+
+        <article class="card">
+            <p>content for card four</p>
+        </article>
+
+    </section>
+</div> -->
+
 <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill>
 
-    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" fxLayoutGap="32px" style="background-color: blue; padding:4px;" fxLayout="row wrap">
+    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" style="background-color: rgb(131, 131, 241);" fxLayout="row wrap">
         <div *ngFor="let mesa of mesas">
-            <div fxFlex="20%" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" style="padding:10px; padding-left: 5px; padding-top:10px;" fxLayoutAlign="start center">
+            <div fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" style="padding:10px; padding-left: 5px; padding-top:10px;" fxLayoutAlign="start center">
 
                 <app-mesa (verMesa)="verMesa($event)" (asignarMesa)="asignarMesa($event)" [mesa]='mesa'></app-mesa>
 
             </div>
         </div>
     </div>
-    <div fxFlex="40%" fxFlexFill style="background-color: green; padding:4px;">
+    <div fxFlex="40%" fxFlexFill style="background-color: rgb(133, 212, 133); padding:4px;">
         <div *ngFor="let pe of pedidos">
             <app-pedido [pedido]='pe'></app-pedido>
             <br>
         </div>
     </div>
 </div>
-
-<!-- 33.3% - 32px -->
-<!-- fxFlex.lt-md="0 1 calc(50% - 32px)" -->
