@@ -1,6 +1,6 @@
 <div class="col-md-6 col-md-offset-3">
   <h2>Alta empleado</h2>
-  <form name="form" (ngSubmit)="registrar()" novalidate>
+  <form name="form" (ngSubmit)="guardarEmpleado()" novalidate>
     <div class="form-group">
       <mat-form-field [floatLabel]="'auto'">
         <input matInput type="text" class="form-control" name="nombre" [(ngModel)]="model.nombre" #nombre="ngModel"
@@ -41,79 +41,15 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- <div class="center">
-      <file-drop headertext="" (onFileDrop)="dropped($event)" 
-      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-          <span>Arrastre la foto aquí</span>
-      </file-drop>
-      <div class="upload-table">
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th></th>
-                  </tr>
-              </thead>
-              <tbody class="upload-name-style">
-                  <tr *ngFor="let item of files; let i=index">
-                      <td><strong>{{ item.relativePath }}</strong></td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-  </div> -->
-
     <div class="container" style="width:400px">
-      <div style="color: blue; margin-bottom: 20px">
-        <h1>{{title}}</h1>
-        <h3>{{description}}</h3>
-      </div>
-
-      <app-upload-files-form [dni]="this.model.dni"></app-upload-files-form>
-
+      <app-upload-files-form [dni]="this.model.documento"></app-upload-files-form>
       <br />
-      <br />
-
       <app-list-upload></app-list-upload>
     </div>
-
     <div class="form-group">
       <button mat-raised-button color="primary" class="btn btn-primary">GUARDAR</button>
       <a [routerLink]="['/mesas']" class="btn btn-link">Cancelar</a>
     </div>
 
-
   </form>
 </div>
-
-
-<!-- <div class="example-container">
-  <form class="example-container" [formGroup]="options">
-    <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox>
-    <div>
-      <label>Float label: </label>
-      <mat-radio-group formControlName="floatLabel">
-        <mat-radio-button value="auto">Auto</mat-radio-button>
-        <mat-radio-button value="always">Always</mat-radio-button>
-        <mat-radio-button value="never">Never</mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </form>
-  <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel">
-    <input matInput placeholder="Simple placeholder" required>
-  </mat-form-field>
-
-  <mat-form-field [floatLabel]="options.value.floatLabel">
-    <mat-label>Both a label and a placeholder</mat-label>
-    <input matInput placeholder="Simple placeholder">
-  </mat-form-field>
-
-  <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel">
-    <mat-select required>
-      <mat-option>-- None --</mat-option>
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
-    <mat-label>
-      <mat-icon>favorite</mat-icon> <b> Fancy</b> <i> label</i>
-    </mat-label>
-  </mat-form-field>
-</div> -->

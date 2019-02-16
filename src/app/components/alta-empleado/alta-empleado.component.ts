@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import * as firebase from "firebase";
 
 import { Iusuario } from 'src/app/clases/usuario';
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 
 @Component({
@@ -32,7 +31,7 @@ export class AltaEmpleadoComponent implements OnInit {
     { value: 'cervecero', viewValue: 'Cervecero' },
     { value: 'admin', viewValue: 'Administrador' }
   ];
-  public files: UploadFile[] = [];
+
   public urlfoto: string;
   public realFile: any;
 
@@ -46,64 +45,13 @@ export class AltaEmpleadoComponent implements OnInit {
   }
 
 
-  public dropped(event: UploadEvent) {
-    this.files = event.files;
-    for (const droppedFile of event.files) {
-
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // Here you can access the real file
-          console.log(droppedFile.relativePath);
-          console.log(file);
-          this.realFile = file;
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
-  }
-
-  public guardarFoto() {
-    let ref = firebase.database().ref("Uploads");
-    let storage = firebase.storage();
-    let pathReference = storage.ref('images/stars.jpg');
-    pathReference.getDownloadURL().then(function (url) {
-      console.log(url);
-      ref.push().set({
-        imgurl: url
-      });
-    });
-  }
-
-  public createUploadTask(file: string) {
-    this.rutaArchivo = `empleados/${this.model.dni}_${new Date().getTime()}.jpg`;
-    this.image = 'data:image/jpg;base64,' + file;
-    this.task = this.storage.ref(this.rutaArchivo).putString(file, 'data_url');
-    return this.task;
-  }
-
-  public fileOver(event) {
-    console.log(event);
-  }
-
-  public fileLeave(event) {
-    console.log(event);
-  }
-
-
-
-
-  registrar() {
+  guardarEmpleado() {
     return this.auth.registerUser(this.model.email, '123456')
       .then((idUsuario) => {
         console.log(idUsuario.user.uid);
         console.log('USUARIO CREADO');
 
-     
+
         let usuarioNuevo: Iusuario =
         {
           nombre: this.model.nombre,
@@ -116,13 +64,13 @@ export class AltaEmpleadoComponent implements OnInit {
           foto: this.urlfoto
         }
         console.log(usuarioNuevo);
-        if(this.urlfoto) {
+        if (this.urlfoto) {
           this.usuarioProvider.guardarUsuario(usuarioNuevo);
         }
         else {
           this.usuarioProvider.guardarUsuarioConFoto(usuarioNuevo);
         }
-        
+
       })
       .catch(error => {
         console.log(this.usuarioProvider.errorAuth(error));

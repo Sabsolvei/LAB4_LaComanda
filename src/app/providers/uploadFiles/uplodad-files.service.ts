@@ -15,7 +15,7 @@ export class UplodadFilesService {
  
   pushFileToStorage(fileUpload: FileUpload, progress: { percentage: number }) {
     const storageRef = firebase.storage().ref();
-    const uploadTask = storageRef.child(`${this.basePath}/${fileUpload.file.name}`).put(fileUpload.file);
+    const uploadTask = storageRef.child(`${this.basePath}/${fileUpload.name}`).put(fileUpload.file);
  
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) => {
@@ -30,9 +30,10 @@ export class UplodadFilesService {
       () => {
         // success
         uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          console.log('File available at', downloadURL);
+          console.log('Archivo disponible en: ');
+          console.log(downloadURL);
           fileUpload.url = downloadURL;
-          fileUpload.name = fileUpload.file.name;
+     //     fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload);
         });
       }

@@ -9,14 +9,15 @@
     <mat-card-subtitle>{{itemPedido.tiempoEstimado}} minutos</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p *ngFor="let item of itemPedido.items">{{item.cantidad}} - {{item.plato.nombre}} </p>
+    <p *ngFor="let item of itemPedido.productos.items">{{item.cantidad}} - {{item.nombre}} </p>
+    <!-- {{item.plato.nombre}} -->
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color='primary' (click)="cambiarEstado('En Preparacion')"
       *ngIf="itemPedido.estadosubPedidosCocina == 'Derivado'">PREPARAR</button>
     <button mat-raised-button color='primary' (click)="cambiarEstado('Preparado')"
       *ngIf="itemPedido.estadosubPedidosCocina == 'En Preparacion'">LISTO</button>
-    <button mat-raised-button color='primary'
-      *ngIf="itemPedido.estadosubPedidosCocina == 'Preparado'" [disabled]="true">A ENTREGAR</button>
+    <button mat-raised-button color='primary' *ngIf="itemPedido.estadosubPedidosCocina == 'Preparado'"
+      [disabled]="true">A ENTREGAR</button>
   </mat-card-actions>
 </mat-card>

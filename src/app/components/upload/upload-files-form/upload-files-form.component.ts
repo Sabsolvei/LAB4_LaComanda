@@ -21,6 +21,7 @@ export class UploadFilesFormComponent implements OnInit {
  
   selectFile(event) {
     this.selectedFiles = event.target.files;
+    this.upload();
   }
  
   upload() {
@@ -28,6 +29,8 @@ export class UploadFilesFormComponent implements OnInit {
     this.selectedFiles = undefined;
  
     this.currentFileUpload = new FileUpload(file);
+    this.currentFileUpload.name = this.dni;
+    this.currentFileUpload.originalName = file.name;
     this.uploadService.pushFileToStorage(this.currentFileUpload, this.progress);
   }
 
