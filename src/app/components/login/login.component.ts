@@ -30,16 +30,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this._auth.Session.subscribe(_session => {
       if (!_session) {
-        this._router.navigate(['../login']);
+        console.log('SESION CERRADA');
+      //  this._router.navigate(['../login']);
       } else {
-        this._auth.getUser().subscribe(user => {
-          this._auth.corroborarUsuario(user)
-            .catch(err => Promise.reject(err))
-            .then((user: Iusuario) => {
-              this._auth.cargarLocalStorage(user);
-              this._auth.redireccionar(user);
-            });
-        });
+        console.log('SESION ABIERTA');
+        // this._auth.getUser().subscribe(user => {
+        //   this._auth.corroborarUsuario(user)
+        //     .catch(err => Promise.reject(err))
+        //     .then((user: Iusuario) => {
+        //       this._auth.cargarLocalStorage(user);
+        //       this._auth.redireccionar(user);
+        //     });
+        // });
       }
     });
   }
@@ -51,7 +53,6 @@ export class LoginComponent implements OnInit {
       .catch(err => Promise.reject(err))
       .then(
         () => {
-          console.log('USUARIO CREADO');
           let user = firebase.auth().currentUser;
           user
             .sendEmailVerification()
