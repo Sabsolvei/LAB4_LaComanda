@@ -1,6 +1,6 @@
 import { UplodadFilesService } from './../../../providers/uploadFiles/uplodad-files.service';
 import { FileUpload } from './../../../clases/file-upload';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-upload-files-form',
@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadFilesFormComponent implements OnInit {
 
+  @Input() dni: string;
   selectedFiles: FileList;
   currentFileUpload: FileUpload;
   progress: { percentage: number } = { percentage: 0 };
