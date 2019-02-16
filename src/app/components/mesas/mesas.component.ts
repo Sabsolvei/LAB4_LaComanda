@@ -35,6 +35,7 @@ export class MesasComponent implements OnInit {
   tiempo: number;
   repetidor: any;
   public comanda: IComanda = null;
+  public mesa: IMesa = null;
 
 
    public mesas: IMesa[] = [];
@@ -78,47 +79,45 @@ export class MesasComponent implements OnInit {
       this.mesas = data;
     });
 
-    console.log(this.auth.Session.subscribe(u => {
-      console.log(u); }
-      ));
   }
 
   // public abrirMenuCarta() {
   //   this.router.navigate(['/menu-carta']);
   // }
 
-  getClass(estado: string): string | any {
-    let clases = [];
+  // getClass(estado: string): string | any {
+  //   let clases = [];
 
-    if (estado) {
+  //   if (estado) {
 
-      switch (estado) {
-        case 'ocupada':
-          clases.push("mat-elevation-z0", "aunNoJugoClass");
+  //     switch (estado) {
+  //       case 'ocupada':
+  //         clases.push("mat-elevation-z0", "aunNoJugoClass");
 
-          break;
+  //         break;
 
-        case 'libre':
-          clases.push("mat-elevation-z0", "correctoClass");
-          break;
+  //       case 'libre':
+  //         clases.push("mat-elevation-z0", "correctoClass");
+  //         break;
 
-        case 'comiendo':
-          clases.push("mat-elevation-z0", "errorClass");
-          break;
+  //       case 'comiendo':
+  //         clases.push("mat-elevation-z0", "errorClass");
+  //         break;
 
-        case 'esperando':
-          clases.push("mat-elevation-z0", "pasapalabraClass");
-          break;
-      }
-      //return this.sanitizer.bypassSecurityTrustStyle(estilo);
-    }
-    return clases;
-  }
+  //       case 'esperando':
+  //         clases.push("mat-elevation-z0", "pasapalabraClass");
+  //         break;
+  //     }
+  //     //return this.sanitizer.bypassSecurityTrustStyle(estilo);
+  //   }
+  //   return clases;
+  // }
 
   verMesa(event: IMesa) {
 
     if (event.estado === "Libre") {
       // Abrir comanda
+      this.mesa = event;
       this.abrirComanda(event);
     }
   }
@@ -129,6 +128,7 @@ export class MesasComponent implements OnInit {
 
   buscarComanda(mesa: IMesa) {
     this._comanda.buscarComanda(mesa.comanda).then(com => {
+      this.mesa = mesa;
       this.comanda = com;
     });
   }

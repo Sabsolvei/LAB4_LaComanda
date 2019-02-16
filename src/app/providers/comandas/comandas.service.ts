@@ -125,7 +125,7 @@ export class ComandasService {
   // }
 
   public actualizarComanda(comanda: IComanda): Promise<Boolean> {
-    let promesa = new Promise<Boolean>((resolve, reject) => {
+    const promesa = new Promise<Boolean>((resolve, reject) => {
       // Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
       this.afDB
@@ -251,21 +251,22 @@ export class ComandasService {
     return promesa;
   }
 
-  public cerrarComanda(comanda: IComanda, mesaKey: string): Promise<Boolean> {
-    let promesa = new Promise<Boolean>((resolve, reject) => {
+  public cerrarComanda(comanda: IComanda, mesa: IMesa): Promise<Boolean> {
+    const promesa = new Promise<Boolean>((resolve, reject) => {
       this.actualizarComanda(comanda).then((actualizo: Boolean) => {
         if (actualizo) {
-          let ref = firebase.database().ref("/mesas/" + mesaKey);
+          mesa.clienteDni = "";
+          mesa.clienteNombre = "";
+          mesa.estado = "Libre";
+          mesa.comanda = 0;
 
-          ref.ref.update({ estado: "Libre", comanda: 0 })
-            .then(
-              () => {
-                resolve(true);
-              },
-              err => {
-                reject(err);
-              }
-            );
+          this.afDB
+          .object("/mesas/" + mesa.idMesa)
+          .update(mesa)
+          .then(() => {
+            resolve(true);
+          })
+          .catch(err => reject(err));
         } else {
           reject();
         }

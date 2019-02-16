@@ -70,7 +70,8 @@ export const firebaseConfig = {
     UploadFilesFormComponent,
     DetailsUploadComponent,
     ListUploadComponent,
-    VerComandaComponent
+    VerComandaComponent,
+    PedidoComponent
   ],
   imports: [
     BrowserModule,

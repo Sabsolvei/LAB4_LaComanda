@@ -13,16 +13,16 @@
         </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-fab color="primary" (click)="asignarCliente()" *ngIf="mesa.clienteDni == ''">
-            <mat-icon >face</mat-icon>
+        <button mat-mini-fab matTooltip="Asignar cliente" color="primary" (click)="asignarCliente()" *ngIf="mesa.clienteDni == ''">
+            <mat-icon>face</mat-icon>
         </button>
 
-        <button mat-fab color="primary" (click)="seleccionarMesa()" *ngIf="mesa.estado =='Libre'">
-            <mat-icon>{{cambiarNombreBoton()}}</mat-icon>
+        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()">
+            <mat-icon>queue</mat-icon>
         </button>
 
-        <button mat-fab color="primary" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando'">
-            <mat-icon>{{cambiarNombreBoton()}}</mat-icon>
+        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando'">
+            <mat-icon>search</mat-icon>
         </button>
 
         <!-- <button mat-raised-button color="primary " (click)="asignarCliente() " *ngIf="mesa.clienteID==n ull ">Asignar Cliente</button>

@@ -1,12 +1,20 @@
 <div *ngIf="comanda != null else noComanda">
-    <div *ngFor="let pedido of comanda.pedidos">
-        <app-pedido [pedido]='pedido'></app-pedido>
+    <div *ngFor="let pedido of comanda.pedidos; index as i">
+        <app-pedido [index]=i [comanda]='comanda'></app-pedido>
     </div>
-    <div>
-        <p>Total: {{comanda.importeTotal | currency}}</p>
-        <p>Estado: {{comanda.estado}}</p>
-        <button mat-fab color="primary"> {{nombreBoton()}} </button>
-    </div>
+    <mat-card class="example-card">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+            <mat-card-title>
+                <b>Total: {{comanda.importeTotal | currency}}</b>
+            </mat-card-title>
+            <mat-card-subtitle>
+                Estado: {{comanda.estado}}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-fab color="primary" (click)="cerrarComanda()" [disabled]="habilitarBoton()"> Cerrar </button>
+        </mat-card-actions>
+    </mat-card>
 </div>
 
 <ng-template #noComanda>

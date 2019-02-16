@@ -1,55 +1,50 @@
 <mat-card class="example-card">
-    <mat-card-header style="background-color='red'">
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title># {{pedido.codigoPedido}}
-            <button mat-fab color="warn" *ngIf="pedido.estado == 'Pendiente'">Eliminar</button>
+    <mat-card-header>
+        <!-- <div mat-card-avatar class="example-header-image"></div> -->
+        <mat-card-title [ngStyle]="{'background-color':sumarMinutos() < 5 ? 'orangered' : 'white' }">#{{comanda.pedidos[index].codigoPedido}}
+            <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">
+                - (restan {{sumarMinutos()}} min)
+            </mat-label>
+
+            <button mat-fab color="warn" *ngIf="comanda.pedidos[index].estado=='Pendiente' ">Eliminar</button>
         </mat-card-title>
-        <mat-card-subtitle>{{pedido.tiempoMayorEstimado}} minutos</mat-card-subtitle>
+        <mat-card-subtitle>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos</mat-card-subtitle>
     </mat-card-header>
-    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
     <mat-card-content>
 
         <mat-list>
-
-            <!-- <h3 mat-subheader *ngIf="pedido.subPedidosCocina.items.length > 0"><b>Cocina</b></h3> -->
-            <mat-list-item *ngFor="let item of pedido.subPedidosCocina.items">
-                <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+            <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosCocina.items ">
                 <div mat-card-avatar mat-list-icon class="cocina"></div>
                 <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
-                <!-- <p mat-line> {{item.cantidad}} - {{item.platoNombre}} </p> -->
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
 
         <mat-list>
-            <!-- <h3 mat-subheader *ngIf="pedido.subPedidosBebida.items.length > 0"><b>Bebidas</b></h3> -->
-            <mat-list-item *ngFor="let item of pedido.subPedidosBebida.items">
-                <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+            <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosBebida.items ">
+
                 <div mat-card-avatar mat-list-icon class="bebida"></div>
                 <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
-                <!-- <p mat-line> {{item.cantidad}} - {{item.bebidaNombre}} </p> -->
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
         <mat-list>
-            <!-- <h3 mat-subheader *ngIf="pedido.subPedidosCerveza.items.length > 0"><b>Cervezas</b></h3> -->
-            <mat-list-item *ngFor="let item of pedido.subPedidosCerveza.items">
-                <!-- <mat-icon mat-list-icon>folder</mat-icon> -->
+
+            <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosCerveza.items ">
                 <div mat-card-avatar mat-list-icon class="cerveza"></div>
                 <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
-                <!-- <p mat-line> {{item.cantidad}} - {{item.bebidaNombre}} </p> -->
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
-
-        <!-- <p *ngFor="let item of pedido.subPedidosBebida.items">{{item.cantidad}} - {{item.bebidaNombre}} </p> -->
-        <!-- <p *ngFor="let item of pedido.subPedidosCerveza.items">{{item.cantidad}} - {{item.bebidaNombre}} </p> -->
-
     </mat-card-content>
-    <mat-card-actions style="align-items: center">
-        <label *ngIf="pedido.estado == 'Derivado'">Esperando</label>
-        <button mat-fab color="primary" *ngIf="pedido.estado == 'Pendiente'">Derivar</button>
-        <button mat-fab color="primary" *ngIf="pedido.estado == 'preparado'">Entregar</button>
+    <mat-card-actions>
+        <div *ngIf="comanda.pedidos[index].estado=='Derivado'" fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon>timer</mat-icon>
+            <span>Esperando...</span>
+        </div>
+
+        <button mat-fab color="primary" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' ">Derivar</button>
+        <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='preparado' ">Entregar</button>
 
     </mat-card-actions>
 </mat-card>

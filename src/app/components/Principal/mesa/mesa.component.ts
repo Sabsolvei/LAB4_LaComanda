@@ -11,13 +11,13 @@ export class MesaComponent implements OnInit {
   @Input() public mesa: IMesa;
   @Input() public estado: string;
 
-  @Output() public verMesa: EventEmitter<IMesa>;
+  @Output() public cargarPedido: EventEmitter<IMesa>;
   @Output() public asignarMesa: EventEmitter<IMesa>;
   @Output() public verComanda: EventEmitter<IMesa>;
 
   constructor(public _mesa: MesaService) {
 
-    this.verMesa = new EventEmitter();
+    this.cargarPedido = new EventEmitter();
     this.asignarMesa = new EventEmitter();
     this.verComanda = new EventEmitter();
   }
@@ -65,8 +65,8 @@ export class MesaComponent implements OnInit {
     return es;
   }
 
-  seleccionarMesa() {
-    this.verMesa.emit(this.mesa);
+  agregarPedido() {
+    this.cargarPedido.emit(this.mesa);
   }
 
   asignarCliente() {

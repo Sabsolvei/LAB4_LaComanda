@@ -1,5 +1,4 @@
 export interface IMesa {
-    key?: string;
     idMesa: number;
     numero: number;
     capacidad: string;
