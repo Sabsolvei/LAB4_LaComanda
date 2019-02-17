@@ -17,14 +17,12 @@ export class MesaService {
 
   public actualizarMesa(mesa: IMesa): Promise<Boolean> {
     const promesa = new Promise<Boolean>((resolve, reject) => {
-
       this.afDB
         .object("/mesas/" + mesa.idMesa)
         .update(mesa)
         .then(() => resolve(true))
         .catch(err => reject(err));
     });
-
     return promesa;
   }
 
@@ -48,12 +46,8 @@ export class MesaService {
   traerMesa(id: any): Promise<IMesa> {
     let promesa = new Promise<IMesa>((resolve) => {
       this.traerMesas().subscribe((mesas: IMesa[]) => {
-        console.log("buscando mesa con id: " + id);
-        console.log(mesas);
         for (let i = 0; i < mesas.length; i++) {
           if (mesas[i].idMesa == id) {
-            console.log("MESA ENCONTRADA");
-            console.log(mesas[i]);
             resolve(mesas[i]);
             break;
           }
