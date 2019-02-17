@@ -198,22 +198,22 @@ export class ComandasService {
     return this.lista;
   }
 
-    buscarComanda(idComanda: number): Promise<IComanda> {
+  buscarComanda(idComanda: number): Promise<IComanda> {
 
-      return new Promise<IComanda>((resolve, reject) => {
+    return new Promise<IComanda>((resolve, reject) => {
 
-        const obs = this.afDB
+      const obs = this.afDB
         .object("/mesa_comandas/" + idComanda.toString())
         .valueChanges().subscribe((com: IComanda) => {
           resolve(com);
         });
 
-        setTimeout(() => {
-          obs.unsubscribe();
-        }, 500);
+      setTimeout(() => {
+        obs.unsubscribe();
+      }, 500);
 
-      });
-    }
+    });
+  }
 
   public verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
     let promesa = new Promise<IComanda>((resolve, reject) => {
@@ -261,12 +261,12 @@ export class ComandasService {
           mesa.comanda = 0;
 
           this.afDB
-          .object("/mesas/" + mesa.idMesa)
-          .update(mesa)
-          .then(() => {
-            resolve(true);
-          })
-          .catch(err => reject(err));
+            .object("/mesas/" + mesa.idMesa)
+            .update(mesa)
+            .then(() => {
+              resolve(true);
+            })
+            .catch(err => reject(err));
         } else {
           reject();
         }
