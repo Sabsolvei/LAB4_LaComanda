@@ -20,23 +20,11 @@ export class ComandasService {
     public afDB: AngularFireDatabase,
     public _mesas: MesaService
   ) {
-    //Traigo las Comandas por usuario
-    // this.lista = this.afDB.list("/mesa_comandas", ref =>
-    //   ref.equalTo(localStorage.getItem("userID"), "userID")
-    // );
-
     this.lista = this.afDB.list("/mesa_comandas");
     this.comandasAbiertas = this.afDB.list("/mesa_comandas", ref =>
       ref.orderByChild("estado").equalTo("Abierta")
     );
 
-    // this.items = this.lista
-    //   .snapshotChanges()
-    //   .pipe(
-    //     map(changes =>
-    //       changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-    //     )
-    //   );
   }
 
   /** Guarda una comanda */
@@ -128,6 +116,8 @@ export class ComandasService {
     const promesa = new Promise<Boolean>((resolve, reject) => {
       // Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
+      console.log("ActualizarComanda");
+      console.log(comanda);
       this.afDB
         .object("/mesa_comandas/" + comanda.id)
         .update(comanda)

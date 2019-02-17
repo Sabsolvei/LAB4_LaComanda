@@ -2,7 +2,6 @@ import { Subscription, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { IMesa } from '../../clases/IMesa';
-import { resolve } from 'q';
 
 @Injectable({
   providedIn: 'root'

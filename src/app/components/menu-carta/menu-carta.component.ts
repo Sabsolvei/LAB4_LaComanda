@@ -32,7 +32,7 @@ export class MenuCartaComponent implements OnInit {
   public lTragos: ISubpedidoItem[] = [];
   public lCervezas: ISubpedidoItem[] = [];
 
-  public comanda: IComanda;
+  public comanda: IComanda = null;
   public menu = [];
   public mesa: IMesa;
   public tipomenu: any;
@@ -54,7 +54,7 @@ export class MenuCartaComponent implements OnInit {
   private pedidoID: number;
   private comandaID: number;
   private pedidoCodigo: string;
-  private totalComanda: number;
+  private totalComanda: number = 0;
 
   constructor(
     private dialogRef: MatDialogRef<MenuCartaComponent>,
@@ -65,7 +65,8 @@ export class MenuCartaComponent implements OnInit {
     public _comandas: ComandasService,
     public _mesas: MesaService
     ) {
-      this.comandaID = data.comandaID;
+      // this.comandaID = data.comandaID;
+      this.comanda = data.comanda;
       this.pedidoID = data.pedidoID;
       this.mesa = data.mesa;
 
@@ -80,7 +81,7 @@ export class MenuCartaComponent implements OnInit {
     this.tipomenu = "minutas";
 
     // pedido nuevo
-    if (this.pedidoID == 0) {
+    if (this.pedidoID != 0) {
       // habria que prepararlo para guardar el pedido
 
     }
@@ -326,7 +327,7 @@ export class MenuCartaComponent implements OnInit {
 
   agregarPedido() {
 
-    if (this.comandaID == 0) {
+    if (this.comanda == null) {
 
       this.comanda = {
         id: new Date().getTime(),
@@ -337,8 +338,8 @@ export class MenuCartaComponent implements OnInit {
         userID: localStorage.getItem("userID"),
         estado: "Abierta",
         clienteId: this.mesa.clienteDni,
-        mozoId: localStorage.getItem("userID") // ,
-        // porcentajePropina: 10
+        mozoId: localStorage.getItem("userID"),
+        importeTotal: 0
       };
     }
 
@@ -354,7 +355,7 @@ export class MenuCartaComponent implements OnInit {
     this.cargarItemsSubpedidos(this.lBebidas);
     this.cargarItemsSubpedidos(this.lCervezas);
 
-    this.comanda.importeTotal = this.totalComanda;
+    this.comanda.importeTotal += this.totalComanda;
 
     // Aca tengo cargados los items categorizados
     // Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
@@ -400,30 +401,19 @@ export class MenuCartaComponent implements OnInit {
       comandaPedidos = [comandaPedido];
       this.comanda.pedidos = comandaPedidos;
     }
+
+    console.log(this.comanda);
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
         this.mesa.comanda = this.comanda.id;
         this.mesa.estado = "Esperando";
 
         this._mesas.actualizarMesa(this.mesa).then(() => {
-
           this.dialogRef.close();
-
-         // this.openSnackBar("Código de Pedido: " , this.pedidoCodigo);
         });
        },
-      () => {//  this.UtilProvider.mostrarMensaje("Reintente por favor");
-      });
+      () => { });
   }
-
-  // openSnackBar(message: string, action: string) {
-  //   this.snackBar.open(message, action, {
-  //     duration: 3000,
-  //   }).afterDismissed().subscribe(() => {
-  //     // this.creado = true;
-  //     this.dialogRef.close(true);
-  //   });
-  // }
 
   generarAlfanumerico(): string {
     let text = "";
@@ -459,7 +449,6 @@ export class MenuCartaComponent implements OnInit {
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
           this.totalComanda += (i.cantidad * i.importe);
         }
-        // this.pedidoACargar.push(i);
       });
   }
 }
