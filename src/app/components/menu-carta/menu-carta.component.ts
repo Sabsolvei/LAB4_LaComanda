@@ -75,6 +75,7 @@ export class MenuCartaComponent implements OnInit {
     this.traerPostres();
     this.traerBebidas();
     this.traerTragos();
+    this.traerCervezas();
 
     // this.mesa = this.navParams.get("mesa");
     // this.comanda = this.navParams.get("comanda");
