@@ -22,6 +22,8 @@ export class ConsultaClienteComponent implements OnInit {
   public comandas: any;
   public fotoMozo: string = '';
   public nombreMozo: string = '';
+  // public codigo: string = '';
+  public codigoMesa: string;
   //  =
   //   [
   //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } }
@@ -35,12 +37,24 @@ export class ConsultaClienteComponent implements OnInit {
 
   ngOnInit() {
     this.perfil = localStorage.getItem('perfil');
-    if (this.perfil) {
+    if (this.perfil == 'Cliente') {
       this.comandaSubscription = this._comanda.comandasAbiertas.valueChanges().subscribe((data: IComanda[][]) => {
         this.comandas = data;
-        this.traerComandaYMesa();
+        this.traerComandaPorCliente();
       });
     }
+  }
+
+  public traerComandaPorCodigoMesa(codigoMesa: string) {
+    this.codigoMesa = this.codigoMesa.toUpperCase();
+    this._mesa.traerMesaPorCodigo(this.codigoMesa).then((mesa) => {
+      this._comanda.buscarComanda(mesa.comanda).then((comanda) => {
+        this.traerMozoAsociado(comanda.mozoId).then(() => {
+          this.mesa = mesa;
+          this.comanda = comanda;
+        });
+      });
+    });
   }
 
   public llamarMozo() {
@@ -61,7 +75,7 @@ export class ConsultaClienteComponent implements OnInit {
     });
   }
 
-  traerComandaYMesa() {
+  traerComandaPorCliente() {
 
     for (let i = 0; i < this.comandas.length; i++) {
       this._comanda.verificarComandaPorUsuario(this.comandas[i].id)

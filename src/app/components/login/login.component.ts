@@ -46,7 +46,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
+  public ingresarComoAnonimo() {
+    localStorage.setItem('perfil', 'anonimo');
+    this._router.navigate(['../consulta']);
+  }
 
   registrar() {
     return this._auth.registerUser(this.usuario, this.pass)
