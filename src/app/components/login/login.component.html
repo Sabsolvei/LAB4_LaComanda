@@ -1,5 +1,4 @@
-<div>
-  <h2>INGRESAR</h2>
+<div class="divLogin">
   <div>
     <mat-form-field class="inputLargo">
       <input matInput placeholder='Email' type="text" [(ngModel)]="usuario" required />
@@ -8,10 +7,13 @@
       <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
     </mat-form-field>
   </div>
-  <div class='separar'>
-    <button mat-raised-button color="primary" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
+
+  <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
+  <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR ANONIMO</button>
+  
+  <!-- <div>
     <a [routerLink]="['/registroEmpleados']">Registrar</a>
-  </div>
+  </div> -->
   <br>
   <div class='separar'>
     <button mat-mini-fab color="primary" (click)="agregar('sabrinaveiga@hotmail.com')">A</button>

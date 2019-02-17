@@ -12,6 +12,7 @@ import { Iusuario } from './clases/usuario';
 })
 export class AppComponent {
   title = 'LaComanda';
+  public perfil: string;
 
   constructor(
     public _auth: AuthProvider,
@@ -29,6 +30,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.perfil = localStorage.getItem('perfil');
   }
 
   salir() {
@@ -38,5 +40,7 @@ export class AppComponent {
         localStorage.clear();
       });
   }
+
+
 
 }
