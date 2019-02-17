@@ -14,7 +14,9 @@ export class VerComandaComponent implements OnInit {
   @Input() public comanda: IComanda;
   @Input() public mesa: IMesa;
 
-  constructor(private _comanda: ComandasService, private snackBar: MatSnackBar) { }
+  constructor(private _comanda: ComandasService, private snackBar: MatSnackBar) { 
+    
+  }
 
   ngOnInit() {
   }

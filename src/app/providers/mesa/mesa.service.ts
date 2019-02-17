@@ -1,7 +1,7 @@
+import { Subscription, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { IMesa } from '../../clases/IMesa';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +43,24 @@ export class MesaService {
           }
         })
     })
+  }
+
+  traerMesa(id: any): Promise<IMesa> {
+    let promesa = new Promise<IMesa>((resolve) => {
+      this.traerMesas().subscribe((mesas: IMesa[]) => {
+        console.log("buscando mesa con id: " + id);
+        console.log(mesas);
+        for (let i = 0; i < mesas.length; i++) {
+          if (mesas[i].idMesa == id) {
+            console.log("MESA ENCONTRADA");
+            console.log(mesas[i]);
+            resolve(mesas[i]);
+            break;
+          }
+        }
+      });
+    });
+    return promesa;
   }
 
 
