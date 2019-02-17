@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { IMesa } from '../../clases/IMesa';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class MesaService {
   constructor(public afDB: AngularFireDatabase) { }
 
 
-  traerMesas() {
+  traerMesas(): Observable<{}[]> {
     return this.afDB.list('/mesas/').valueChanges();
   }
 

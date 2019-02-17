@@ -117,11 +117,11 @@ export class MesasComponent implements OnInit {
   cargarPedido(event: IMesa) {
 
 
-    if (event.estado === "Libre") {
+    // if (event.estado === "Libre") {
       // Abrir comanda
       this.mesa = event;
       this.abrirComanda(event);
-    }
+    // }
   }
 
   verComanda(mesa: IMesa) {
@@ -158,16 +158,37 @@ export class MesasComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    dialogConfig.data = {
-      comandaID: mesa.comanda,
-      pedidoID: 0, // si viene por este lado, no tiene pedido creado
-      mesa: mesa
-    };
 
-    const dialogRef = this.dialog.open(MenuCartaComponent, dialogConfig);
+    if(mesa.comanda == 0) {
+      dialogConfig.data = {
+        comanda: null,
+        pedidoID: 0, // si viene por este lado, no tiene pedido creado
+        mesa: mesa
+      };
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+      const dialogRef = this.dialog.open(MenuCartaComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    } else {
+      this._comanda.buscarComanda(mesa.comanda).then(com => {
+        this.mesa = mesa;
+        this.comanda = com;
+
+        dialogConfig.data = {
+          comanda: com,
+          pedidoID: 0, // si viene por este lado, no tiene pedido creado
+          mesa: mesa
+        };
+
+        const dialogRef = this.dialog.open(MenuCartaComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+
+      });
+    }
   }
 }
