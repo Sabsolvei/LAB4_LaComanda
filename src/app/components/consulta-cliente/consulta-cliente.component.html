@@ -11,9 +11,34 @@
         <mat-icon matSuffix>restaurant-menu</mat-icon>
         <!-- <mat-hint>Hint</mat-hint> -->
     </mat-form-field>
-
     <button mat-raised-button color="primary">CONSULTAR MI PEDIDO</button>
 </div>
-<div *ngIf="perfil == 'Cliente'" >
-    <app-ver-comanda [comanda]='comanda' [mesa] = 'mesa'></app-ver-comanda>
+
+
+<div *ngIf="this.comanda" class="datosMozo">
+    <mat-card class="example-card">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+            <div mat-card-avatar class='example-header-image'
+                [ngStyle]="{ 'background-image': 'url(' + fotoMozo + ')'}"></div>
+            <mat-card-title>
+                <b>{{nombreMozo}}</b>
+            </mat-card-title>
+            <mat-card-subtitle>
+                MOZO
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-raised-button color='primary' class='blockButton' (click)="llamarMozo()"
+                [disabled]="mesa.estado == 'Llamando'">LLAMAR</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+
+<div *ngIf="this.comanda" >
+    <app-ver-comanda [comanda]='comanda' [mesa]='mesa'></app-ver-comanda>
+</div>
+<div *ngIf="this.comanda" class="datosMozo">
+    <button mat-stroked-button color='primary' class='blockButton' (click)="pagar()"
+        [disabled]="mesa.estado == 'Cobrar'">PAGAR</button>
 </div>
