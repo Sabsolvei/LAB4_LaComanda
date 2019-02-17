@@ -7,10 +7,18 @@
     height: 35px !important;
 }
 
+.titulo {
+    text-align: left !important;
+}
+
 mat-card-actions {
     text-align: center !important;
     align-items: center !important;
     vertical-align: center !important;
+}
+
+button {
+    margin-right: 1%;
 }
 
 .example-header-image {
@@ -19,7 +27,7 @@ mat-card-actions {
 }
 
 .cocina {
-    background-image: url('../../../../assets/comida.jpg');
+    background-image: url('../../../../assets/comida.png');
     background-size: cover;
 }
 
