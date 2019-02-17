@@ -1,14 +1,14 @@
 <mat-card class="example-card">
     <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title [ngStyle]="{'background-color':sumarMinutos() < 5 ? 'orangered' : 'white' }">#{{comanda.pedidos[index].codigoPedido}}
-            <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">
-                - (restan {{sumarMinutos()}} min)
+        <mat-card-title class="titulo">Pedido #{{comanda.pedidos[index].codigoPedido}}
+            <mat-label>
             </mat-label>
-
-            <button mat-fab color="warn" *ngIf="comanda.pedidos[index].estado=='Pendiente' ">Eliminar</button>
         </mat-card-title>
-        <mat-card-subtitle>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos</mat-card-subtitle>
+        <mat-card-subtitle [ngStyle]="{'background-color':sumarMinutos() < 5 ? 'orangered' : 'white' }">
+            <h3>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos
+                <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">- (restan {{sumarMinutos()}} min)</mat-label>
+            </h3>
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
 
@@ -45,6 +45,8 @@
 
         <button mat-fab color="primary" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' ">Derivar</button>
         <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='preparado' ">Entregar</button>
+        <button mat-fab color="accent" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Editar</button>
+        <button mat-fab color="warn" (click)="eliminar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Quitar</button>
 
     </mat-card-actions>
 </mat-card>
