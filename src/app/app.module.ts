@@ -9,7 +9,7 @@ import { BebidasService } from './providers/bebidas/bebidas.service';
 import { PlatosService } from './providers/platos/platos.service';
 import { AuthProvider } from './providers/auth/auth';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
@@ -46,6 +46,7 @@ import { VerComandaComponent } from './components/ver-comanda/ver-comanda/ver-co
 import { LlamandoMozoPipe } from './pipes/llamando-mozo.pipe';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { PuntajeComponent } from './components/puntaje/puntaje.component';
+import { AppHeaderComponent } from './components/app-header/app-header/app-header.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -78,9 +79,10 @@ export const firebaseConfig = {
     PedidoComponent,
     LlamandoMozoPipe,
     EncuestaComponent,
-    PuntajeComponent
+    PuntajeComponent,
     ConfirmacionDialog,
-    LlamandoMozoPipe
+    LlamandoMozoPipe,
+    AppHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -89,12 +91,10 @@ export const firebaseConfig = {
     FlexLayoutModule,
     FormsModule,
     MaterialModule,
-    // FirebaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    AngularFireDatabaseModule //,
-    // FileDropModule
+    AngularFireDatabaseModule
   ],
   entryComponents: [
     AltaComandaComponent,
@@ -103,7 +103,6 @@ export const firebaseConfig = {
     ConfirmacionDialog
   ],
   providers: [
-    // FirebaseProvider,
     AuthProvider,
     PlatosService,
     BebidasService,
@@ -114,10 +113,8 @@ export const firebaseConfig = {
     UplodadFilesService,
     AngularFireStorage,
     EncuestaService
-
-
   ],
-  bootstrap: [AppComponent]
-
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

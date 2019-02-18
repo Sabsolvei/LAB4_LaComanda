@@ -20,7 +20,9 @@ import {
   MatStepperModule,
   MatListModule,
   MatProgressSpinnerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatToolbarModule
+
 } from '@angular/material';
 
 @NgModule({
@@ -46,9 +48,8 @@ import {
     MatStepperModule,
     MatListModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
-
-
+    MatTooltipModule,
+    MatToolbarModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -70,7 +71,8 @@ import {
     MatStepperModule,
     MatListModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatToolbarModule
   ],
 })
 export class MaterialModule { }

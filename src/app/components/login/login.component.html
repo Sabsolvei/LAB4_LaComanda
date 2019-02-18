@@ -1,26 +1,46 @@
-<div class="divLogin">
-  <div>
-    <mat-form-field class="inputLargo">
-      <input matInput placeholder='Email' type="text" [(ngModel)]="usuario" required />
-    </mat-form-field>
-    <mat-form-field class="inputLargo">
-      <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
-    </mat-form-field>
-  </div>
+<!-- <div class="divLogin">
+    <div>
+        <mat-form-field class="inputLargo">
+            <input matInput placeholder='Email' type="text" [(ngModel)]="usuario" required />
+        </mat-form-field>
+        <mat-form-field class="inputLargo">
+            <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
+        </mat-form-field>
+    </div>
 
-  <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
-  <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR ANONIMO</button>
-  
-  <!-- <div>
-    <a [routerLink]="['/registroEmpleados']">Registrar</a>
-  </div> -->
-  <br>
-  <div class='separar'>
-    <button mat-mini-fab color="primary" (click)="agregar('sabrinaveiga@hotmail.com')">A</button>
-    <button mat-mini-fab color="accent" (click)="agregar('sebillac@hotmail.com')">M</button>
-    <button mat-mini-fab color="warn" (click)="agregar('joseperez@hotmail.com')">Co</button>
-    <button mat-mini-fab color="warn" (click)="agregar('maria@hotmail.com')">B</button>
-    <button mat-mini-fab color="warn" (click)="agregar('robertoromero@hotmail.com')">Ce</button>
-    <button mat-mini-fab color="basic" (click)="agregar('jperez@gmail.com')">Cl</button>
-  </div>
+    <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
+    <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR ANONIMO</button>
+ -->
+<!-- style="background-color: rgb(158, 164, 246)" -->
+<div class="fondo">
+    <div class="signin-content">
+        <mat-card>
+            <mat-card-header style="display: flex; justify-content: center; background-color: rgb(158, 164, 246)">
+                <div mat-card-avatar class="example-header-image"></div>
+                <p>Acceso al Sistema de Comanda</p>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field class="inputLargo" appearance="outline">
+                    <mat-label>Ingrese el Email</mat-label>
+                    <input matInput placeholder='Email' [(ngModel)]="usuario" required />
+                </mat-form-field>
+                <mat-form-field class="inputLargo" appearance="outline">
+                    <mat-label>Ingrese la contraseña</mat-label>
+                    <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
+                <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR ANONIMO</button>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <div class='separar'>
+                <button mat-mini-fab color="primary" (click)="agregar('sabrinaveiga@hotmail.com')">A</button>
+                <button mat-mini-fab color="accent" (click)="agregar('sebillac@hotmail.com')">M</button>
+                <button mat-mini-fab color="warn" (click)="agregar('joseperez@hotmail.com')">Co</button>
+                <button mat-mini-fab color="warn" (click)="agregar('maria@hotmail.com')">B</button>
+                <button mat-mini-fab color="warn" (click)="agregar('robertoromero@hotmail.com')">Ce</button>
+                <button mat-mini-fab color="basic" (click)="agregar('jperez@gmail.com')">Cl</button>
+            </div>
+        </mat-card>
+    </div>
 </div>
