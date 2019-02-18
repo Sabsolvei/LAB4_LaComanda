@@ -10,11 +10,10 @@ import { IProducto } from 'src/app/clases/IProducto';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
 import { ISubpedidoCocina } from 'src/app/clases/ISubpedidoCocina';
 import { ISubpedidoBebida } from 'src/app/clases/ISubpedidoBebida';
-import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IMesa } from '../../clases/IMesa';
-import { MesaComponent } from '../Principal/mesa/mesa.component';
-// import { ISubpedidoComida } from 'src/app/clases/ISubPedidoComida';
 import { MesaService } from '../../providers/mesa/mesa.service';
+
 
 
 @Component({
@@ -39,35 +38,33 @@ export class MenuCartaComponent implements OnInit {
   public pedidoACargar: ISubpedidoItem[] = [];
   public cant: number;
   public platos: any;
-  // CAMPOS COMANDA
-  public itemsCocina: { cantidad: number; platoID: number; nombre: string }[] = [];
-  public itemsBebida: { cantidad: number; bebidaID: number; nombre: string }[] = [];
-  public itemsCerveza: { cantidad: number; bebidaID: number; nombre: string }[] = [];
-  public tiemposEstimadosDelPedido = [];
 
-  public subTotal: number = 0;
+  // CAMPOS COMANDA
+  public itemsCocina: { cantidad: number; platoID: number; nombre: string, precio: number }[] = [];
+  public itemsBebida: { cantidad: number; bebidaID: number; nombre: string, precio: number }[] = [];
+  public itemsCerveza: { cantidad: number; bebidaID: number; nombre: string, precio: number }[] = [];
+  public tiemposEstimadosDelPedido = [];
 
   public pedidoCocina: any[];
   public pedidoBartender: any[];
   public pedidoCerveza: any[];
 
-  private pedidoID: number;
-  private comandaID: number;
+  private pedidoIndex: number;
+  // private comandaID: number;
   private pedidoCodigo: string;
-  private totalComanda: number = 0;
+  public nombreBoton: string;
+
 
   constructor(
     private dialogRef: MatDialogRef<MenuCartaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    // private snackBar: MatSnackBar,
     public _platos: PlatosService,
     public _bebidas: BebidasService,
     public _comandas: ComandasService,
     public _mesas: MesaService
     ) {
-      // this.comandaID = data.comandaID;
       this.comanda = data.comanda;
-      this.pedidoID = data.pedidoID;
+      this.pedidoIndex = data.pedidoIndex;
       this.mesa = data.mesa;
 
     this.traerEntradas();
@@ -77,15 +74,7 @@ export class MenuCartaComponent implements OnInit {
     this.traerTragos();
     this.traerCervezas();
 
-    // this.mesa = this.navParams.get("mesa");
-    // this.comanda = this.navParams.get("comanda");
     this.tipomenu = "minutas";
-
-    // pedido nuevo
-    if (this.pedidoID != 0) {
-      // habria que prepararlo para guardar el pedido
-
-    }
   }
 
   cancelar() {
@@ -93,6 +82,11 @@ export class MenuCartaComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.pedidoIndex > -1) {
+      this.nombreBoton = "Editar pedido";
+    } else {
+      this.nombreBoton = "Agregar pedido";
+    }
   }
 
   public cargarPedido() {
@@ -173,67 +167,268 @@ export class MenuCartaComponent implements OnInit {
   }
 
   traerEntradas() {
+    let listaAux: ISubpedidoCocina = null;
+    let cant: number = 0;
+
+    if (this.pedidoIndex > -1) {
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosCocina;
+    }
+
     merge(this._platos.traerPlatos('Frios'), this._platos.traerPlatos('Minutas'))
       .subscribe(data => {
         data.forEach((item: IProducto) => {
-          if (!this.lMinutas.some(p => p.id === item.id)) {
-            this.lMinutas.push(this.cargarLista(item, 0));
+
+          if (!this.lMinutas.some(p => p.id === item.id)) { // No se cargó aún en la lista
+
+            if (this.pedidoIndex > -1) {
+              if (listaAux.estado != "Nada") { // Tiene algo cargado
+
+                let itemAux: {
+                  cantidad: number,
+                  platoID: number,
+                  nombre: string,
+                  precio: number
+                };
+
+                itemAux = listaAux.items.find(i => i.platoID == item.id); // Busco si el producto es uno de los agregados
+
+                if (itemAux != null) { // lo agrego y cargo la cantidad que ya tenía seleccionada
+                  cant = itemAux.cantidad;
+                } else {
+                  cant = 0;
+                }
+              } else {
+                cant = 0;
+              }
+            } else {
+              cant = 0;
+            }
           }
+
+          this.lMinutas.push(this.cargarLista(item, cant));
         });
-      })
+      });
   }
 
   traerPrincipal() {
-    this._platos.traerPlatos('Calientes').subscribe(dataPlatos => {
-      dataPlatos.forEach((item: IProducto) => {
-        if (!this.lCalientes.some(p => p.id === item.id)) {
-          this.lCalientes.push(this.cargarLista(item, 0));
+    let listaAux: ISubpedidoCocina = null;
+    let cant: number = 0;
+
+    if (this.pedidoIndex > -1) {
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosCocina;
+    }
+
+    this._platos.traerPlatos('Calientes')
+    .subscribe(data => {
+      data.forEach((item: IProducto) => {
+
+        if (!this.lCalientes.some(p => p.id === item.id)) { // No se cargó aún en la lista
+
+          if (this.pedidoIndex > -1) {
+            if (listaAux.estado != "Nada") { // Tiene algo cargado
+
+              let itemAux: {
+                cantidad: number,
+                platoID: number,
+                nombre: string,
+                precio: number
+              };
+
+              itemAux = listaAux.items.find(i => i.platoID == item.id); // Busco si el producto es uno de los agregados
+
+              if (itemAux != null) { // lo agrego y cargo la cantidad que ya tenía seleccionada
+                cant = itemAux.cantidad;
+              } else {
+                cant = 0;
+              }
+            } else {
+              cant = 0;
+            }
+          } else {
+            cant = 0;
+          }
         }
+
+        this.lCalientes.push(this.cargarLista(item, cant));
       });
-    })
+    });
   }
 
   traerPostres() {
-    this._platos.traerPlatos('Postres').subscribe(dataPlatos => {
-      dataPlatos.forEach((item: IProducto) => {
-        if (!this.lPostres.some(p => p.id === item.id)) {
-          this.lPostres.push(this.cargarLista(item, 0));
+    let listaAux: ISubpedidoCocina = null;
+    let cant: number = 0;
+
+    if (this.pedidoIndex > -1) {
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosCocina;
+    }
+
+
+    this._platos.traerPlatos('Postres')
+    .subscribe(data => {
+      data.forEach((item: IProducto) => {
+
+        if (!this.lPostres.some(p => p.id === item.id)) { // No se cargó aún en la lista
+
+          if (this.pedidoIndex > -1) {
+            if (listaAux.estado != "Nada") { // Tiene algo cargado
+
+              let itemAux: {
+                cantidad: number,
+                platoID: number,
+                nombre: string,
+                precio: number
+              };
+
+              itemAux = listaAux.items.find(i => i.platoID == item.id); // Busco si el producto es uno de los agregados
+
+              if (itemAux != null) { // lo agrego y cargo la cantidad que ya tenía seleccionada
+                cant = itemAux.cantidad;
+              } else {
+                cant = 0;
+              }
+            } else {
+              cant = 0;
+            }
+          } else {
+            cant = 0;
+          }
         }
+
+        this.lPostres.push(this.cargarLista(item, cant));
       });
-    })
+    });
   }
 
   traerBebidas() {
+    let listaAux: ISubpedidoBebida = null;
+    let cant: number = 0;
+
+    if (this.pedidoIndex > -1) {
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosBebida;
+    }
+
     this._bebidas.traerBebidas('bebida')
-      .subscribe(data => {
-        data.forEach((item: IProducto) => {
-          if (!this.lBebidas.some(p => p.id === item.id)) {
-            this.lBebidas.push(this.cargarLista(item, 0));
+    .subscribe(data => {
+      data.forEach((item: IProducto) => {
+
+        if (!this.lBebidas.some(p => p.id === item.id)) { // No se cargó aún en la lista
+
+          if (this.pedidoIndex > -1) {
+            if (listaAux.estado != "Nada") { // Tiene algo cargado
+
+              let itemAux: {
+                cantidad: number,
+                bebidaID: number,
+                nombre: string,
+                precio: number
+              };
+
+              itemAux = listaAux.items.find(i => i.bebidaID == item.id); // Busco si el producto es uno de los agregados
+
+              if (itemAux != null) { // lo agrego y cargo la cantidad que ya tenía seleccionada
+                cant = itemAux.cantidad;
+              } else {
+                cant = 0;
+              }
+            } else {
+              cant = 0;
+            }
+          } else {
+            cant = 0;
           }
-        });
-      })
+        }
+
+        this.lBebidas.push(this.cargarLista(item, cant));
+      });
+    });
   }
 
   traerTragos() {
+    let listaAux: ISubpedidoBebida = null;
+    let cant: number = 0;
+
+    if (this.pedidoIndex > -1) {
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosBebida;
+    }
+
     this._bebidas.traerBebidas('trago')
-      .subscribe(data => {
-        data.forEach((item: IProducto) => {
-          if (!this.lTragos.some(p => p.id === item.id)) {
-            this.lTragos.push(this.cargarLista(item, 0));
+    .subscribe(data => {
+      data.forEach((item: IProducto) => {
+
+        if (!this.lTragos.some(p => p.id === item.id)) { // No se cargó aún en la lista
+
+          if (this.pedidoIndex > -1) {
+            if (listaAux.estado != "Nada") { // Tiene algo cargado
+
+              let itemAux: {
+                cantidad: number,
+                bebidaID: number,
+                nombre: string,
+                precio: number
+              };
+
+              itemAux = listaAux.items.find(i => i.bebidaID == item.id); // Busco si el producto es uno de los agregados
+
+              if (itemAux != null) { // lo agrego y cargo la cantidad que ya tenía seleccionada
+                cant = itemAux.cantidad;
+              } else {
+                cant = 0;
+              }
+            } else {
+              cant = 0;
+            }
+          } else {
+            cant = 0;
           }
-        });
-      })
+        }
+
+        this.lTragos.push(this.cargarLista(item, cant));
+      });
+    });
   }
 
   traerCervezas() {
+    let listaAux: ISubpedidoBebida = null;
+    let cant: number = 0;
+
+    if (this.pedidoIndex > -1) {
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosCerveza;
+    }
+
     this._bebidas.traerBebidas('cerveza')
-      .subscribe(data => {
-        data.forEach((item: IProducto) => {
-          if (!this.lCervezas.some(p => p.id === item.id)) {
-            this.lCervezas.push(this.cargarLista(item, 0));
+    .subscribe(data => {
+      data.forEach((item: IProducto) => {
+
+        if (!this.lCervezas.some(p => p.id === item.id)) { // No se cargó aún en la lista
+
+          if (this.pedidoIndex > -1) {
+            if (listaAux.estado != "Nada") { // Tiene algo cargado
+
+              let itemAux: {
+                cantidad: number,
+                bebidaID: number,
+                nombre: string,
+                precio: number
+              };
+
+              itemAux = listaAux.items.find(i => i.bebidaID == item.id); // Busco si el producto es uno de los agregados
+
+              if (itemAux != null) { // lo agrego y cargo la cantidad que ya tenía seleccionada
+                cant = itemAux.cantidad;
+              } else {
+                cant = 0;
+              }
+            } else {
+              cant = 0;
+            }
+          } else {
+            cant = 0;
           }
-        });
-      })
+        }
+
+        this.lCervezas.push(this.cargarLista(item, cant));
+      });
+    });
   }
 
   // traerEntradas() {
@@ -349,14 +544,17 @@ export class MenuCartaComponent implements OnInit {
     let estadoCerveza: string;
     let comandaPedido: IComandaPedido;
     let comandaPedidos: IComandaPedido[];
+    let subTotal: number = 0;
+    let totalComanda: number = 0;
     this.cargarItemsSubpedidos(this.lMinutas);
     this.cargarItemsSubpedidos(this.lFrios);
     this.cargarItemsSubpedidos(this.lCalientes);
     this.cargarItemsSubpedidos(this.lPostres);
     this.cargarItemsSubpedidos(this.lBebidas);
+    this.cargarItemsSubpedidos(this.lTragos);
     this.cargarItemsSubpedidos(this.lCervezas);
 
-    this.comanda.importeTotal += this.totalComanda;
+    // this.comanda.importeTotal += this.totalComanda;
 
     // Aca tengo cargados los items categorizados
     // Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
@@ -384,26 +582,55 @@ export class MenuCartaComponent implements OnInit {
       items: this.itemsCerveza
     };
 
-
-    const tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
-    // const tiempoMayorEstimado = 10;
-    comandaPedido = {
-      id: new Date().valueOf(),
-      codigoPedido: this.generarAlfanumerico(),
-      estado: "Pendiente",
-      subPedidosBebida: subBebida,
-      subPedidosCocina: subCocina,
-      subPedidosCerveza: subCerveza,
-      tiempoMayorEstimado: tiempoMayorEstimado
-    };
-    if (this.comanda.pedidos != null) {
-      this.comanda.pedidos.push(comandaPedido);
-    } else {
-      comandaPedidos = [comandaPedido];
-      this.comanda.pedidos = comandaPedidos;
+    if (subCerveza.estado != "Nada") {
+      for (let i = 0; i < subCerveza.items.length; i++) {
+        subTotal += (subCerveza.items[i].cantidad * subCerveza.items[i].precio);
+      }
     }
 
-    console.log(this.comanda);
+    if (subBebida.estado != "Nada") {
+      for (let i = 0; i < subBebida.items.length; i++) {
+        subTotal += (subBebida.items[i].cantidad * subBebida.items[i].precio);
+      }
+    }
+
+    if (subCocina.estado != "Nada") {
+      for (let i = 0; i < subCocina.items.length; i++) {
+        subTotal += (subCocina.items[i].cantidad * subCocina.items[i].precio);
+      }
+    }
+
+    const tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
+
+    if (this.pedidoIndex > -1) {
+      // se quita el el subtotal viejo
+      this.comanda.importeTotal -= this.comanda.pedidos[this.pedidoIndex].subTotal;
+      this.comanda.pedidos[this.pedidoIndex].subPedidosBebida = subBebida;
+      this.comanda.pedidos[this.pedidoIndex].subPedidosCocina = subCocina;
+      this.comanda.pedidos[this.pedidoIndex].subPedidosCerveza = subCerveza;
+      this.comanda.pedidos[this.pedidoIndex].tiempoMayorEstimado = tiempoMayorEstimado;
+      this.comanda.pedidos[this.pedidoIndex].subTotal = subTotal;
+    } else {
+      comandaPedido = {
+        id: new Date().valueOf(),
+        codigoPedido: this.generarAlfanumerico(),
+        estado: "Pendiente",
+        subPedidosBebida: subBebida,
+        subPedidosCocina: subCocina,
+        subPedidosCerveza: subCerveza,
+        tiempoMayorEstimado: tiempoMayorEstimado,
+        subTotal: subTotal
+      };
+
+      if (this.comanda.pedidos != null) {
+        this.comanda.pedidos.push(comandaPedido);
+      } else {
+        comandaPedidos = [comandaPedido];
+        this.comanda.pedidos = comandaPedidos;
+      }
+    }
+
+    this.comanda.importeTotal += subTotal;
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
         this.mesa.comanda = this.comanda.id;
@@ -436,19 +663,22 @@ export class MenuCartaComponent implements OnInit {
       .filter(item => item.cantidad > 0)
       .forEach((i: ISubpedidoItem) => {
         if (i.categoria == "bebida" || i.categoria == 'trago') {
-          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre });
+          this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre, precio: i.importe });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
-          this.totalComanda += (i.cantidad * i.importe);
+          // this.subTotal += (i.cantidad * i.importe);
+          // this.totalComanda += (i.cantidad * i.importe);
         }
         else if (i.categoria == 'cerveza') {
-          this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre });
+          this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre, precio: i.importe });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
-          this.totalComanda += (i.cantidad * i.importe);
+          // this.subTotal += (i.cantidad * i.importe);
+          // this.totalComanda += (i.cantidad * i.importe);
         }
         else {
-          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id, nombre: i.nombre });
+          this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id, nombre: i.nombre, precio: i.importe });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
-          this.totalComanda += (i.cantidad * i.importe);
+          // this.subTotal += (i.cantidad * i.importe);
+          // this.totalComanda += (i.cantidad * i.importe);
         }
       });
   }

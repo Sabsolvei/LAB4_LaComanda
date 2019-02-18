@@ -26,7 +26,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AppComponent } from './app.component';
 import { MesasComponent } from './components/mesas/mesas.component';
 import { MesaComponent } from './components/principal/mesa/mesa.component';
-import { PedidoComponent } from './components/Principal/pedido/pedido.component';
+import { PedidoComponent, ConfirmacionDialog } from './components/Principal/pedido/pedido.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuCartaComponent } from './components/menu-carta/menu-carta.component';
 import { TablaComponent } from './components/menu-carta/tabla/tabla.component';
@@ -79,6 +79,8 @@ export const firebaseConfig = {
     LlamandoMozoPipe,
     EncuestaComponent,
     PuntajeComponent
+    ConfirmacionDialog,
+    LlamandoMozoPipe
   ],
   imports: [
     BrowserModule,
@@ -97,7 +99,8 @@ export const firebaseConfig = {
   entryComponents: [
     AltaComandaComponent,
     MenuCartaComponent,
-    AsignarClienteComponent
+    AsignarClienteComponent,
+    ConfirmacionDialog
   ],
   providers: [
     // FirebaseProvider,

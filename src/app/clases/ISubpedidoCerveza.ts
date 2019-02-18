@@ -6,5 +6,6 @@ export interface ISubpedidoCerveza extends ISubpedido {
         cantidad: number;
         bebidaID: number;
         nombre: string;
+        precio: number;
     }[];
 }

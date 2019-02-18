@@ -15,7 +15,7 @@
         <mat-list>
             <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosCocina.items ">
                 <div mat-card-avatar mat-list-icon class="cocina"></div>
-                <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
+                <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
@@ -24,7 +24,7 @@
             <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosBebida.items ">
 
                 <div mat-card-avatar mat-list-icon class="bebida"></div>
-                <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
+                <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
@@ -32,7 +32,7 @@
 
             <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosCerveza.items ">
                 <div mat-card-avatar mat-list-icon class="cerveza"></div>
-                <h4 mat-line>{{item.cantidad}} - {{item.nombre}}</h4>
+                <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
@@ -44,8 +44,8 @@
         </div>
 
         <button mat-fab color="primary" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' ">Derivar</button>
-        <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='preparado' ">Entregar</button>
-        <button mat-fab color="accent" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Editar</button>
+        <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='Preparado' ">Entregar</button>
+        <button mat-fab color="accent" (click)="editar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Editar</button>
         <button mat-fab color="warn" (click)="eliminar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Quitar</button>
 
     </mat-card-actions>

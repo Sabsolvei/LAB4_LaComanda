@@ -20,6 +20,14 @@ button {
     margin-right: 1%;
 }
 
+.ponerBorde {
+    border: 3px solid black;
+}
+
+.quitarBorde {
+    border: 0px solid black;
+}
+
 .quadrat {
     -webkit-animation: BLINK 1s infinite;
     /* Safari 4+ */
@@ -35,7 +43,7 @@ button {
     0%,
     49% {
         text-align: center;
-        background-color: red;
+        background-color: rgb(243, 81, 81);
         border: 1px solid black;
     }
     50%,
