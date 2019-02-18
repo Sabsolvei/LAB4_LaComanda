@@ -1,19 +1,39 @@
-<div *ngIf="!perfil">
-    <mat-form-field appearance="outline">
-        <mat-label># MESA</mat-label>
-        <input matInput placeholder="Ingrese código">
-        <mat-icon matSuffix>format_size</mat-icon>
-        <!-- <mat-hint>Hint</mat-hint> -->
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label># PEDIDO</mat-label>
-        <input matInput placeholder="Ingrese código">
-        <mat-icon matSuffix>restaurant-menu</mat-icon>
-        <!-- <mat-hint>Hint</mat-hint> -->
-    </mat-form-field>
-
-    <button mat-raised-button color="primary">CONSULTAR MI PEDIDO</button>
+<div *ngIf="perfil == 'anonimo' && !comanda" class="ingresarCodMesa">
+    <div>
+        <mat-form-field appearance="outline" class='blockButton'>
+            <mat-label># MESA</mat-label>
+            <input matInput placeholder="Ingrese código" [(ngModel)]="codigoMesa">
+            <mat-icon matSuffix>format_size</mat-icon>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary" class='blockButton' (click)='traerComandaPorCodigoMesa()'
+            [disabled]="!codigoMesa">CONSULTAR
+            MI PEDIDO</button>
+    </div>
 </div>
-<div *ngIf="perfil == 'Cliente'" >
-    <app-ver-comanda [comanda]='comanda' [mesa] = 'mesa'></app-ver-comanda>
+
+<div *ngIf="comanda" class="datosMozo">
+    <mat-card class="mozo-card">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+            <div mat-card-avatar class='mozo-header-image' [ngStyle]="{ 'background-image': 'url(' + fotoMozo + ')'}">
+            </div>
+            <mat-card-title>
+                <b>{{nombreMozo}}</b>
+            </mat-card-title>
+            <mat-card-subtitle>
+                MOZO
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <button mat-raised-button color='primary' class='blockButton' (click)="llamarMozo()"
+                [class.quadrat]="mesa.estado =='Llamando'">{{ 'LLAMAR' | llamandoMozo: mesa.estado}} </button>
+        </mat-card-actions>
+    </mat-card>
+    <br>
+    <app-ver-comanda [comanda]='comanda' [mesa]='mesa'></app-ver-comanda>
+    <button mat-stroked-button color='primary' class='blockButton' (click)="pagar()"
+        [class.quadrat]="mesa.estado =='Cobrar'">{{ 'PAGAR' | llamandoMozo: mesa.estado}} </button>
+
+
 </div>

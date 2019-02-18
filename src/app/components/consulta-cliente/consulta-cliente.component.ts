@@ -1,3 +1,4 @@
+import { UsuarioService } from './../../providers/usuarios/usuario.service';
 import { IComanda } from './../../clases/IComanda';
 import { Subscription } from 'rxjs';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
@@ -19,6 +20,10 @@ export class ConsultaClienteComponent implements OnInit {
   public mesa: IMesa;
   public comandaSubscription: Subscription;
   public comandas: any;
+  public fotoMozo: string = '';
+  public nombreMozo: string = '';
+  // public codigo: string = '';
+  public codigoMesa: string;
   //  =
   //   [
   //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } }
@@ -26,20 +31,51 @@ export class ConsultaClienteComponent implements OnInit {
 
   constructor(
     public _comanda: ComandasService,
-    public _mesa: MesaService
+    public _mesa: MesaService,
+    public _usuario: UsuarioService
   ) { }
 
   ngOnInit() {
     this.perfil = localStorage.getItem('perfil');
-    if (this.perfil) {
+    if (this.perfil == 'Cliente') {
       this.comandaSubscription = this._comanda.comandasAbiertas.valueChanges().subscribe((data: IComanda[][]) => {
         this.comandas = data;
-        this.traerComandaYMesa();
+        this.traerComandaPorCliente();
       });
     }
   }
 
-  traerComandaYMesa() {
+  public traerComandaPorCodigoMesa(codigoMesa: string) {
+    this.codigoMesa = this.codigoMesa.toUpperCase();
+    this._mesa.traerMesaPorCodigo(this.codigoMesa).then((mesa) => {
+      this._comanda.buscarComanda(mesa.comanda).then((comanda) => {
+        this.traerMozoAsociado(comanda.mozoId).then(() => {
+          this.mesa = mesa;
+          this.comanda = comanda;
+        });
+      });
+    });
+  }
+
+  public llamarMozo() {
+    this.mesa.estado = 'Llamando';
+    this._mesa.actualizarMesa(this.mesa).then((respuesta) => {
+      if (respuesta) {
+        console.log("EL MOZO VENDRA EN UNOS MINUTOS");
+      }
+    });
+  }
+
+  public pagar() {
+    this.mesa.estado = 'Cobrar';
+    this._mesa.actualizarMesa(this.mesa).then((respuesta) => {
+      if (respuesta) {
+        console.log("EL MOZO VENDRA EN UNOS MINUTOS");
+      }
+    });
+  }
+
+  traerComandaPorCliente() {
 
     for (let i = 0; i < this.comandas.length; i++) {
       this._comanda.verificarComandaPorUsuario(this.comandas[i].id)
@@ -48,6 +84,9 @@ export class ConsultaClienteComponent implements OnInit {
             this._mesa.traerMesa(c.mesa).then((m) => {
               this.mesa = m;
               this.comanda = c;
+              localStorage.setItem('comandaID', this.comanda.id.toString());
+              localStorage.setItem('mesaID', this.mesa.idMesa.toString());
+              this.traerMozoAsociado(this.comanda.mozoId);
             });
           }
         });
@@ -56,6 +95,24 @@ export class ConsultaClienteComponent implements OnInit {
         break;
       }
     }
+  }
+
+
+  traerMozoAsociado(mozoId: any): Promise<any> {
+    console.log("TRAER MOZO ASOCIADO");
+    return new Promise((resolve) => {
+      this._usuario.buscarNombreYApellido(mozoId).then((mozo) => {
+        this.nombreMozo = mozo;
+        localStorage.setItem('nombreMozo', mozo);
+        this._usuario.buscarFoto(mozoId).then((url) => {
+          this.fotoMozo = url;
+          localStorage.setItem('fotoMozo', url);
+          console.log(this.nombreMozo);
+          console.log(this.fotoMozo);
+          resolve(true);
+        });
+      });
+    });
   }
 
   ngOnDestroy() {

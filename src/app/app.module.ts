@@ -42,6 +42,7 @@ import { UploadFilesFormComponent } from './components/upload/upload-files-form/
 import { DetailsUploadComponent } from './components/upload/details-upload/details-upload.component';
 import { ListUploadComponent } from './components/upload/list-upload/list-upload.component';
 import { VerComandaComponent } from './components/ver-comanda/ver-comanda/ver-comanda.component';
+import { LlamandoMozoPipe } from './pipes/llamando-mozo.pipe';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -72,7 +73,8 @@ export const firebaseConfig = {
     ListUploadComponent,
     VerComandaComponent,
     PedidoComponent,
-    ConfirmacionDialog
+    ConfirmacionDialog,
+    LlamandoMozoPipe
   ],
   imports: [
     BrowserModule,

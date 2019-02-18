@@ -1,8 +1,27 @@
 .separar button,
 .separar a {
-    margin-right: 8px;
+    margin-right: 2%;
+    margin-left: 2%;
   }
 
-  .inputLargo {
+  .separar {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 7%; 
+    // text-align: left;
+}
+
+.inputLargo {
     width: 80%;
   }
+
+.divLogin {
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 10%; 
+    text-align: left;
+}
+
+.botonIngresar {
+  width: 80%;
+}
