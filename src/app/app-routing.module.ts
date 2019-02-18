@@ -9,6 +9,7 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MesasComponent } from './components/mesas/mesas.component';
 import { AuthGuard } from './auth.guard';
+import { EncuestaComponent } from './components/encuesta/encuesta.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -26,6 +27,13 @@ const routes: Routes = [
     canActivate: [AccessGuard],
     data: {
       rolesPermitidos: ['admin', 'Cliente', 'mozo', 'anonimo']
+    }
+  },
+  {
+    path: 'encuesta', component: EncuestaComponent,
+    canActivate: [AccessGuard],
+    data: {
+      rolesPermitidos: ['admin', 'Cliente', 'anonimo']
     }
   },
   {

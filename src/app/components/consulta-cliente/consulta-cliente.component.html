@@ -34,6 +34,6 @@
     <app-ver-comanda [comanda]='comanda' [mesa]='mesa'></app-ver-comanda>
     <button mat-stroked-button color='primary' class='blockButton' (click)="pagar()"
         [class.quadrat]="mesa.estado =='Cobrar'">{{ 'PAGAR' | llamandoMozo: mesa.estado}} </button>
-
+    <button mat-stroked-button color='primary' class='blockButton' (click)="hacerEncuesta()">HACER ENCUESTA</button>
 
 </div>
