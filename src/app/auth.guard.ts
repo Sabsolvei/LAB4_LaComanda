@@ -23,6 +23,9 @@ export class AuthGuard implements CanActivate {
         if (!s) {
           resolve(false);
         } else {
+
+          // para cuando está logueado, al no entrar al login, le explicito que puede cargarme el menú
+          this.auth.dejarPasar();
           resolve(true);
         }
       });

@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthProvider {
-    //public perfilLogueado: string;
+    // public perfilLogueado: string;
     uid: string;
     public usuarioLogueado;
     public perfil$ = new BehaviorSubject("");
+    private loggedIn = new BehaviorSubject<boolean>(false);
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -23,10 +24,18 @@ export class AuthProvider {
         public router: Router
     ) { }
 
+
+    get isLoggedIn() {
+      return this.loggedIn.asObservable();
+    }
+
+    dejarPasar() {
+      this.loggedIn.next(true);
+    }
+
     loginGoogle() {
         return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
-
 
 
     buscarDestino(perfil: string): string {
@@ -91,6 +100,9 @@ export class AuthProvider {
             this.afAuth.auth
                 .signInWithEmailAndPassword(email.toLowerCase(), password)
                 .then(data => {
+
+                  this.loggedIn.next(true);
+
                     localStorage.setItem("userID", data.user.uid);
                     let usuario = firebase.auth().currentUser;
                     this.corroborarUsuario(usuario).then((us: Iusuario) => {
@@ -103,7 +115,7 @@ export class AuthProvider {
     }
 
     public corroborarUsuario(user: firebase.User): Promise<any> {
- 
+
         let promesa = new Promise((resolve, reject) => {
             this._usuario
                 .buscarUsuarioxMail(user.email)
@@ -125,6 +137,9 @@ export class AuthProvider {
 
     // Logout de usuario
     logout() {
+      this.loggedIn.next(false);
+      this.router.navigate(['/login']);
+
         this.usuarioLogueado = null;
         return this.afAuth.auth.signOut();
     }

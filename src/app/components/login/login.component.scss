@@ -2,26 +2,57 @@
 .separar a {
     margin-right: 2%;
     margin-left: 2%;
-  }
+}
 
-  .separar {
+.separar {
     width: 80%;
     margin: 0 auto;
-    margin-top: 7%; 
+    margin-top: 7%;
     // text-align: left;
 }
 
 .inputLargo {
     width: 80%;
-  }
+}
 
 .divLogin {
     width: 30%;
     margin: 0 auto;
-    margin-top: 10%; 
+    margin-top: 10%;
     text-align: left;
 }
 
 .botonIngresar {
-  width: 80%;
+    width: 80%;
+}
+
+///////////////////////
+mat-card {
+    max-width: 400px;
+    margin: 2em auto;
+    text-align: center;
+}
+
+.signin-content {
+    padding: 60px 1rem;
+    opacity: 1;
+}
+
+.full-width-input {
+    width: 100%;
+}
+
+.example-header-image {
+    background-image: url('../../../assets/bandeja.png');
+    background-size: cover;
+}
+
+.fondo {
+    background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("../../../assets/1920_1080_20100520014441336870.jpg");
+    // background-image: url("../../../assets/1920_1080_20100520014441336870.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: rgb(172, 161, 236);
 }
