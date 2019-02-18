@@ -44,7 +44,6 @@ export class ClienteService {
 
   buscarDNI(dni: string): Promise<ICliente> {
 
-    console.log("CLIENTE");
     const promesa = new Promise<ICliente>((resolve, reject) => {
 
       this.afDB
