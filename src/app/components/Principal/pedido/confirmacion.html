@@ -1,0 +1,9 @@
+<h1 style="text-align: center" mat-dialog-title>Pedido <b>#{{data.pedido}}</b></h1>
+<div mat-dialog-content>
+    <p>¿Desea eliminar el pedido seleccionado?</p>
+</div>
+
+<div mat-dialog-actions style="width: 100%; text-align:center; display: flex; justify-content: center;">
+    <button style="margin-right: 1%" mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Confirmar</button>
+    <button style="margin-right: 1%" mat-raised-button color="warn" [mat-dialog-close]="false">Cancelar</button>
+</div>

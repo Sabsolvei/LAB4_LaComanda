@@ -22,8 +22,6 @@ export class TablaComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.datos);
-    // console.log("TABLA DATOS");
-    // console.log(this.datos);
   }
 
   public applyFilter(filterValue: string) {
@@ -33,12 +31,10 @@ export class TablaComponent implements OnInit {
 
   public sumarCantidad(item: ISubpedidoItem, value: number) {
     item.cantidad = item.cantidad + value;
-    //  this.subTotal = parseInt(this.subTotal.toString()) + parseInt(item.importe.toString());
   }
   public restarCantidad(item: ISubpedidoItem, value: number) {
     if (item.cantidad > 0) {
       item.cantidad = item.cantidad + value;
-      //   this.subTotal = parseInt(this.subTotal.toString()) - parseInt(item.importe.toString());
     }
   }
 

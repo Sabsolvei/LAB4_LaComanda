@@ -1,5 +1,4 @@
-<!-- <button mat-button>{{mesa.numero}} - #{{mesa.codigoQr}}</button> -->
-<mat-card class="card" [class.quadrat]="mesa.estado =='Llamando'" [style.background-color]="tomarColor()">
+<mat-card class="card" [class.quadrat]="mesa.estado =='Llamando' ||mesa.estado == 'Cobrar'" [style.background-color]="tomarColor()">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>Mesa {{mesa.numero}}
