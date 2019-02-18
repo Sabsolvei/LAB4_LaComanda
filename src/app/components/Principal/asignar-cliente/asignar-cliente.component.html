@@ -15,21 +15,23 @@
 
     <div *ngIf="encontrado && buscado else noExiste">
         <div class="example-full-width">
-            <mat-label placeholder="Color"> {{cliente.nombre}}</mat-label>
+            <mat-label placeholder="Color"><b>Nombre:</b> {{cliente.nombre}}</mat-label>
         </div>
 
         <div class="example-full-width">
-            <mat-label placeholder="Color"> {{cliente.apellido}}</mat-label>
+            <mat-label placeholder="Color"><b>Apellido:</b> {{cliente.apellido}}</mat-label>
         </div>
 
         <div class="example-full-width">
-            <mat-label placeholder="Color"> {{cliente.email}}</mat-label>
+            <mat-label placeholder="Color"><b>Email:</b> {{cliente.email}}</mat-label>
         </div>
 
-        <button mat-raised-button [mat-dialog-close]="asignado" color="primary" class="btn btn-primary" (click)="asignar()">Asignar</button>
+        <div style="width: 100%; text-align:center; display: flex; justify-content: center; margin-top: 1%">
+            <button mat-raised-button style="margin-top: 2%" [mat-dialog-close]="asignado" color="primary" class="btn btn-primary" (click)="asignar()">Asignar</button>
+        </div>
     </div>
 
-    <ng-template *ngIf="buscado" #noExiste>
+    <ng-template #noExiste>
         <mat-form-field class="example-full-width" hintLabel="Max 20 caracteres">
             <input matInput #nombre maxlength="20" placeholder="Ingrese el nombre" [(ngModel)]="cliente.nombre">
             <mat-hint align="end">{{nombre.value?.length || 0}}/20</mat-hint>
