@@ -1,6 +1,6 @@
 <div *ngIf="comanda != null else noComanda">
     <div *ngFor="let pedido of comanda.pedidos; index as i">
-        <app-pedido [index]=i [comanda]='comanda'></app-pedido>
+        <app-pedido [index]=i [comanda]='comanda' [mesa]='mesa'></app-pedido>
     </div>
     <mat-card class="example-card">
         <mat-card-header fxLayout="row" fxLayoutAlign="center center">

@@ -11,4 +11,5 @@ export interface IComandaPedido {
   subPedidosCerveza?: ISubpedidoCerveza;
   tiempoMayorEstimado?: number;
   horaDerivado?: number;
+  subTotal: number;
 }
