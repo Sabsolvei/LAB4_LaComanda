@@ -94,7 +94,11 @@ export class PedidoComponent implements OnInit {
   }
 
   entregar() {
+    this.comanda.pedidos[this.index].estado = "Entregado";
 
+    this._comanda.actualizarComanda(this.comanda).then(() => {
+      this.openSnackBar("El pedido fue entregado" , "");
+    });
   }
 }
 

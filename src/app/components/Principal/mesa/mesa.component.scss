@@ -20,6 +20,14 @@ button {
     margin-right: 1%;
 }
 
+.ponerBorde {
+    border: 3px solid black;
+}
+
+.quitarBorde {
+    border: 0px solid black;
+}
+
 .quadrat {
     -webkit-animation: BLINK 1s infinite;
     /* Safari 4+ */

@@ -38,22 +38,22 @@ export class MenuCartaComponent implements OnInit {
   public pedidoACargar: ISubpedidoItem[] = [];
   public cant: number;
   public platos: any;
+
   // CAMPOS COMANDA
   public itemsCocina: { cantidad: number; platoID: number; nombre: string, precio: number }[] = [];
   public itemsBebida: { cantidad: number; bebidaID: number; nombre: string, precio: number }[] = [];
   public itemsCerveza: { cantidad: number; bebidaID: number; nombre: string, precio: number }[] = [];
   public tiemposEstimadosDelPedido = [];
 
-  public subTotal: number = 0;
-
   public pedidoCocina: any[];
   public pedidoBartender: any[];
   public pedidoCerveza: any[];
 
   private pedidoIndex: number;
-  private comandaID: number;
+  // private comandaID: number;
   private pedidoCodigo: string;
-  private totalComanda: number = 0;
+  public nombreBoton: string;
+
 
   constructor(
     private dialogRef: MatDialogRef<MenuCartaComponent>,
@@ -75,11 +75,6 @@ export class MenuCartaComponent implements OnInit {
     this.traerCervezas();
 
     this.tipomenu = "minutas";
-
-    // modificar pedido
-    if (this.pedidoIndex != 0) {
-
-    }
   }
 
   cancelar() {
@@ -87,6 +82,11 @@ export class MenuCartaComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.pedidoIndex > -1) {
+      this.nombreBoton = "Editar pedido";
+    } else {
+      this.nombreBoton = "Agregar pedido";
+    }
   }
 
   public cargarPedido() {
@@ -186,7 +186,8 @@ export class MenuCartaComponent implements OnInit {
                 let itemAux: {
                   cantidad: number,
                   platoID: number,
-                  nombre: string
+                  nombre: string,
+                  precio: number
                 };
 
                 itemAux = listaAux.items.find(i => i.platoID == item.id); // Busco si el producto es uno de los agregados
@@ -229,7 +230,8 @@ export class MenuCartaComponent implements OnInit {
               let itemAux: {
                 cantidad: number,
                 platoID: number,
-                nombre: string
+                nombre: string,
+                precio: number
               };
 
               itemAux = listaAux.items.find(i => i.platoID == item.id); // Busco si el producto es uno de los agregados
@@ -273,7 +275,8 @@ export class MenuCartaComponent implements OnInit {
               let itemAux: {
                 cantidad: number,
                 platoID: number,
-                nombre: string
+                nombre: string,
+                precio: number
               };
 
               itemAux = listaAux.items.find(i => i.platoID == item.id); // Busco si el producto es uno de los agregados
@@ -316,7 +319,8 @@ export class MenuCartaComponent implements OnInit {
               let itemAux: {
                 cantidad: number,
                 bebidaID: number,
-                nombre: string
+                nombre: string,
+                precio: number
               };
 
               itemAux = listaAux.items.find(i => i.bebidaID == item.id); // Busco si el producto es uno de los agregados
@@ -359,7 +363,8 @@ export class MenuCartaComponent implements OnInit {
               let itemAux: {
                 cantidad: number,
                 bebidaID: number,
-                nombre: string
+                nombre: string,
+                precio: number
               };
 
               itemAux = listaAux.items.find(i => i.bebidaID == item.id); // Busco si el producto es uno de los agregados
@@ -387,7 +392,7 @@ export class MenuCartaComponent implements OnInit {
     let cant: number = 0;
 
     if (this.pedidoIndex > -1) {
-     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosBebida;
+     listaAux = this.comanda.pedidos[this.pedidoIndex].subPedidosCerveza;
     }
 
     this._bebidas.traerBebidas('cerveza')
@@ -402,7 +407,8 @@ export class MenuCartaComponent implements OnInit {
               let itemAux: {
                 cantidad: number,
                 bebidaID: number,
-                nombre: string
+                nombre: string,
+                precio: number
               };
 
               itemAux = listaAux.items.find(i => i.bebidaID == item.id); // Busco si el producto es uno de los agregados
@@ -538,7 +544,8 @@ export class MenuCartaComponent implements OnInit {
     let estadoCerveza: string;
     let comandaPedido: IComandaPedido;
     let comandaPedidos: IComandaPedido[];
-    // let subTotal: number = 0;
+    let subTotal: number = 0;
+    let totalComanda: number = 0;
     this.cargarItemsSubpedidos(this.lMinutas);
     this.cargarItemsSubpedidos(this.lFrios);
     this.cargarItemsSubpedidos(this.lCalientes);
@@ -547,7 +554,7 @@ export class MenuCartaComponent implements OnInit {
     this.cargarItemsSubpedidos(this.lTragos);
     this.cargarItemsSubpedidos(this.lCervezas);
 
-    this.comanda.importeTotal += this.totalComanda;
+    // this.comanda.importeTotal += this.totalComanda;
 
     // Aca tengo cargados los items categorizados
     // Si hay items cargados le doy el estado Pendiente, sino Nada (porque en los pedidos de la comanda van a haber 2 subitems)
@@ -575,14 +582,34 @@ export class MenuCartaComponent implements OnInit {
       items: this.itemsCerveza
     };
 
+    if (subCerveza.estado != "Nada") {
+      for (let i = 0; i < subCerveza.items.length; i++) {
+        subTotal += (subCerveza.items[i].cantidad * subCerveza.items[i].precio);
+      }
+    }
+
+    if (subBebida.estado != "Nada") {
+      for (let i = 0; i < subBebida.items.length; i++) {
+        subTotal += (subBebida.items[i].cantidad * subBebida.items[i].precio);
+      }
+    }
+
+    if (subCocina.estado != "Nada") {
+      for (let i = 0; i < subCocina.items.length; i++) {
+        subTotal += (subCocina.items[i].cantidad * subCocina.items[i].precio);
+      }
+    }
+
     const tiempoMayorEstimado = Math.max(...this.tiemposEstimadosDelPedido);
 
     if (this.pedidoIndex > -1) {
+      // se quita el el subtotal viejo
+      this.comanda.importeTotal -= this.comanda.pedidos[this.pedidoIndex].subTotal;
       this.comanda.pedidos[this.pedidoIndex].subPedidosBebida = subBebida;
       this.comanda.pedidos[this.pedidoIndex].subPedidosCocina = subCocina;
       this.comanda.pedidos[this.pedidoIndex].subPedidosCerveza = subCerveza;
       this.comanda.pedidos[this.pedidoIndex].tiempoMayorEstimado = tiempoMayorEstimado;
-
+      this.comanda.pedidos[this.pedidoIndex].subTotal = subTotal;
     } else {
       comandaPedido = {
         id: new Date().valueOf(),
@@ -592,7 +619,7 @@ export class MenuCartaComponent implements OnInit {
         subPedidosCocina: subCocina,
         subPedidosCerveza: subCerveza,
         tiempoMayorEstimado: tiempoMayorEstimado,
-        subTotal: this.subTotal
+        subTotal: subTotal
       };
 
       if (this.comanda.pedidos != null) {
@@ -603,6 +630,7 @@ export class MenuCartaComponent implements OnInit {
       }
     }
 
+    this.comanda.importeTotal += subTotal;
     this._comandas.actualizarComanda(this.comanda).then(
       () => {
         this.mesa.comanda = this.comanda.id;
@@ -637,20 +665,20 @@ export class MenuCartaComponent implements OnInit {
         if (i.categoria == "bebida" || i.categoria == 'trago') {
           this.itemsBebida.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre, precio: i.importe });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
-          this.subTotal += (i.cantidad * i.importe);
-          this.totalComanda += (i.cantidad * i.importe);
+          // this.subTotal += (i.cantidad * i.importe);
+          // this.totalComanda += (i.cantidad * i.importe);
         }
         else if (i.categoria == 'cerveza') {
           this.itemsCerveza.push({ cantidad: i.cantidad, bebidaID: i.id, nombre: i.nombre, precio: i.importe });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
-          this.subTotal += (i.cantidad * i.importe);
-          this.totalComanda += (i.cantidad * i.importe);
+          // this.subTotal += (i.cantidad * i.importe);
+          // this.totalComanda += (i.cantidad * i.importe);
         }
         else {
           this.itemsCocina.push({ cantidad: i.cantidad, platoID: i.id, nombre: i.nombre, precio: i.importe });
           this.tiemposEstimadosDelPedido.push(i.tiempoEstimado);
-          this.subTotal += (i.cantidad * i.importe);
-          this.totalComanda += (i.cantidad * i.importe);
+          // this.subTotal += (i.cantidad * i.importe);
+          // this.totalComanda += (i.cantidad * i.importe);
         }
       });
   }
