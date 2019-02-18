@@ -1,0 +1,56 @@
+<div class="divEncuesta">
+  <mat-tab-group [color]="'accent'" [backgroundColor]="'primary'" class="example-stretched-tabs mat-elevation-z4"
+    [selectedIndex]="selected">
+
+    <mat-tab label=" Mesa">
+      <div class='divPregunta'>
+        <p class="preguntaFuente">Servicio y presenatación de la mesa</p>
+      </div>
+      <div class='separar'>
+        <app-puntaje [tema]="'mesa'" (enviarPuntaje)=guardarPuntaje($event)></app-puntaje>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Restaurant">
+      <div class='divPregunta'>
+        <p class="preguntaFuente">Ambientación y clima del restaurant</p>
+      </div>
+      <div class='separar'>
+        <app-puntaje [tema]="'restaurant'" (enviarPuntaje)=guardarPuntaje($event)></app-puntaje>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Mozo">
+      <div class='divPregunta'>
+        <p class="preguntaFuente">Atención, amabilidad y rapidez del mozo</p>
+      </div>
+      <div class='separar'>
+        <app-puntaje [tema]="'mozo'" (enviarPuntaje)=guardarPuntaje($event)></app-puntaje>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Cocinero">
+      <div class='divPregunta'>
+        <p class="preguntaFuente">Preparación y presentación de los platos</p>
+      </div>
+      <div class='separar'>
+        <app-puntaje [tema]="'cocinero'" (enviarPuntaje)=guardarPuntaje($event)></app-puntaje>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Comentario">
+      <div class='divTextComentario'>
+        <mat-form-field appearance="outline" class="textBox">
+          <mat-label>Ingrese su observación</mat-label>
+          <input matInput class="inputBox" [(ngModel)]="comentario">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class='divBotonEnviar'>
+        <button mat-raised-button color="primary" class="botonEnviar" (click)="enviarEncuesta()"
+          [disabled]="!(encuesta.mesa && encuesta.cocinero && encuesta.restaurant && encuesta.mozo)">ENVIAR</button>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

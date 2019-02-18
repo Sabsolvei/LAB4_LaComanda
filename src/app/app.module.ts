@@ -1,3 +1,4 @@
+import { EncuestaService } from './providers/encuesta/encuesta.service';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { UplodadFilesService } from './providers/uploadFiles/uplodad-files.service';
 import { ComandasService } from './providers/comandas/comandas.service';
@@ -43,6 +44,8 @@ import { DetailsUploadComponent } from './components/upload/details-upload/detai
 import { ListUploadComponent } from './components/upload/list-upload/list-upload.component';
 import { VerComandaComponent } from './components/ver-comanda/ver-comanda/ver-comanda.component';
 import { LlamandoMozoPipe } from './pipes/llamando-mozo.pipe';
+import { EncuestaComponent } from './components/encuesta/encuesta.component';
+import { PuntajeComponent } from './components/puntaje/puntaje.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -73,6 +76,9 @@ export const firebaseConfig = {
     ListUploadComponent,
     VerComandaComponent,
     PedidoComponent,
+    LlamandoMozoPipe,
+    EncuestaComponent,
+    PuntajeComponent
     ConfirmacionDialog,
     LlamandoMozoPipe
   ],
@@ -106,7 +112,8 @@ export const firebaseConfig = {
     MesaService,
     ComandasService,
     UplodadFilesService,
-    AngularFireStorage
+    AngularFireStorage,
+    EncuestaService
 
 
   ],

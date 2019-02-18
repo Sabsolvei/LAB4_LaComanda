@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComandasService } from 'src/app/providers/comandas/comandas.service';
 import { MesaService } from 'src/app/providers/mesa/mesa.service';
 import { IMesa } from 'src/app/clases/IMesa';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consulta-cliente',
@@ -32,7 +33,8 @@ export class ConsultaClienteComponent implements OnInit {
   constructor(
     public _comanda: ComandasService,
     public _mesa: MesaService,
-    public _usuario: UsuarioService
+    public _usuario: UsuarioService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -97,7 +99,6 @@ export class ConsultaClienteComponent implements OnInit {
     }
   }
 
-
   traerMozoAsociado(mozoId: any): Promise<any> {
     console.log("TRAER MOZO ASOCIADO");
     return new Promise((resolve) => {
@@ -119,8 +120,8 @@ export class ConsultaClienteComponent implements OnInit {
     this.comandaSubscription.unsubscribe();
   }
 
-  traerComanda() {
-
+  public hacerEncuesta() {
+    this._router.navigate(['../encuesta']);
   }
 
 }
