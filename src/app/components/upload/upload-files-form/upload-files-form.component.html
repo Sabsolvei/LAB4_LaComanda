@@ -5,7 +5,7 @@
 		{{progress.percentage}}%</div>
 </div>
 
-<input #filebutton type="file" (change)="selectFile($event)" [hidden]="true"><button mat-raised-button #upload [disabled]="!dni"
+<input #filebutton type="file" (change)="selectFile($event)" [hidden]="true"><button type="button" mat-raised-button #upload [disabled]="!dni"
 	(click)="filebutton.click()">Seleccionar foto</button>
 
 
