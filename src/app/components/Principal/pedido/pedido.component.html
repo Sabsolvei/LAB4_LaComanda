@@ -1,13 +1,13 @@
 <mat-card class="example-card">
     <mat-card-header>
-        <mat-card-title class="titulo">Pedido #{{comanda.pedidos[index].codigoPedido}}
+        <mat-card-title class="titulo">Pedido <b>#{{comanda.pedidos[index].codigoPedido}}</b> - Estado: <b>{{comanda.pedidos[index].estado}}</b>
             <mat-label>
             </mat-label>
         </mat-card-title>
         <mat-card-subtitle [ngStyle]="{'background-color':sumarMinutos() < 5 ? 'orangered' : 'white' }">
-            <h3>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos
+            <h2>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos
                 <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">- (restan {{sumarMinutos()}} min)</mat-label>
-            </h3>
+            </h2>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -16,37 +16,43 @@
             <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosCocina.items ">
                 <div mat-card-avatar mat-list-icon class="cocina"></div>
                 <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
+                <span class="spacer"></span>
+                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'">{{comanda.pedidos[index].subPedidosCocina.estado}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
 
         <mat-list>
             <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosBebida.items ">
-
                 <div mat-card-avatar mat-list-icon class="bebida"></div>
                 <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
+                <span class="spacer "></span>
+                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'">{{comanda.pedidos[index].subPedidosBebida.estado}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
-        <mat-list>
 
+        <mat-list>
             <mat-list-item *ngFor="let item of comanda.pedidos[index].subPedidosCerveza.items ">
                 <div mat-card-avatar mat-list-icon class="cerveza"></div>
                 <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
+                <span class="spacer "></span>
+                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'">{{comanda.pedidos[index].subPedidosCerveza.estado}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
+
     </mat-card-content>
     <mat-card-actions>
-        <div *ngIf="comanda.pedidos[index].estado=='Derivado'" fxLayout="row" fxLayoutAlign="center center">
+        <div *ngIf="comanda.pedidos[index].estado=='Derivado'" fxLayout="row " fxLayoutAlign="center center ">
             <mat-icon>timer</mat-icon>
             <span>Esperando...</span>
         </div>
 
-        <button mat-fab color="primary" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' ">Derivar</button>
-        <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='Preparado' ">Entregar</button>
-        <button mat-fab color="accent" (click)="editar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Editar</button>
-        <button mat-fab color="warn" (click)="eliminar()" *ngIf="comanda.pedidos[index].estado=='Pendiente'">Quitar</button>
+        <button mat-fab color="primary" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Derivar</button>
+        <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='Preparado' && verBotones()">Entregar</button>
+        <button mat-fab color="accent" (click)="editar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Editar</button>
+        <button mat-fab color="warn" (click)="eliminar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Quitar</button>
 
     </mat-card-actions>
 </mat-card>

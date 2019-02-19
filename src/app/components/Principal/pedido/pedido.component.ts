@@ -100,6 +100,18 @@ export class PedidoComponent implements OnInit {
       this.openSnackBar("El pedido fue entregado" , "");
     });
   }
+
+  verBotones(): boolean {
+    const perfil = localStorage.getItem('perfil');
+
+    if (perfil == "Cliente") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
 }
 
 @Component({

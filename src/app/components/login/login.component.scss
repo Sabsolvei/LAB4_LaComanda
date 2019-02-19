@@ -39,8 +39,9 @@ mat-card-content {
 }
 
 .signin-content {
-    padding: 60px 1rem;
-    opacity: 1;
+    // padding: 60px 1rem;
+    padding-top: 8%;
+    padding-bottom: 8%;
 }
 
 .full-width-input {
@@ -56,7 +57,6 @@ mat-card-content {
 
 .fondo {
     background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("../../../assets/1920_1080_20100520014441336870.jpg");
-    // background-image: url("../../../assets/1920_1080_20100520014441336870.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -70,3 +70,4 @@ mat-card-content {
     font-size: 25px;
 }
 
+  

@@ -2,6 +2,7 @@ import { Subscription, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { IMesa } from '../../clases/IMesa';
+import { ComandasService } from '../comandas/comandas.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,9 @@ export class MesaService {
       this.afDB
         .object("/mesas/" + mesa.idMesa)
         .update(mesa)
-        .then(() => resolve(true))
+        .then(() => {
+          resolve(true);
+        })
         .catch(err => reject(err));
     });
     return promesa;
