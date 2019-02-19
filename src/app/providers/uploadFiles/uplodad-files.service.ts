@@ -3,6 +3,7 @@ import { FileUpload } from './../../clases/file-upload';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import * as firebase from "firebase";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,24 @@ import * as firebase from "firebase";
 export class UplodadFilesService {
 
   private basePath = '/uploads';
- 
+  private imagenCargada = new BehaviorSubject<boolean>(false);
+
   constructor(private db: AngularFireDatabase) { }
+
+  get mostrarImagenCargada() {
+    return this.imagenCargada.asObservable();
+  }
 
   traerImagenCargada(dni: string) {
     return this.db
       .list("/uploads/", ref => ref.orderByChild("name").equalTo(dni))
       .valueChanges();
   }
- 
+
   pushFileToStorage(fileUpload: FileUpload, progress: { percentage: number }) {
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef.child(`${this.basePath}/${fileUpload.name}`).put(fileUpload.file);
- 
+
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) => {
         // in progress
@@ -45,16 +51,16 @@ export class UplodadFilesService {
       }
     );
   }
- 
+
   private saveFileData(fileUpload: FileUpload) {
-    this.db.list(`${this.basePath}/`).push(fileUpload);
+    this.db.list(`${this.basePath}/`).push(fileUpload).then(() => this.imagenCargada.next(true));
   }
- 
+
   public getFileUploads(numberItems): AngularFireList<FileUpload> {
     return this.db.list(this.basePath, ref =>
       ref.limitToLast(numberItems));
   }
- 
+
   public deleteFileUpload(fileUpload: FileUpload) {
     this.deleteFileDatabase(fileUpload.key)
       .then(() => {
@@ -62,11 +68,11 @@ export class UplodadFilesService {
       })
       .catch(error => console.log(error));
   }
- 
+
   private deleteFileDatabase(key: string) {
     return this.db.list(`${this.basePath}/`).remove(key);
   }
- 
+
   private deleteFileStorage(name: string) {
     const storageRef = firebase.storage().ref();
     storageRef.child(`${this.basePath}/${name}`).delete();

@@ -7,7 +7,7 @@
     </mat-card-header>
     <mat-card-content>
         <p>Estado: {{mesa.estado}}</p>
-        <div *ngIf="mesa.clienteID != 0">
+        <div *ngIf="mesa.clienteDni != ''">
             <p>Cliente: {{mesa.clienteNombre}}</p>
         </div>
     </mat-card-content>
