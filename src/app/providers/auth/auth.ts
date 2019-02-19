@@ -103,10 +103,16 @@ export class AuthProvider {
 
                   this.loggedIn.next(true);
 
-                    localStorage.setItem("userID", data.user.uid);
                     let usuario = firebase.auth().currentUser;
                     this.corroborarUsuario(usuario).then((us: Iusuario) => {
                         this.usuarioLogueado = us;
+
+                        localStorage.setItem("userID", data.user.uid);
+
+                        if (us.perfil == "Cliente") {
+                          localStorage.setItem("userDni", us.dni);
+                        }
+
                         resolve(us);
                     });
                 });
