@@ -25,7 +25,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
 import { MesasComponent } from './components/mesas/mesas.component';
-import { MesaComponent } from './components/principal/mesa/mesa.component';
+import { MesaComponent } from './components/Principal/mesa/mesa.component';
 import { PedidoComponent, ConfirmacionDialog } from './components/Principal/pedido/pedido.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MenuCartaComponent } from './components/menu-carta/menu-carta.component';

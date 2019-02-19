@@ -45,6 +45,7 @@ export class AltaEmpleadoComponent implements OnInit {
   ngOnInit() {
   }
 
+  guardarEmpleado() {}
 
   // public dropped(event: UploadEvent) {
   //   this.files = event.files;
