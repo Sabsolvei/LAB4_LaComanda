@@ -28,9 +28,14 @@
 
 ///////////////////////
 mat-card {
-    max-width: 400px;
+    // max-width: 400px;
+    max-width: 35%;
     margin: 2em auto;
     text-align: center;
+}
+
+mat-card-content {
+    margin-top: 5%;
 }
 
 .signin-content {
@@ -45,7 +50,9 @@ mat-card {
 .example-header-image {
     background-image: url('../../../assets/bandeja.png');
     background-size: cover;
+    margin-top: 2%;
 }
+
 
 .fondo {
     background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("../../../assets/1920_1080_20100520014441336870.jpg");
@@ -56,3 +63,10 @@ mat-card {
     background-attachment: fixed;
     background-color: rgb(172, 161, 236);
 }
+
+.tituloLogin {
+    font-weight: bold;
+    color: white;
+    font-size: 25px;
+}
+

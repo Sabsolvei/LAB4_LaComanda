@@ -1,55 +1,115 @@
-<div class="col-md-6 col-md-offset-3">
-  <h2>Alta empleado</h2>
-  <form name="form" (ngSubmit)="guardarEmpleado()" novalidate>
-    <div class="form-group">
-      <mat-form-field [floatLabel]="'auto'">
-        <input matInput type="text" class="form-control" name="nombre" [(ngModel)]="model.nombre" #nombre="ngModel"
-          placeholder="Nombre" required />
-      </mat-form-field>
-      <div *ngIf="!nombre.valid" class="help-block"></div>
-    </div>
-    <div class="form-group">
-      <mat-form-field [floatLabel]="'auto'">
-        <input matInput type="text" class="form-control" name="apellido" [(ngModel)]="model.apellido"
-          #apellido="ngModel" placeholder="Apellido" placeholder="Apellido" required />
-      </mat-form-field>
-      <!-- <div *ngIf="!lastName.valid" class="help-block">El Apellido es requerido</div> -->
-    </div>
-    <div class="form-group">
-      <mat-form-field [floatLabel]="'auto'">
-        <input matInput type="text" class="form-control" name="documento" [(ngModel)]="model.documento"
-          #documento="ngModel" placeholder="Documento" required />
-      </mat-form-field>
-    </div>
-    <div class="form-group">
-      <mat-form-field [floatLabel]="'auto'">
-        <input matInput type="text" class="form-control" name="cuil" [(ngModel)]="model.cuil" #cuil="ngModel"
-          placeholder="Cuil" required />
-      </mat-form-field>
-    </div>
-    <div class="form-group">
-      <mat-form-field [floatLabel]="'auto'">
-        <input matInput type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel"
-          placeholder="Email" required />
-      </mat-form-field>
-    </div>
-    <mat-form-field>
-      <mat-select placeholder="Perfil" [(ngModel)]="model.perfil" name="perfil">
-        <mat-option *ngFor="let perfil of perfiles" [value]="perfil.value">
-          {{perfil.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div class="divFormEmpleado">
+  <mat-card>
+    <mat-card-header
+      style="display: flex; justify-content: center; background-color: rgb(65, 77, 253); color: whitesmoke">
+      <div mat-card-avatar class="example-header-image"></div>
+      <p>NUEVO EMPLEADO</p>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <div class="divFormEmpleado"> -->
+      <form [formGroup]="formularioAlta" autocomplete="off" novalidate
+        (ngSubmit)="guardarEmpleado(formularioAlta.value)" fxLayout="column wrap" fxLayoutAlign="center center"
+        fxLayoutGap="10px">
 
-    <div class="container" style="width:400px">
-      <app-upload-files-form [dni]="this.model.documento"></app-upload-files-form>
-      <br />
-      <app-list-upload></app-list-upload>
-    </div>
-    <div class="form-group">
-      <button mat-raised-button color="primary" class="btn btn-primary">GUARDAR</button>
-      <a [routerLink]="['/mesas']" class="btn btn-link">Cancelar</a>
-    </div>
+        <div class="form-group">
+          <mat-form-field class='formInput'>
+            <input matInput type="text" class="form-control" formControlName="nombre" id="nombre"
+              placeholder="Nombre" />
+            <mat-hint align="end"></mat-hint>
+            <mat-error *ngIf="hasError('nombre', 'required')">Nombre es obligatorio</mat-error>
+            <mat-error *ngIf="hasError('nombre', 'maxlength')">Maximo 60 caracteres</mat-error>
+            <mat-error *ngIf="hasError('nombre', 'pattern')">Nombre inválido</mat-error>
+          </mat-form-field>
+        </div>
 
-  </form>
+        <div class="form-group">
+          <mat-form-field class='formInput'>
+            <input matInput type="text" class="form-control" formControlName="apellido" id="apellido"
+              placeholder="Apellido" />
+            <mat-hint align="end"></mat-hint>
+            <mat-error *ngIf="hasError('apellido', 'required')">Apellido es obligatorio</mat-error>
+            <mat-error *ngIf="hasError('apellido', 'maxlength')">Maximo 60 caracteres</mat-error>
+            <mat-error *ngIf="hasError('apellido', 'pattern')">Apellido inválido</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class='formInput'>
+            <input matInput type="text" class="form-control" formControlName="documento" id="documento"
+              placeholder="DNI" />
+            <mat-hint align="end">Ej: 30999000</mat-hint>
+            <mat-error *ngIf="hasError('documento', 'required')">documento es obligatorio</mat-error>
+            <mat-error *ngIf="hasError('documento', 'maxlength')">Maximo 8 caracteres</mat-error>
+            <mat-error *ngIf="hasError('documento', 'pattern')">Documento inválido</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class='formInput'>
+            <input matInput type="text" class="form-control" formControlName="cuil" id="cuil" placeholder="CUIL" />
+            <mat-hint align="end">Ej: 20309990002</mat-hint>
+            <mat-error *ngIf="hasError('cuil', 'required')">cuil es obligatorio</mat-error>
+            <mat-error *ngIf="hasError('cuil', 'maxlength')">Maximo 11 caracteres</mat-error>
+            <mat-error *ngIf="hasError('cuil', 'pattern')">CUIL inválido</mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div class="form-group">
+          <mat-form-field class='formInput'>
+            <input matInput type="email" class="form-control" formControlName="email" id="email" placeholder="Email" />
+            <mat-hint align="end">usuario@ejemplo.com</mat-hint>
+            <mat-error *ngIf="hasError('email', 'required')">Email es obligatorio</mat-error>
+            <mat-error *ngIf="hasError('email', 'maxlength')">Maximo 50 caracteres</mat-error>
+            <mat-error *ngIf="hasError('email', 'email')">Email inválido</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class='formInput'>
+            <mat-select placeholder="Perfil" name="perfil" class="form-control" formControlName="perfil" id="perfil">
+              <mat-option *ngFor="let perfil of perfiles" [value]="perfil.value">
+                {{perfil.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('perfil', 'required')">Perfil es obligatorio</mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- <div class="form-group">
+          <mat-form-field class='formInput'>
+            <mat-select placeholder="Perfil" [(ngModel)]="model.perfil" name="perfil">
+              <mat-option *ngFor="let perfil of perfiles" [value]="perfil.value">
+                {{perfil.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+
+        <div class="form-group">
+          <div class='formInput'>
+            <app-upload-files-form [dni]="formularioAlta.value.documento"></app-upload-files-form>
+            <br />
+            <app-list-upload></app-list-upload>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-card-actions align="center" class='formInput'>
+            <div>
+              <button class="botonGuardar" mat-raised-button color="primary"
+                [disabled]="!formularioAlta.valid">GUARDAR</button>
+              <br>
+            </div>
+            <div>
+              <button type="button" class="botonCancelar" mat-raised-button color="warn"
+                (click)="onCancel()">CANCELAR</button>
+            </div>
+          </mat-card-actions>
+        </div>
+
+      </form>
+      <!-- </div> -->
+    </mat-card-content>
+  </mat-card>
 </div>
