@@ -12,21 +12,31 @@ import { Observable, Subscription } from 'rxjs';
 export class ListUploadComponent implements OnInit {
 
   public fileUploads: any[];
+  @Input() public dni: string;
+  imagenCargada$: Observable<boolean>;
 
-
-  constructor(private uploadService: UplodadFilesService) { 
+  constructor(private uploadService: UplodadFilesService) {
   }
 
-  ngOnInit() { 
-    // Use snapshotChanges().pipe(map()) to store the key
-    this.uploadService.getFileUploads(1).snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(fileUploads => {
-      this.fileUploads = fileUploads;
+  ngOnInit() {
+    this.imagenCargada$ = this.uploadService.mostrarImagenCargada;
+
+    this.imagenCargada$.subscribe(() => {
+      this.uploadService.traerImagenCargada(this.dni).subscribe(data => {
+        console.log("DNI");
+        console.log(this.dni);
+        this.fileUploads = data;
+      });
     });
-    
+
+    // this.uploadService.getFileUploads(1).snapshotChanges().pipe(
+    //   map(changes =>
+    //     changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+    //   )
+    // ).subscribe(fileUploads => {
+    //   this.fileUploads = fileUploads;
+    // });
+
   }
 
 

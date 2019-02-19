@@ -30,9 +30,6 @@ export class UsuarioService {
         )
         .valueChanges()
         .subscribe((user: Iusuario[]) => {
-
-          console.log("USUARIO");
-          console.log(user);
           if (user.length > 0) {
             resolve(user[0]);
           } else {
@@ -104,6 +101,7 @@ export class UsuarioService {
     return new Promise<string>((resolve, reject) => {
       this.buscarDni(idUsuario)
         .then(dni => {
+
           this.afDB
             .list("/uploads/", ref => ref.orderByChild("name").equalTo(dni))
             .valueChanges().subscribe((data: FileUpload[]) => {
