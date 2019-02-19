@@ -39,6 +39,7 @@ export class ConsultaClienteComponent implements OnInit {
 
   ngOnInit() {
     this.perfil = localStorage.getItem('perfil');
+
     if (this.perfil == 'Cliente') {
       this.comandaSubscription = this._comanda.comandasAbiertas.valueChanges().subscribe((data: IComanda[][]) => {
         this.comandas = data;
@@ -93,14 +94,12 @@ export class ConsultaClienteComponent implements OnInit {
           }
         });
       if (this.comanda) {
-        console.log("ENCONTRÓ");
         break;
       }
     }
   }
 
   traerMozoAsociado(mozoId: any): Promise<any> {
-    console.log("TRAER MOZO ASOCIADO");
     return new Promise((resolve) => {
       this._usuario.buscarNombreYApellido(mozoId).then((mozo) => {
         this.nombreMozo = mozo;
@@ -108,8 +107,6 @@ export class ConsultaClienteComponent implements OnInit {
         this._usuario.buscarFoto(mozoId).then((url) => {
           this.fotoMozo = url;
           localStorage.setItem('fotoMozo', url);
-          console.log(this.nombreMozo);
-          console.log(this.fotoMozo);
           resolve(true);
         });
       });

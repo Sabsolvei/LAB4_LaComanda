@@ -4,6 +4,7 @@ import { ClienteService } from '../../../providers/cliente/cliente.service';
 import { MesaService } from '../../../providers/mesa/mesa.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { IMesa } from 'src/app/clases/IMesa';
+import { ComandasService } from '../../../providers/comandas/comandas.service';
 
 @Component({
   selector: 'app-asignar-cliente',
@@ -33,7 +34,9 @@ public get cliEncontrado(): boolean {
   constructor(
     private dialogRef: MatDialogRef<AsignarClienteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public _cliente: ClienteService, public _mesa: MesaService) {
+    public _cliente: ClienteService,
+    public _mesa: MesaService,
+    public _comanda: ComandasService) {
       this.mesa = data.mesa;
     }
 
@@ -44,7 +47,18 @@ public get cliEncontrado(): boolean {
     this.mesa.clienteDni = this.cliente.dni;
     this.mesa.clienteNombre = this.cliente.nombre;
 
-    this._mesa.actualizarMesa(this.mesa).then(() => this.asignado = true);
+    this._mesa.actualizarMesa(this.mesa).then(() => {
+
+      if (this.mesa.comanda > 0) {
+          this._comanda.buscarComanda(this.mesa.comanda).then(c => {
+            c.clienteId = this.mesa.clienteDni;
+            c.nombreCliente = this.mesa.clienteNombre;
+           this._comanda.actualizarComanda(c).then(() => this.asignado = true);
+          });
+        } else {
+          this.asignado = true;
+        }
+    });
   }
 
   registrar() {
@@ -64,7 +78,7 @@ public get cliEncontrado(): boolean {
       } else {
         this.encontrado = false;
       }
-    }).catch(error=>console.log(error));
+    }).catch(error => console.log(error));
   }
 
 }

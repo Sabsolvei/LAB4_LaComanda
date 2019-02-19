@@ -260,18 +260,19 @@ export class PedidosPorSectorComponent implements OnInit {
     this.automatico = false;
     let itemComanda: any;
     let encontro: boolean = false;
+    let i,j: number = 0;
+
     // this._utils.presentLoading("Cambiando estado...");
-    for (let i = 0; i < this.comandas.length; i++) {
+    for (i = 0; i < this.comandas.length; i++) {
       itemComanda = this.comandas[i];
       if (itemComanda.id == event.idComanda) {
-        for (let j = 0; j < itemComanda.pedidos.length; j++) {
+        for (j = 0; j < itemComanda.pedidos.length; j++) {
           if (itemComanda.pedidos[j].id == event.idPedido) {
             encontro = true;
             if (this.perfil == "bartender") {
               itemComanda.pedidos[j].subPedidosBebida.estado = event.estadoPedido;
             }
             if (this.perfil == "cocinero") {
-              console.log("ESTADO A CAMBIAR: " + event.estadoPedido);
               itemComanda.pedidos[j].subPedidosCocina.estado = event.estadoPedido;
             }
             if (this.perfil == "cervecero") {
@@ -281,8 +282,25 @@ export class PedidosPorSectorComponent implements OnInit {
           }
         }
       }
-      if (encontro)
+      if (encontro) {
+        let completo: boolean = false;
+
+        if (itemComanda.pedidos[j].subPedidosBebida.estado == "Preparado" || itemComanda.pedidos[j].subPedidosBebida.estado == "Nada") {
+          if (itemComanda.pedidos[j].subPedidosCocina.estado == "Preparado" || itemComanda.pedidos[j].subPedidosCocina.estado == "Nada") {
+            if (itemComanda.pedidos[j].subPedidosCerveza.estado == "Preparado" || itemComanda.pedidos[j].subPedidosCerveza.estado == "Nada") {
+              completo = true;
+            }
+          }
+        }
+
+        // Si todos estan en Preparado, paso el estado del pedido a Preparado
+        if (completo) {
+          itemComanda.pedidos[j].estado = "Preparado";
+        }
+
         break;
+      }
+
     }
     this._comandas.actualizarComanda(itemComanda).then(
       () => {

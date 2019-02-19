@@ -206,8 +206,10 @@ export class ComandasService {
   }
 
   public verificarComandaPorUsuario(comandaID: number): Promise<IComanda> {
-    let promesa = new Promise<IComanda>((resolve, reject) => {
-      let userID: string = localStorage.getItem("userID");
+    const promesa = new Promise<IComanda>((resolve, reject) => {
+      const userID: string = localStorage.getItem("userID");
+      const userDni: string = localStorage.getItem("userDni");
+
       let encontro: boolean = false;
 
       let subs = this.lista.valueChanges().subscribe(
@@ -216,7 +218,7 @@ export class ComandasService {
             if (comandas[i].id == comandaID) {
               if (
                 comandas[i].mozoId == userID ||
-                comandas[i].clienteId == userID
+                comandas[i].clienteId == userDni
               ) {
                 resolve(comandas[i]);
                 encontro = true;
@@ -225,9 +227,10 @@ export class ComandasService {
             }
           }
 
-          if (!encontro)
-            //no le pertenece la Comanda al usuario
+          if (!encontro) {
+            // no le pertenece la Comanda al usuario
             resolve(null);
+          }
         },
         err => {
           reject(err);
