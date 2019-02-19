@@ -12,6 +12,12 @@ export class UplodadFilesService {
   private basePath = '/uploads';
  
   constructor(private db: AngularFireDatabase) { }
+
+  traerImagenCargada(dni: string) {
+    return this.db
+      .list("/uploads/", ref => ref.orderByChild("name").equalTo(dni))
+      .valueChanges();
+  }
  
   pushFileToStorage(fileUpload: FileUpload, progress: { percentage: number }) {
     const storageRef = firebase.storage().ref();

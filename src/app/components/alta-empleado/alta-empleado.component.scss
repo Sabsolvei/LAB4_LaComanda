@@ -1,20 +1,40 @@
-.example-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .example-container > * {
-    width: 100%;
-  }
-  
-  .example-container form {
-    margin-bottom: 20px;
-  }
-  
-  .example-container form > * {
-    margin: 5px 0;
-  }
-  
-  .example-container .mat-radio-button {
-    margin: 0 5px;
-  }
+
+.divFormEmpleado {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 7%;
+}
+
+.formInput {
+  width: 90%;
+}
+
+.form-group {
+  width: 60%;
+}
+
+
+
+
+.botonGuardar {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.botonCancelar {
+  margin-top: 15px;
+  width: 100%;
+}
+
+mat-card {
+  width: 100%;
+}
+
+mat-card-content{
+  margin-top: 2%;
+}
+
+p {
+ font-weight: bold;
+}

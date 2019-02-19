@@ -9,7 +9,7 @@ import { BebidasService } from './providers/bebidas/bebidas.service';
 import { PlatosService } from './providers/platos/platos.service';
 import { AuthProvider } from './providers/auth/auth';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
@@ -47,6 +47,7 @@ import { LlamandoMozoPipe } from './pipes/llamando-mozo.pipe';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { PuntajeComponent } from './components/puntaje/puntaje.component';
 import { AppHeaderComponent } from './components/app-header/app-header/app-header.component';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -94,7 +95,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     AltaComandaComponent,
@@ -107,7 +109,7 @@ export const firebaseConfig = {
     PlatosService,
     BebidasService,
     UsuarioService,
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     MesaService,
     ComandasService,
     UplodadFilesService,
@@ -115,6 +117,6 @@ export const firebaseConfig = {
     EncuestaService
   ],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

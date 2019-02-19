@@ -50,8 +50,6 @@ export class EncuestaComponent implements OnInit {
         this.encuesta.comentario = puntaje.puntos;
         break;
     }
-
-
   }
 
   public enviarEncuesta() {
