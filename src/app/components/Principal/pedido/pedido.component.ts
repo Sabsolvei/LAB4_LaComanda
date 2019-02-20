@@ -5,6 +5,7 @@ import { ComandasService } from '../../../providers/comandas/comandas.service';
 import { MatSnackBar, MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { IMesa } from 'src/app/clases/IMesa';
 import { MenuCartaComponent } from '../../menu-carta/menu-carta.component';
+import { MesaService } from '../../../providers/mesa/mesa.service';
 
 @Component({
   selector: 'app-pedido',
@@ -20,7 +21,8 @@ export class PedidoComponent implements OnInit {
 
   constructor(private _comanda: ComandasService
     , private snackBar: MatSnackBar
-    , public dialog: MatDialog) {
+    , public dialog: MatDialog,
+    private _mesa: MesaService) {
 
   }
 
@@ -94,11 +96,30 @@ export class PedidoComponent implements OnInit {
   }
 
   entregar() {
+    let comiendo: boolean = true;
     this.comanda.pedidos[this.index].estado = "Entregado";
 
-    this._comanda.actualizarComanda(this.comanda).then(() => {
-      this.openSnackBar("El pedido fue entregado" , "");
-    });
+    for (let i = 0; i < this.comanda.pedidos.length; i++) {
+      if (this.comanda.pedidos[i].estado != "Entregado") {
+        comiendo = false;
+      }
+    }
+
+    if (comiendo) {
+      this.mesa.estado = "Comiendo";
+      this._mesa.actualizarMesa(this.mesa).then(() => {
+        this._comanda.actualizarComanda(this.comanda).then(() => {
+          this.openSnackBar("El pedido fue entregado" , "");
+        });
+      });
+    } else { // No estan todos los pedidos entregados
+      this.mesa.estado = "Esperando"; // explicito esperando, porque puede estar en comiendo y se agrega un nuevo pedido
+      this._mesa.actualizarMesa(this.mesa).then(() => {
+        this._comanda.actualizarComanda(this.comanda).then(() => {
+          this.openSnackBar("El pedido fue entregado" , "");
+        });
+      });
+    }
   }
 
   verBotones(): boolean {

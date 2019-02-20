@@ -4,7 +4,7 @@
             <mat-label>
             </mat-label>
         </mat-card-title>
-        <mat-card-subtitle [ngStyle]="{'background-color':sumarMinutos() < 5 ? 'orangered' : 'white' }">
+        <mat-card-subtitle [ngStyle]="{'background-color':sumarMinutos() < 5 && comanda.pedidos[index].estado =='Derivado' ? 'orangered' : '#FCA731' }">
             <h2>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos
                 <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">- (restan {{sumarMinutos()}} min)</mat-label>
             </h2>
