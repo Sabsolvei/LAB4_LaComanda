@@ -49,16 +49,16 @@ export class MesaComponent implements OnInit {
 
     switch (this.mesa.estado) {
       case "Libre":
-        es = "#a9ec89";
+        es = "white";
         break;
-      case "Comiendo":
-        es = "#ec6990";
-        break;
+      // case "Comiendo":
+      //   es = "#ec6990";
+      //   break;
       case "Esperando":
-        es = "#f5ed79";
+        es = "#FCE155";
         break;
       case "Comiendo":
-        es = "Ver comanda";
+        es = "#90ABD7";
         break;
     }
 

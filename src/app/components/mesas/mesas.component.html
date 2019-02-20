@@ -1,6 +1,6 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill>
 
-    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" style="background-color: rgb(131, 131, 241);" fxLayout="row wrap">
+    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" fxLayout="row wrap">
         <div *ngFor="let mesa of mesas">
             <div fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" style="padding:10px; padding-left: 5px; padding-top:10px;" fxLayoutAlign="start center">
 
@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-    <div fxFlex="40%" fxFlexFill style="background-color: rgb(133, 212, 133); padding:4px;">
+    <div fxFlex="40%" fxFlexFill style="padding:4px;">
         <app-ver-comanda [mesa]='mesa' [comanda]='comanda'></app-ver-comanda>
     </div>
 </div>

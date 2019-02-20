@@ -1,4 +1,4 @@
-<mat-card class="card" [class.ponerBorde]="mesa.estado =='Llamando'" [class.quadrat]="mesa.estado =='Llamando' ||mesa.estado == 'Cobrar'" [style.background-color]="tomarColor()">
+<mat-card class="card" [class.ponerBorde]="mesa.estado =='Llamando'" [class.quadrat]="mesa.estado =='Llamando' || mesa.estado == 'Cobrando'" [style.background-color]="tomarColor()">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>Mesa {{mesa.numero}}
@@ -16,15 +16,12 @@
             <mat-icon>face</mat-icon>
         </button>
 
-        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()">
+        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Libre' || mesa.estado =='Comiendo'">
             <mat-icon>queue</mat-icon>
         </button>
 
-        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando'">
+        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Cobrando' || mesa.estado =='Llamando'  || mesa.estado =='Comiendo'">
             <mat-icon>search</mat-icon>
         </button>
-
-        <!-- <button mat-raised-button color="primary " (click)="asignarCliente() " *ngIf="mesa.clienteID==n ull ">Asignar Cliente</button>
-        <button mat-raised-button color="primary " (click)="seleccionarMesa() " *ngIf="mesa.estado=='Libre' ">{{cambiarNombreBoton()}}</button> -->
     </mat-card-actions>
 </mat-card>

@@ -30,12 +30,6 @@ export class PedidosPorSectorComponent implements OnInit {
   subs: Subscription;
   automatico: Boolean = true;
   public mesas: IMesa[] = [];
-  // public pedidos: IComandaPedido[] =
-  //   [
-  //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } },
-  //     { "id": 1, "estado": "preparado", "tiempoMayorEstimado": 10, "codigoPedido": "TS543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }, { "cantidad": 2, "bebidaID": 480844 }] } },
-  //     { "id": 1, "estado": "pendiente", "tiempoMayorEstimado": 18, "codigoPedido": "AG543", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 4366576 }, { "cantidad": 2, "bebidaID": 4366576 }] } }
-  //   ];
 
   constructor(
     public _mesas: MesaService,
@@ -69,7 +63,7 @@ export class PedidosPorSectorComponent implements OnInit {
   }
 
   buscarComanda() {
-    //Recorro las comandas abiertas
+    // Recorro las comandas abiertas
     this.subs = this._comandas.comandasAbiertas
       .valueChanges()
       .subscribe(data => {
@@ -78,7 +72,7 @@ export class PedidosPorSectorComponent implements OnInit {
         this.listaPedidosPendientes = [];
         this.listaPedidosEnPreparacion = [];
         this.listaPedidosListos = [];
-        //Recorro las comandas
+        // Recorro las comandas
         for (let i = 0; i < data.length; i++) {
           comanda = data[i];
           this.armarListasEstados(comanda).then(() => {
@@ -117,7 +111,7 @@ export class PedidosPorSectorComponent implements OnInit {
             //Recorro los pedidos
             for (let i = 0; i < comanda.pedidos.length; i++) {
               //hora = this._utils.convertirAHora(this.comanda.pedidos[i].id);
-              if (comanda.pedidos[i].estado == "Derivado") {
+              if (comanda.pedidos[i].estado == "Derivado" || comanda.pedidos[i].estado == "Preparado") {
                 if (this.perfil == "bartender") {
                   //await this.armarListaBebidas(comanda.pedidos[i]).then(() => {
                   let item = {
