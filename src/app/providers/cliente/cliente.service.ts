@@ -34,7 +34,12 @@ export class ClienteService {
           id: idUsuario.user.uid
         }
         // console.log(usuarioNuevo);
-        this.usuarioProvider.guardarUsuario(usuarioNuevo);
+        this.usuarioProvider.guardarUsuario(usuarioNuevo).then(() => {
+          this.afDB
+        .object("/clientes/" + cliente.dni)
+        .update(cliente)
+        .then(() => { });
+        });
       })
       .catch(error => {
         console.log(this.usuarioProvider.errorAuth(error));

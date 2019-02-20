@@ -6,11 +6,11 @@
         <mat-card-subtitle class='tiempoEstimado'>{{itemPedido.tiempoEstimado}} minutos</mat-card-subtitle>
         <div *ngIf="itemPedido.estadoSubpedido == 'Pendiente'">
             <button mat-icon-button color="primary" class='botonMasCinco' (click)="sumarCincoMinutos()">
-        <mat-icon class='iconoMasCinco'>forward_5</mat-icon>
-      </button>
+              <mat-icon class='iconoMasCinco'>forward_5</mat-icon>
+            </button>
             <button mat-icon-button color="primary" class='botonMenosCinco' (click)="restarCincoMinutos()">
-        <mat-icon class='iconoMenosCinco'>replay_5</mat-icon>
-      </button>
+              <mat-icon class='iconoMenosCinco'>replay_5</mat-icon>
+            </button>
         </div>
     </mat-card-header>
     <mat-card-content>
@@ -22,7 +22,6 @@
             </tr>
         </table>
 
-        <!-- <p class='itemProducto' *ngFor="let item of itemPedido.productos.items">{{item.cantidad}} ... {{item.nombre}} </p> -->
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color='primary' (click)="cambiarEstado('En Preparacion')" *ngIf="itemPedido.estadoSubpedido == 'Pendiente'">PREPARAR</button>

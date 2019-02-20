@@ -3,6 +3,7 @@ import { IComanda } from 'src/app/clases/IComanda';
 import { IMesa } from 'src/app/clases/IMesa';
 import { ComandasService } from '../../../providers/comandas/comandas.service';
 import { MatSnackBar } from '@angular/material';
+import { MesaService } from '../../../providers/mesa/mesa.service';
 
 @Component({
   selector: 'app-ver-comanda',
@@ -13,20 +14,33 @@ export class VerComandaComponent implements OnInit {
 
   @Input() public comanda: IComanda;
   @Input() public mesa: IMesa;
+  public nombreBoton: string;
 
-  constructor(private _comanda: ComandasService, private snackBar: MatSnackBar) {  }
+  constructor(
+    private _comanda: ComandasService,
+    private snackBar: MatSnackBar,
+    private _mesa: MesaService) {  }
 
   ngOnInit() {
+    this.definirNombreBoton();
   }
 
-  cerrarComanda() {
-    this.comanda.estado = "Cerrada";
+  cerrarCobrarComanda() {
+    if (this.nombreBoton == "Cobrar") {
+      this.mesa.estado = "Cobrando";
 
-    this._comanda.cerrarComanda(this.comanda, this.mesa).then( () => {
-      this.comanda = null;
-      this.mesa = null;
-      this.openSnackBar("La comanda fue cerrada", " ");
-    });
+      this._mesa.actualizarMesa(this.mesa).then(() => {
+        this.openSnackBar("La comanda está cobrando", " ");
+      });
+    } else {
+
+      this.comanda.estado = "Cerrada";
+      this._comanda.cerrarComanda(this.comanda, this.mesa).then( () => {
+        this.comanda = null;
+        this.mesa = null;
+        this.openSnackBar("La comanda fue cerrada", " ");
+      });
+    }
   }
 
   openSnackBar(message: string, action: string) {
@@ -48,13 +62,29 @@ export class VerComandaComponent implements OnInit {
   }
 
 
+  definirNombreBoton() {
+    const perfil = localStorage.getItem('perfil');
+
+    if (perfil == "mozo") {
+      this.nombreBoton = "Cobrar";
+    } else if (perfil == "admin") {
+      this.nombreBoton = "Cerrar";
+    }
+  }
+
   verBotones(): boolean {
     const perfil = localStorage.getItem('perfil');
 
     if (perfil == "Cliente") {
       return false;
-    } else {
+    } else if (perfil == "admin") {
       return true;
+    } else {
+      if(this.mesa.estado != "Cobrando") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }

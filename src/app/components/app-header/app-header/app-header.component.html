@@ -1,5 +1,5 @@
 <div>
-    <mat-toolbar color="primary" *ngIf="isLoggedIn$ | async">
+    <mat-toolbar style="background-color:#2A51D7; color: white" *ngIf="isLoggedIn$ | async">
         <mat-toolbar-row>
             <button mat-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger" (click)="matMenuTrigger.openMenu()"  *ngIf="perfil == 'admin'">
                 <mat-icon>more_vert</mat-icon>
