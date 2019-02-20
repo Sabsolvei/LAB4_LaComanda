@@ -33,7 +33,7 @@ export class UsuarioService {
           if (user.length > 0) {
             resolve(user[0]);
           } else {
-            reject();
+            reject(false);
           }
         });
     });

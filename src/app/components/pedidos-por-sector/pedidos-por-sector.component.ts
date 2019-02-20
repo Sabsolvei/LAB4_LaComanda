@@ -1,3 +1,5 @@
+import { AuthProvider } from './../../providers/auth/auth';
+
 import { UsuarioService } from './../../providers/usuarios/usuario.service';
 import { BebidasService } from './../../providers/bebidas/bebidas.service';
 import { PlatosService } from './../../providers/platos/platos.service';
@@ -38,6 +40,7 @@ export class PedidosPorSectorComponent implements OnInit {
   //   ];
 
   constructor(
+    public _auth: AuthProvider,
     public _mesas: MesaService,
     public _comandas: ComandasService,
     public _platos: PlatosService,
@@ -70,6 +73,7 @@ export class PedidosPorSectorComponent implements OnInit {
 
   buscarComanda() {
     //Recorro las comandas abiertas
+    this._auth.loadingOn();
     this.subs = this._comandas.comandasAbiertas
       .valueChanges()
       .subscribe(data => {
@@ -81,12 +85,17 @@ export class PedidosPorSectorComponent implements OnInit {
         //Recorro las comandas
         for (let i = 0; i < data.length; i++) {
           comanda = data[i];
-          this.armarListasEstados(comanda).then(() => {
-            // if (this.listaPedidosPendientes.length == 0)
-            //   if (this.listaPedidosEnPreparacion.length == 0)
-            //     if (this.listaPedidosEntregados.length > 0)
-            //       this.todoEntregado = true;
-          });
+          this.armarListasEstados(comanda)
+            .then(() => {
+              this._auth.loadingOff();
+              // if (this.listaPedidosPendientes.length == 0)
+              //   if (this.listaPedidosEnPreparacion.length == 0)
+              //     if (this.listaPedidosEntregados.length > 0)
+              //       this.todoEntregado = true;
+            })
+            .catch(() => {
+              this._auth.loadingOff();
+            });
         }
       });
   }
@@ -257,10 +266,11 @@ export class PedidosPorSectorComponent implements OnInit {
 
 
   public cambiarEstadoPedido(event: any) {
+    this._auth.loadingOn();
     this.automatico = false;
     let itemComanda: any;
     let encontro: boolean = false;
-    let i,j: number = 0;
+    let i, j: number = 0;
 
     // this._utils.presentLoading("Cambiando estado...");
     for (i = 0; i < this.comandas.length; i++) {
@@ -305,12 +315,14 @@ export class PedidosPorSectorComponent implements OnInit {
     this._comandas.actualizarComanda(itemComanda).then(
       () => {
         console.log("Cambió el estado del pedido");
+        this._auth.loadingOff();
         //this.inicializar();
         setTimeout(() => {
           this.automatico = true;
         }, 2000);
       },
       () => {
+        this._auth.loadingOff();
         console.log("Reintente");
       }
     );

@@ -17,6 +17,7 @@ export class AuthProvider {
     public usuarioLogueado;
     public perfil$ = new BehaviorSubject("");
     private loggedIn = new BehaviorSubject<boolean>(false);
+    private loading = new BehaviorSubject<boolean>(false);
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -26,12 +27,26 @@ export class AuthProvider {
 
 
     get isLoggedIn() {
-      return this.loggedIn.asObservable();
+        return this.loggedIn.asObservable();
+    }
+
+    get isLoading() {
+        return this.loading.asObservable();
     }
 
     dejarPasar() {
-      this.loggedIn.next(true);
+        this.loggedIn.next(true);
     }
+
+    loadingOn() {
+        this.loading.next(true);
+    }
+
+    loadingOff() {
+        this.loading.next(false);
+    }
+
+
 
     loginGoogle() {
         return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -101,20 +116,23 @@ export class AuthProvider {
                 .signInWithEmailAndPassword(email.toLowerCase(), password)
                 .then(data => {
 
-                  this.loggedIn.next(true);
-
+                    this.loggedIn.next(true);
+                    let respuesta: boolean;
                     let usuario = firebase.auth().currentUser;
-                    this.corroborarUsuario(usuario).then((us: Iusuario) => {
-                        this.usuarioLogueado = us;
+                    this.corroborarUsuario(usuario)
+                        .then((us: Iusuario) => {
+                            this.usuarioLogueado = us;
+                            localStorage.setItem("userID", data.user.uid);
 
-                        localStorage.setItem("userID", data.user.uid);
-
-                        if (us.perfil == "Cliente") {
-                          localStorage.setItem("userDni", us.dni);
-                        }
-
-                        resolve(us);
-                    });
+                            if (us.perfil == "Cliente") {
+                                localStorage.setItem("userDni", us.dni);
+                            }
+                            resolve(us);
+                        })
+                        .catch((rta) => {
+                            respuesta = rta;
+                            console.log("NO SE ENCONTRÓ USUARIO");
+                        });
                 });
         });
         return promesa;
@@ -126,12 +144,11 @@ export class AuthProvider {
             this._usuario
                 .buscarUsuarioxMail(user.email)
                 .catch(() => {
-                    reject("Usuario inexistente");
+                    reject(false);
                 })
                 .then((u: Iusuario) => {
                     console.log('DENTRO DE CORROBORAR USUARIO. Usuario: ');
                     resolve(u);
-
                 });
         })
         return promesa;
@@ -143,8 +160,8 @@ export class AuthProvider {
 
     // Logout de usuario
     logout() {
-      this.loggedIn.next(false);
-      this.router.navigate(['/login']);
+        this.loggedIn.next(false);
+        this.router.navigate(['/login']);
 
         this.usuarioLogueado = null;
         return this.afAuth.auth.signOut();

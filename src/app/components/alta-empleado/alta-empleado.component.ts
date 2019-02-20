@@ -33,10 +33,10 @@ export class AltaEmpleadoComponent implements OnInit {
   public perfiles: any[] = [
     { value: 'mozo', viewValue: 'Mozo' },
     { value: 'bartender', viewValue: 'Bartender' },
-    { value: 'cocinero', viewValue: 'Pastelero' },
     { value: 'cocinero', viewValue: 'Cocinero' },
     { value: 'cervecero', viewValue: 'Cervecero' },
     { value: 'admin', viewValue: 'Administrador' }
+    // { value: 'cocinero', viewValue: 'Pastelero' },
   ];
   // public files: UploadFile[] = [];
   public urlfoto: string;
@@ -44,7 +44,7 @@ export class AltaEmpleadoComponent implements OnInit {
   public file: FileUpload[];
 
   constructor(
-    private router: Router,
+    private _router: Router,
     private auth: AuthProvider,
     public storage: AngularFireStorage,
     private usuarioProvider: UsuarioService,
@@ -104,6 +104,7 @@ export class AltaEmpleadoComponent implements OnInit {
 
   private executeOwnerCreation = (formularioAltaValue) => {
 
+    this.auth.loadingOn();
     return this.auth.registerUser(formularioAltaValue.email, '123456')
       .then((idUsuario) => {
         console.log(idUsuario.user.uid);
@@ -126,61 +127,12 @@ export class AltaEmpleadoComponent implements OnInit {
         else {
           this.usuarioProvider.guardarUsuario(usuarioNuevo);
         }
+        this.auth.loadingOff();
+        this._router.navigate(['../mesas']);
       })
       .catch(error => {
+        this.auth.loadingOff();
         console.log(this.usuarioProvider.errorAuth(error));
       });
-
   }
-
-
 }
-
-
-
-
-
-    // let apiUrl = 'api/owner';
-    // this.repository.create(apiUrl, owner)
-    //   .subscribe(res => {
-    //     //this is temporary, until we create our dialogs
-    //     this.location.back();
-    //   },
-    //     (error => {
-    //       //temporary as well
-    //       this.location.back();
-    //     })
-    //   )
-
-
-
-  // guardarEmpleado() {
-  //   return this.auth.registerUser(this.model.email, '123456')
-  //     .then((idUsuario) => {
-  //       console.log(idUsuario.user.uid);
-  //       console.log('USUARIO CREADO');
-
-  //       let usuarioNuevo: Iusuario = {
-  //         nombre: this.model.nombre,
-  //         apellido: this.model.apellido,
-  //         dni: this.model.documento,
-  //         perfil: this.model.perfil,
-  //         email: this.model.email,
-  //         cuil: this.model.cuil,
-  //         id: idUsuario.user.uid,
-  //         foto: this.urlfoto
-  //       }
-  //       console.log(usuarioNuevo);
-  //       if (this.urlfoto) {
-  //         this.usuarioProvider.guardarUsuario(usuarioNuevo);
-  //       }
-  //       else {
-  //         this.usuarioProvider.guardarUsuarioConFoto(usuarioNuevo);
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(this.usuarioProvider.errorAuth(error));
-  //     });
-  // }
-
-
