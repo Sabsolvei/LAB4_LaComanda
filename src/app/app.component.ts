@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { AuthProvider } from './providers/auth/auth';
 import { Component } from '@angular/core';
 import { auth } from 'firebase';
@@ -11,9 +12,9 @@ import { Iusuario } from './clases/usuario';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'LaComanda';
+  public title = 'LaComanda';
   public perfil: string;
-
+  public isLoading$: Observable<boolean>;                  // {1}
   constructor(
     public _auth: AuthProvider,
     public _router: Router
@@ -31,6 +32,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.perfil = localStorage.getItem('perfil');
+    this.isLoading$ = this._auth.isLoading;
   }
 
   salir() {

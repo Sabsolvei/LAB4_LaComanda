@@ -16,7 +16,6 @@ export class AppHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.perfil = localStorage.getItem('perfil');
-
     this.isLoggedIn$ = this._auth.isLoggedIn; // {2}
   }
 

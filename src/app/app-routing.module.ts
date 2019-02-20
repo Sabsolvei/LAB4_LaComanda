@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'consulta', component: ConsultaClienteComponent,
-    canActivate: [AccessGuard],
+    canActivate: [AccessGuard, AuthGuard],
     data: {
       rolesPermitidos: ['admin', 'Cliente', 'mozo', 'anonimo']
     }

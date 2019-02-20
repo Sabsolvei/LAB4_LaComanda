@@ -24,6 +24,10 @@
 
 <app-header></app-header>
 
-<div>
-    <router-outlet></router-outlet>
+<div class="loading-indicator" *ngIf="isLoading$ | async">
+  <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
 </div>
+
+<router-outlet>
+
+</router-outlet>

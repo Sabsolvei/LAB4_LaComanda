@@ -50,9 +50,9 @@ export class MesasComponent implements OnInit {
 
 
     // if (event.estado === "Libre") {
-      // Abrir comanda
-      this.mesa = event;
-      this.abrirComanda(event);
+    // Abrir comanda
+    this.mesa = event;
+    this.abrirComanda(event);
     // }
   }
 
@@ -82,12 +82,13 @@ export class MesasComponent implements OnInit {
   }
 
   abrirComanda(mesa: IMesa) {
+    this.auth.loadingOn();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
 
-    if(mesa.comanda == 0) {
+    if (mesa.comanda == 0) {
       dialogConfig.data = {
         comanda: null,
         pedidoIndex: -1, // si viene por este lado, no tiene pedido creado
@@ -97,10 +98,12 @@ export class MesasComponent implements OnInit {
       const dialogRef = this.dialog.open(MenuCartaComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe(result => {
+        this.auth.loadingOff();
         // console.log(`Dialog result: ${result}`);
       });
     } else {
       this._comanda.buscarComanda(mesa.comanda).then(com => {
+        this.auth.loadingOff();
         this.mesa = mesa;
         this.comanda = com;
 
@@ -113,6 +116,7 @@ export class MesasComponent implements OnInit {
         const dialogRef = this.dialog.open(MenuCartaComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(result => {
+          this.auth.loadingOff();
           console.log(`Dialog result: ${result}`);
         });
 

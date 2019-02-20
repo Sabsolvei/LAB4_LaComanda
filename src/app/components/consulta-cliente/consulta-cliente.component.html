@@ -1,4 +1,4 @@
-<div *ngIf="perfil == 'anonimo' && !comanda" class="ingresarCodMesa">
+<div *ngIf="(perfil == 'anonimo' && !comanda) || (mostrarBuscador && !comanda)" class="ingresarCodMesa">
     <div>
         <mat-form-field appearance="outline" class='blockButton'>
             <mat-label># MESA</mat-label>

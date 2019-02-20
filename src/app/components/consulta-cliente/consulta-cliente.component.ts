@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../providers/auth/auth';
 import { UsuarioService } from './../../providers/usuarios/usuario.service';
 import { IComanda } from './../../clases/IComanda';
 import { Subscription } from 'rxjs';
@@ -7,6 +8,7 @@ import { ComandasService } from 'src/app/providers/comandas/comandas.service';
 import { MesaService } from 'src/app/providers/mesa/mesa.service';
 import { IMesa } from 'src/app/clases/IMesa';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-consulta-cliente',
@@ -25,6 +27,7 @@ export class ConsultaClienteComponent implements OnInit {
   public nombreMozo: string = '';
   // public codigo: string = '';
   public codigoMesa: string;
+  public mostrarBuscador: boolean = false;
   //  =
   //   [
   //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } }
@@ -34,8 +37,11 @@ export class ConsultaClienteComponent implements OnInit {
     public _comanda: ComandasService,
     public _mesa: MesaService,
     public _usuario: UsuarioService,
-    private _router: Router
-  ) { }
+    private _router: Router,
+    private _auth: AuthProvider
+  ) {
+    
+  }
 
   ngOnInit() {
     this.perfil = localStorage.getItem('perfil');
@@ -45,7 +51,7 @@ export class ConsultaClienteComponent implements OnInit {
         this.comandas = data;
         this.traerComandaPorCliente();
       });
-    }
+    } 
   }
 
   public traerComandaPorCodigoMesa(codigoMesa: string) {
@@ -79,7 +85,8 @@ export class ConsultaClienteComponent implements OnInit {
   }
 
   traerComandaPorCliente() {
-
+    this._auth.loadingOn();
+    let encontro: boolean = false;
     for (let i = 0; i < this.comandas.length; i++) {
       this._comanda.verificarComandaPorUsuario(this.comandas[i].id)
         .then((c) => {
@@ -89,7 +96,10 @@ export class ConsultaClienteComponent implements OnInit {
               this.comanda = c;
               localStorage.setItem('comandaID', this.comanda.id.toString());
               localStorage.setItem('mesaID', this.mesa.idMesa.toString());
-              this.traerMozoAsociado(this.comanda.mozoId);
+              this.traerMozoAsociado(this.comanda.mozoId).then((respuesta) => {
+                this._auth.loadingOff();
+                encontro = true;
+              });
             });
           }
         });
@@ -97,19 +107,26 @@ export class ConsultaClienteComponent implements OnInit {
         break;
       }
     }
+    if (!encontro) {
+      this._auth.loadingOff();
+      this.mostrarBuscador = true;
+      console.log("No tiene comanda abierta");
+    }
   }
 
   traerMozoAsociado(mozoId: any): Promise<any> {
     return new Promise((resolve) => {
-      this._usuario.buscarNombreYApellido(mozoId).then((mozo) => {
-        this.nombreMozo = mozo;
-        localStorage.setItem('nombreMozo', mozo);
-        this._usuario.buscarFoto(mozoId).then((url) => {
-          this.fotoMozo = url;
-          localStorage.setItem('fotoMozo', url);
-          resolve(true);
+      this._usuario.buscarNombreYApellido(mozoId)
+        .then((mozo) => {
+          this.nombreMozo = mozo;
+          localStorage.setItem('nombreMozo', mozo);
+          this._usuario.buscarFoto(mozoId)
+            .then((url) => {
+              this.fotoMozo = url;
+              localStorage.setItem('fotoMozo', url);
+              resolve(true);
+            });
         });
-      });
     });
   }
 
