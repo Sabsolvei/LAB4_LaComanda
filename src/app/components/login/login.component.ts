@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
     public _auth: AuthProvider,
     private route: ActivatedRoute,
     private _router: Router) {
-     
+
   }
 
   ngOnInit() {
-   
+   console.log("LOGIN!!!!!!!!!!!!");
     this._auth.Session.subscribe(_session => {
       if (!_session) {
         // console.log('SESION CERRADA');
