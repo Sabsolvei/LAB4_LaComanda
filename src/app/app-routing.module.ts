@@ -10,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MesasComponent } from './components/mesas/mesas.component';
 import { AuthGuard } from './auth.guard';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
+import { Grafico1Component } from './components/graficos/grafico1/grafico1.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -58,6 +59,7 @@ const routes: Routes = [
       rolesPermitidos: ['admin', 'mozo']
     }
   },
+  { path: 'grafico', component: Grafico1Component },
 ];
 
 @NgModule({
