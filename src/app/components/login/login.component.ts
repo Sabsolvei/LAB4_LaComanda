@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+   console.log("LOGIN!!!!!!!!!!!!");
     this._auth.Session.subscribe(_session => {
       if (!_session) {
         // console.log('SESION CERRADA');

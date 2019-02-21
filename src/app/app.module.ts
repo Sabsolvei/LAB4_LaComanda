@@ -48,6 +48,9 @@ import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { PuntajeComponent } from './components/puntaje/puntaje.component';
 import { AppHeaderComponent } from './components/app-header/app-header/app-header.component';
 
+import { ChartsModule } from 'ng2-charts';
+import { Grafico1Component } from './components/graficos/grafico1/grafico1.component';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -83,7 +86,8 @@ export const firebaseConfig = {
     PuntajeComponent,
     ConfirmacionDialog,
     LlamandoMozoPipe,
-    AppHeaderComponent
+    AppHeaderComponent,
+    Grafico1Component
   ],
   imports: [
     BrowserModule,
@@ -96,7 +100,8 @@ export const firebaseConfig = {
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   entryComponents: [
     AltaComandaComponent,
