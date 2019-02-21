@@ -13,11 +13,12 @@
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-            <button mat-fab color="primary" *ngIf="verBotones()" (click)="cerrarCobrarComanda()" [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
+            <button mat-fab color="primary" *ngIf="verBotones()" (click)="cerrarCobrarComanda()"
+                [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
         </mat-card-actions>
     </mat-card>
 </div>
 
 <ng-template #noComanda>
-    <p>No hay comanda seleccionada</p>
+    <p style="color:#dfdfdf; text-align: center; margin-top:40%; font-size: 180%; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">NO HAY COMANDA SELECCIONADA</p>
 </ng-template>

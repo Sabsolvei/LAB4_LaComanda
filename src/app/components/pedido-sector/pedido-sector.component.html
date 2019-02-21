@@ -6,10 +6,10 @@
         <mat-card-subtitle class='tiempoEstimado'>{{itemPedido.tiempoEstimado}} minutos</mat-card-subtitle>
         <div *ngIf="itemPedido.estadoSubpedido == 'Pendiente'">
             <button mat-icon-button color="primary" class='botonMasCinco' (click)="sumarCincoMinutos()">
-              <mat-icon class='iconoMasCinco'>forward_5</mat-icon>
+              <mat-icon class='iconoMasCinco' color="accent">forward_5</mat-icon>
             </button>
             <button mat-icon-button color="primary" class='botonMenosCinco' (click)="restarCincoMinutos()">
-              <mat-icon class='iconoMenosCinco'>replay_5</mat-icon>
+              <mat-icon class='iconoMenosCinco' color="accent">replay_5</mat-icon>
             </button>
         </div>
     </mat-card-header>

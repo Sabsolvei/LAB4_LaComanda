@@ -13,7 +13,7 @@ export class MesaService {
 
 
   traerMesas(): Observable<{}[]> {
-    return this.afDB.list('/mesas/').valueChanges();
+    return this.afDB.list("/mesas/", ref => ref.orderByChild("numero")).valueChanges();
   }
 
   public actualizarMesa(mesa: IMesa): Promise<Boolean> {

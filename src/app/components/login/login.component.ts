@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
    console.log("LOGIN!!!!!!!!!!!!");
     this._auth.Session.subscribe(_session => {
       if (!_session) {
@@ -55,6 +56,12 @@ export class LoginComponent implements OnInit {
     this._auth.loginUser(this.usuario, this.pass)
       .catch(err => Promise.reject(err))
       .then((user: Iusuario) => {
+        if (user.perfil == 'admin') {
+          this._auth.mostrarMenu();
+        }
+        else {
+          this._auth.ocultarMenu();
+        }
         this._auth.cargarLocalStorage(user);
         this._auth.redireccionar(user);
         this._auth.loadingOff();

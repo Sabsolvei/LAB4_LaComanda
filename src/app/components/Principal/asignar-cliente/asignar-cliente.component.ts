@@ -13,23 +13,23 @@ import { ComandasService } from '../../../providers/comandas/comandas.service';
 })
 export class AsignarClienteComponent implements OnInit {
 
-public dniCliente: string;
-public encontrado: boolean = false;
-public buscado: boolean = false;
-public mesa: IMesa;
-public asignado: boolean = false;
+  public dniCliente: string;
+  public encontrado: boolean = false;
+  public buscado: boolean = false;
+  public mesa: IMesa;
+  public asignado: boolean = false;
 
-public cliente: ICliente = {
-  nombre: "",
-  apellido: "",
-  dni: "",
-  email: ""
-};
+  public cliente: ICliente = {
+    nombre: "",
+    apellido: "",
+    dni: "",
+    email: ""
+  };
 
 
-public get cliEncontrado(): boolean {
-  return this.cliEncontrado;
-}
+  public get cliEncontrado(): boolean {
+    return this.cliEncontrado;
+  }
 
   constructor(
     private dialogRef: MatDialogRef<AsignarClienteComponent>,
@@ -37,8 +37,8 @@ public get cliEncontrado(): boolean {
     public _cliente: ClienteService,
     public _mesa: MesaService,
     public _comanda: ComandasService) {
-      this.mesa = data.mesa;
-    }
+    this.mesa = data.mesa;
+  }
 
   ngOnInit() {
   }
@@ -46,18 +46,19 @@ public get cliEncontrado(): boolean {
   asignar() {
     this.mesa.clienteDni = this.cliente.dni;
     this.mesa.clienteNombre = this.cliente.nombre;
+    this.mesa.estado = 'Esperando';
 
     this._mesa.actualizarMesa(this.mesa).then(() => {
 
       if (this.mesa.comanda > 0) {
-          this._comanda.buscarComanda(this.mesa.comanda).then(c => {
-            c.clienteId = this.mesa.clienteDni;
-            c.nombreCliente = this.mesa.clienteNombre;
-           this._comanda.actualizarComanda(c).then(() => this.asignado = true);
-          });
-        } else {
-          this.asignado = true;
-        }
+        this._comanda.buscarComanda(this.mesa.comanda).then(c => {
+          c.clienteId = this.mesa.clienteDni;
+          c.nombreCliente = this.mesa.clienteNombre;
+          this._comanda.actualizarComanda(c).then(() => this.asignado = true);
+        });
+      } else {
+        this.asignado = true;
+      }
     });
   }
 

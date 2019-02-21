@@ -31,7 +31,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.perfil = localStorage.getItem('perfil');
     this.isLoading$ = this._auth.isLoading;
   }
 
