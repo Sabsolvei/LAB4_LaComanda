@@ -1,14 +1,14 @@
-<mat-card class="card" [class.ponerBorde]="mesa.estado =='Llamando'" [class.quadrat]="mesa.estado =='Llamando' || mesa.estado == 'Cobrando'" [style.background-color]="tomarColor()">
+<mat-card class="card" [class.ponerBorde]="mesa.estado =='Llamando'" [class.quadrat]="mesa.estado =='Llamando' || mesa.estado == 'Cobrar' || mesa.estado == 'Cobrando'" [style.background-color]="tomarColor()">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Mesa {{mesa.numero}}
+        <mat-card-title style="font-weight: bold;">{{mesa.numero}}
         </mat-card-title>
         <mat-card-subtitle># {{mesa.codigoQr}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>Estado: {{mesa.estado}}</p>
+        <p style="font-weight: bold;">{{mesa.estado.toUpperCase()}}</p>
         <div *ngIf="mesa.clienteDni != ''">
-            <p>Cliente: {{mesa.clienteNombre}}</p>
+            <p style="color: grey;">{{mesa.clienteNombre}}</p>
         </div>
     </mat-card-content>
     <mat-card-actions>
@@ -16,11 +16,11 @@
             <mat-icon>face</mat-icon>
         </button>
 
-        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Libre' || mesa.estado =='Comiendo'">
+        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Libre' || mesa.estado =='Comiendo' || mesa.estado =='Llamando' || mesa.estado =='Cobrar'">
             <mat-icon>queue</mat-icon>
         </button>
 
-        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Cobrando' || mesa.estado =='Llamando'  || mesa.estado =='Comiendo'">
+        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Cobrando' || mesa.estado =='Cobrar' || mesa.estado =='Llamando'  || mesa.estado =='Comiendo'">
             <mat-icon>search</mat-icon>
         </button>
     </mat-card-actions>

@@ -3,6 +3,7 @@ import { EncuestaService } from './../../providers/encuesta/encuesta.service';
 import { Component, OnInit } from '@angular/core';
 import { IEncuesta } from 'src/app/clases/iencuesta';
 import { FormControl } from '@angular/forms';
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-encuesta',
@@ -17,7 +18,8 @@ export class EncuestaComponent implements OnInit {
   public encuesta: IEncuesta = {};
   constructor(
     public _encuesta: EncuestaService,
-    public _auth: AuthProvider
+    public _auth: AuthProvider,
+    public _router: Router
   ) {
     // this.encuesta = { mesa: 0, restaurant: 0, mozo: 0, cocinero: 0 };
   }
@@ -59,8 +61,9 @@ export class EncuestaComponent implements OnInit {
     if (this.encuesta.mesa > 0 && this.encuesta.restaurant > 0 && this.encuesta.mozo > 0 && this.encuesta.cocinero > 0) {
       this.encuesta.comentario = this.comentario;
       console.log(this.encuesta);
-      this._encuesta.guardarEncuesta(this.encuesta).then(()=> {
+      this._encuesta.guardarEncuesta(this.encuesta).then(() => {
         this._auth.loadingOff();
+        this._router.navigate(['../consulta']);
       });
     }
   }

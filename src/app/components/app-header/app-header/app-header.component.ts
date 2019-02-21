@@ -10,13 +10,14 @@ import { Observable } from 'rxjs';
 export class AppHeaderComponent implements OnInit {
 
   public perfil: string = null;
-  isLoggedIn$: Observable<boolean>;                  // {1}
+  public isLoggedIn$: Observable<boolean>;
+  public hasMenu$: Observable<boolean>;
 
   constructor(private _auth: AuthProvider) { }
 
   ngOnInit() {
-    this.perfil = localStorage.getItem('perfil');
-    this.isLoggedIn$ = this._auth.isLoggedIn; // {2}
+    this.isLoggedIn$ = this._auth.isLoggedIn;
+    this.hasMenu$ = this._auth.hasMenu;
   }
 
   salir() {

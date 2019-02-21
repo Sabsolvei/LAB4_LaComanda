@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
     public _auth: AuthProvider,
     private route: ActivatedRoute,
     private _router: Router) {
-     
+
   }
 
   ngOnInit() {
-   
+
     this._auth.Session.subscribe(_session => {
       if (!_session) {
         // console.log('SESION CERRADA');
@@ -55,6 +55,12 @@ export class LoginComponent implements OnInit {
     this._auth.loginUser(this.usuario, this.pass)
       .catch(err => Promise.reject(err))
       .then((user: Iusuario) => {
+        if (user.perfil == 'admin') {
+          this._auth.mostrarMenu();
+        }
+        else {
+          this._auth.ocultarMenu();
+        }
         this._auth.cargarLocalStorage(user);
         this._auth.redireccionar(user);
         this._auth.loadingOff();

@@ -18,6 +18,7 @@ export class AuthProvider {
     public perfil$ = new BehaviorSubject("");
     private loggedIn = new BehaviorSubject<boolean>(false);
     private loading = new BehaviorSubject<boolean>(false);
+    private itemsMenu = new BehaviorSubject<boolean>(false);
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -32,6 +33,18 @@ export class AuthProvider {
 
     get isLoading() {
         return this.loading.asObservable();
+    }
+
+    get hasMenu() {
+        return this.itemsMenu.asObservable();
+    }
+
+    mostrarMenu() {
+        this.itemsMenu.next(true);
+    }
+
+    ocultarMenu() {
+        this.itemsMenu.next(false);
     }
 
     dejarPasar() {
@@ -64,7 +77,7 @@ export class AuthProvider {
                 break;
 
             case "admin":
-                destinoPage = "registroEmpleados";
+                destinoPage = "mesas";
                 break;
 
             case "mozo":
