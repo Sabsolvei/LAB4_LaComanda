@@ -1,6 +1,3 @@
-<!-- <mat-spinner></mat-spinner> -->
-
-
 <div class="fondo">
 
     <div class="signin-content">
@@ -19,8 +16,7 @@
                     <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading"
-                    (click)='ingresar()'>INGRESAR</button>
+                <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
                 <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR
                     ANONIMO</button>
             </mat-card-content>
@@ -37,19 +33,3 @@
         </mat-card>
     </div>
 </div>
-
-
-<!-- <div class="divLogin">
-    <div>
-        <mat-form-field class="inputLargo">
-            <input matInput placeholder='Email' type="text" [(ngModel)]="usuario" required />
-        </mat-form-field>
-        <mat-form-field class="inputLargo">
-            <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
-        </mat-form-field>
-    </div>
-
-    <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
-    <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR ANONIMO</button>
- -->
-<!-- style="background-color: rgb(158, 164, 246)" -->

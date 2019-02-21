@@ -1,15 +1,20 @@
 <div>
     <mat-toolbar style="background-color:rgb(63, 104, 236); color: white" *ngIf="isLoggedIn$ | async">
         <mat-toolbar-row>
-            <button mat-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger"
-                (click)="matMenuTrigger.openMenu()" *ngIf="hasMenu$ | async">
+            <button mat-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger" (click)="matMenuTrigger.openMenu()" *ngIf="hasMenu$ | async">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" [overlapTrigger]="false">
                 <!-- <div (click)="matMenuTrigger.closeMenu()"> -->
-                    <button mat-menu-item [routerLink]="['/mesas']">Mesas</button>
-                    <button mat-menu-item [routerLink]="['/registroEmpleados']">Registrar empleado</button>
+                <button mat-menu-item [routerLink]="['/mesas']">Mesas</button>
+                <button mat-menu-item [routerLink]="['/registroEmpleados']">Registrar empleado</button>
+                <button mat-menu-item [matMenuTriggerFor]="reportes">Reportes</button>
                 <!-- </div> -->
+            </mat-menu>
+
+            <mat-menu #reportes="matMenu">
+                <button mat-menu-item [routerLink]="['/masVendidos']">Mas Vendidos</button>
+                <!-- <button mat-menu-item>Mammals</button> -->
             </mat-menu>
 
             <span class="spacer"></span>

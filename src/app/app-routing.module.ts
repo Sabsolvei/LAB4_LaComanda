@@ -59,7 +59,7 @@ const routes: Routes = [
       rolesPermitidos: ['admin', 'mozo']
     }
   },
-  { path: 'grafico', component: Grafico1Component },
+  { path: 'masVendidos', component: Grafico1Component },
 ];
 
 @NgModule({
