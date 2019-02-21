@@ -8,37 +8,20 @@ import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
   styleUrls: ['./grafico1.component.scss']
 })
 export class Grafico1Component implements OnInit{
-   // Doughnut
-   // public listaLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-   public listaLabels:string[] = [];
+  public barChartLabels: string[] = ['Mas vendidos'];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
 
-  //  private lisLabels$ = new ReplaySubject<string>();
-  //  private lisData$ = new ReplaySubject<number>();
+  // public barChartData2:any[] = [
+  //   {data: [65], label: 'Carne'},
+  //   {data: [28], label: 'Pollo'}
+  // ];
 
-   // public listaData:number[] = [350, 450, 100];
-   public listaData:number[] = [];
-   public doughnutChartType:string = 'doughnut';
+  public barChartData: any[] = [];
 
-   // events
-   public chartClicked(e:any):void {
-     console.log(e);
-   }
-
-   public chartHovered(e:any):void {
-     console.log(e);
-   }
 
    constructor(private _graf: GraficosService) {
-    //this.traerDatos();
   }
-
-  // get listaLabels(): Observable<string> {
-  //   return this.lisLabels$.asObservable();
-  // }
-
-  // get listaData(): Observable<number> {
-  //   return this.lisData$.asObservable();
-  // }
 
   ngOnInit() {
     this.traerDatos();
@@ -46,17 +29,32 @@ export class Grafico1Component implements OnInit{
 
   traerDatos() {
     this._graf.traerProductosMasVendidos().then((data: IListaProductos[]) => {
-      console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        // this.lisLabels$.next(data[i].nombre);
-        // this.lisData$.next(data[i].cantidad);
 
-        // console.log(this.lisData$);
-        this.listaLabels.push(data[i].nombre);
-        this.listaData.push(data[i].cantidad);
+      this.barChartData.push({data: [0], label: ""});
+      for (let i = 0; i < data.length; i++) {
+        this.barChartData.push({data: [data[i].cantidad], label: data[i].nombre});
       }
+
+      console.log(this.barChartData);
     });
   }
+
+
+  public barChartOptions:any = {
+    scaleShowVerticalLines: true,
+    responsive: true
+  };
+
+
+  // events
+  public chartClicked(e:any):void {
+    // console.log(e);
+  }
+
+  public chartHovered(e:any):void {
+    // console.log(e);
+  }
+
 }
 
 interface IListaProductos {

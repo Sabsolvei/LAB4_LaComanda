@@ -1,27 +1,24 @@
-.separar button,
-.separar a {
-    margin-right: 2%;
-    margin-left: 2%;
-}
-
-.separar {
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 7%;
-    // text-align: left;
-}
-
+// .separar button,
+// .separar a {
+//     margin-right: 2%;
+//     margin-left: 2%;
+// }
+// .separar {
+//     width: 80%;
+//     margin: 0 auto;
+//     margin-top: 5%;
+//     // text-align: left;
+// }
 .inputLargo {
-    width: 80%;
+    width: 100%;
 }
 
-.divLogin {
-    width: 30%;
-    margin: 0 auto;
-    margin-top: 10%;
-    text-align: left;
-}
-
+// .divLogin {
+//     width: 30%;
+//     margin: 0 auto;
+//     margin-top: 10%;
+//     text-align: left;
+// }
 .botonIngresar {
     width: 80%;
 }
@@ -29,9 +26,26 @@
 ///////////////////////
 mat-card {
     // max-width: 400px;
-    max-width: 35%;
-    margin: 2em auto;
+    // max-width: 35%;
+    // width: 60vw;
+    //margin: 2em auto;
+    //position: absolute;
+    //align-content: center;
+    //margin-top: 15%;
     text-align: center;
+}
+
+@media screen and (min-width: 40em) {
+    mat-card {
+        vertical-align: middle;
+        max-width: calc(70% - 1em);
+    }
+}
+
+@media screen and (min-width: 60em) {
+    mat-card {
+        max-width: calc(25% - 1em);
+    }
 }
 
 mat-card-content {
@@ -40,8 +54,19 @@ mat-card-content {
 
 .signin-content {
     // padding: 60px 1rem;
-    padding-top: 8%;
-    padding-bottom: 8%;
+    // padding-top: 8%;
+    // margin-top: 6%;
+    // padding-bottom: 6%;
+    // vertical-align: 50%;
+    // align-items: center;
+    // height: 100vh;
+    //padding: 0%;
+    //margin: 0%;
+    //width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .full-width-input {
@@ -54,9 +79,8 @@ mat-card-content {
     margin-top: 2%;
 }
 
-
 .fondo {
-    background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("../../../assets/1920_1080_20100520014441336870.jpg");
+    background: linear-gradient(rgba(255, 255, 255, .3), rgba(255, 255, 255, .3)), url("../../../assets/1920_1080_20100520014441336870.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -67,17 +91,14 @@ mat-card-content {
 .tituloLogin {
     font-weight: bold;
     color: #ffffff;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .headerLogin {
-    display: flex; 
-    justify-content: center; 
+    //display: flex;
+    // margin-top: 8%;
+    justify-content: center;
     background-color: rgb(185, 185, 255);
 }
 
-
-
-
-
-  
+///////////////////////////////////////////////////////////

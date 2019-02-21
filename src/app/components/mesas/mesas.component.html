@@ -1,8 +1,8 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill>
 
-    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-start" fxLayout="row wrap">
+    <div fxFlex="60%" fxFlexFill fxLayout.lt-sm="column" fxFlex.xs="55" fxLayoutAlign="flex-center" fxLayout="row wrap">
         <div *ngFor="let mesa of mesas">
-            <div fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" style="padding:10px; padding-left: 5px; padding-top:10px;" fxLayoutAlign="start center">
+            <div fxFlex.lt-md="1 2 calc(35% - 25px)" fxFlex.lt-sm="100%" style="padding:5px; padding-left: 5px; padding-top:10px;">
 
                 <app-mesa (cargarPedido)="cargarPedido($event)" (asignarMesa)="asignarMesa($event)" (verComanda)="verComanda($event)" [mesa]='mesa'></app-mesa>
             </div>

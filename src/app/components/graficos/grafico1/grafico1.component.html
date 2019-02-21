@@ -1,3 +1,7 @@
-<div style="display: block">
-    <canvas baseChart [data]="listaData" [labels]="listaLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+<h2>Productos mas vendidos</h2>
+
+<div>
+    <div style="height: 50vh;" *ngIf="barChartData.length > 0">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+    </div>
 </div>
