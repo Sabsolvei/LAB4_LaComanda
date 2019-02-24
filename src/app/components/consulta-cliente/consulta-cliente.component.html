@@ -1,3 +1,14 @@
+<div  *ngIf="!isLoggedIn$ | async">
+    <mat-toolbar style="background-color:rgb(63, 104, 236); color: white">
+        <mat-toolbar-row>
+            <span class="spacer"></span>
+            <button mat-icon-button color='basic' (click)="irALogin()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
+
 <div *ngIf="(perfil == 'anonimo' && !comanda) || (mostrarBuscador && !comanda)" class="ingresarCodMesa">
     <div>
         <mat-form-field appearance="outline" class='blockButton'>

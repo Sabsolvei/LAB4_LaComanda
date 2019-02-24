@@ -50,6 +50,14 @@ import { AppHeaderComponent } from './components/app-header/app-header/app-heade
 
 import { ChartsModule } from 'ng2-charts';
 import { Grafico1Component } from './components/graficos/grafico1/grafico1.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaFormsModule} from 'ng-recaptcha/forms';
+import { FormatoHoraPipe } from './pipes/formato-hora.pipe';
+import { FormatoFechaPipe } from './pipes/formato-fecha.pipe';
+import { HighlightDirective } from './directives/highlight.directive';
+import { ElevateDirective } from './directives/elevate.directive';
+import { ElevateSelectedDirective } from './directives/elevate-selected.directive';
+import { CaptchaPropioComponent } from './components/captcha-propio/captcha-propio.component';
 
 import { AgmCoreModule } from '@agm/core';            // @agm/core
 import { AgmDirectionModule } from 'agm-direction';
@@ -92,7 +100,13 @@ export const firebaseConfig = {
     LlamandoMozoPipe,
     AppHeaderComponent,
     Grafico1Component,
-    MapaComponent
+    MapaComponent,
+    FormatoHoraPipe,
+    FormatoFechaPipe,
+    HighlightDirective,
+    ElevateDirective,
+    ElevateSelectedDirective,
+    CaptchaPropioComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +124,9 @@ export const firebaseConfig = {
     AgmCoreModule.forRoot({ // @agm/core
       apiKey: 'AIzaSyDBOE9pA2a1TtVGGdreh6U485Knv81aor4',
     }),
-    AgmDirectionModule     // agm-direction
+    AgmDirectionModule,
+    RecaptchaModule, //.forRoot()
+    RecaptchaFormsModule
   ],
   entryComponents: [
     AltaComandaComponent,

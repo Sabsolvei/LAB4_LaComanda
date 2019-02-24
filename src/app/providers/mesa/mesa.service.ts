@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Subscription, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
@@ -9,8 +10,17 @@ import { ComandasService } from '../comandas/comandas.service';
 })
 export class MesaService {
 
+  private mesaSeleccionada = new BehaviorSubject<number>(0);
+
   constructor(public afDB: AngularFireDatabase) { }
 
+  get numeroSeleccionado() {
+    return this.mesaSeleccionada.asObservable();
+  }
+
+  public seleccionarMesa(nro: number) {
+    this.mesaSeleccionada.next(nro);
+  }
 
   traerMesas(): Observable<{}[]> {
     return this.afDB.list("/mesas/", ref => ref.orderByChild("numero")).valueChanges();
