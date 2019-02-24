@@ -1,7 +1,10 @@
-<h2>Productos mas vendidos</h2>
+<div id="contentToConvert">
+    <h2 style="padding-bottom: 5%">Productos mas vendidos</h2>
 
-<div>
-    <div style="height: 50vh;" *ngIf="barChartData.length > 0">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+    <div>
+        <div style="height: 100vh;" *ngIf="barChartData.length > 0">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
     </div>
 </div>
+<button (click)="generatePDF()">Exportar a PDF </button>

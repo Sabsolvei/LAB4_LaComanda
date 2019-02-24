@@ -11,6 +11,7 @@ import { MesasComponent } from './components/mesas/mesas.component';
 import { AuthGuard } from './auth.guard';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { Grafico1Component } from './components/graficos/grafico1/grafico1.component';
+import { MapaComponent } from './components/mapa/mapa.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -60,6 +61,7 @@ const routes: Routes = [
     }
   },
   { path: 'masVendidos', component: Grafico1Component },
+  { path: 'mapa', component: MapaComponent }
 ];
 
 @NgModule({

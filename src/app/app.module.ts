@@ -51,6 +51,10 @@ import { AppHeaderComponent } from './components/app-header/app-header/app-heade
 import { ChartsModule } from 'ng2-charts';
 import { Grafico1Component } from './components/graficos/grafico1/grafico1.component';
 
+import { AgmCoreModule } from '@agm/core';            // @agm/core
+import { AgmDirectionModule } from 'agm-direction';
+import { MapaComponent } from './components/mapa/mapa.component';   // agm-direction
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -87,7 +91,8 @@ export const firebaseConfig = {
     ConfirmacionDialog,
     LlamandoMozoPipe,
     AppHeaderComponent,
-    Grafico1Component
+    Grafico1Component,
+    MapaComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +106,11 @@ export const firebaseConfig = {
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    AgmCoreModule.forRoot({ // @agm/core
+      apiKey: 'AIzaSyDBOE9pA2a1TtVGGdreh6U485Knv81aor4',
+    }),
+    AgmDirectionModule     // agm-direction
   ],
   entryComponents: [
     AltaComandaComponent,
