@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { IComanda } from 'src/app/clases/IComanda';
 import { IMesa } from 'src/app/clases/IMesa';
 import { ComandasService } from '../../../providers/comandas/comandas.service';
 import { MatSnackBar } from '@angular/material';
 import { MesaService } from '../../../providers/mesa/mesa.service';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-ver-comanda',
@@ -11,7 +12,7 @@ import { MesaService } from '../../../providers/mesa/mesa.service';
   styleUrls: ['./ver-comanda.component.scss']
 })
 export class VerComandaComponent implements OnInit {
-
+  @ViewChild("content") content: ElementRef;
   @Input() public comanda: IComanda;
   @Input() public mesa: IMesa;
   public nombreBoton: string;
@@ -98,5 +99,24 @@ export class VerComandaComponent implements OnInit {
         return false;
       }
     }
+  }
+
+  exportPDF() {
+    const doc = new jsPDF();
+
+    const spetialELementHandlers = {
+      "#editor": function(element, renderer) {
+        return true;
+      }
+    };
+
+    let content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': spetialELementHandlers
+    });
+
+    doc.save("grafico1.pdf");
   }
 }

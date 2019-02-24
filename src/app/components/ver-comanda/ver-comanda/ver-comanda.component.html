@@ -1,4 +1,4 @@
-<div *ngIf="comanda != null else noComanda">
+<div id="content" #content *ngIf="comanda != null else noComanda">
     <div *ngFor="let pedido of comanda.pedidos; index as i">
         <app-pedido [index]=i [comanda]='comanda' [mesa]='mesa'></app-pedido>
     </div>
@@ -13,8 +13,9 @@
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-            <button mat-fab color="primary" *ngIf="verBotones()" (click)="confirmarCerrarConCaptcha()"
-                [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
+            <button mat-fab color="primary" *ngIf="verBotones()" (click)="confirmarCerrarConCaptcha()" [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
+            <!-- <button mat-fab color="primary" *ngIf="verBotones()" (click)="cerrarCobrarComanda()" [disabled]="habilitarBoton()"> {{nombreBoton}} </button> -->
+            <button (click)="exportPDF()">Exportar a PDF </button>
         </mat-card-actions>
         <div *ngIf="mostrarCaptcha" class="divCaptcha">
             <app-captcha-propio (enviarResultado)='permitirCerrarMesa($event)' (cerrarCaptcha)="mostrarCaptcha=false"></app-captcha-propio>
