@@ -1,3 +1,35 @@
-<p>
-  captcha-propio works!
-</p>
+<mat-card class="captchaCard">
+  <mat-card-header
+    style="display: flex; justify-content: center; background-color: rgb(65, 77, 253); color: whitesmoke">
+    <div mat-card-avatar class="example-header-image"></div>
+    <p>RESUELVA PARA CERRAR</p>
+    <button mat-icon-button (click)='cerrar()' style='margin-left:7%;'>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="5" rowHeight="100px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <h3 class='numeros'>{{nuevoCaptcha.primerNumero}}</h3>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <h3 class='operacion'>{{nuevoCaptcha.operador}}</h3>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <h3 class='numeros'>{{nuevoCaptcha.segundoNumero}}</h3>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(0)">0</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(1)">1</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(2)">2</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(3)">3</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(4)">4</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(5)">5</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(6)">6</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(7)">7</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(8)">8</button>
+  <button mat-mini-fab color="accent" class='minifab' (click)="guardarRespuesta(9)">9</button>
+</mat-card>
