@@ -1,7 +1,7 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { UsuarioService } from './../../providers/usuarios/usuario.service';
 import { IComanda } from './../../clases/IComanda';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { IComandaPedido } from 'src/app/clases/IComandaPedido';
 import { Component, OnInit } from '@angular/core';
 import { ComandasService } from 'src/app/providers/comandas/comandas.service';
@@ -28,6 +28,7 @@ export class ConsultaClienteComponent implements OnInit {
   // public codigo: string = '';
   public codigoMesa: string;
   public mostrarBuscador: boolean = false;
+  public isLoggedIn$: Observable<boolean>;
   //  =
   //   [
   //     { "id": 1, "estado": "derivado", "tiempoMayorEstimado": 20, "codigoPedido": "CD423", "subPedidosBebida": { "id": 1, "estado": 'Pendiente', "items": [{ "cantidad": 2, "bebidaID": 333104 }, { "cantidad": 2, "bebidaID": 333104 }] } }
@@ -40,10 +41,11 @@ export class ConsultaClienteComponent implements OnInit {
     private _router: Router,
     private _auth: AuthProvider
   ) {
-    
+
   }
 
   ngOnInit() {
+    this.isLoggedIn$ = this._auth.isLoggedIn;
     this.perfil = localStorage.getItem('perfil');
 
     if (this.perfil == 'Cliente') {
@@ -51,7 +53,11 @@ export class ConsultaClienteComponent implements OnInit {
         this.comandas = data;
         this.traerComandaPorCliente();
       });
-    } 
+    }
+  }
+
+  public irALogin() {
+    this._router.navigate(["../login"]);
   }
 
   public traerComandaPorCodigoMesa(codigoMesa: string) {
@@ -131,7 +137,10 @@ export class ConsultaClienteComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.comandaSubscription.unsubscribe();
+    if (this.comandaSubscription) {
+      this.comandaSubscription.unsubscribe();
+    }
+
   }
 
   public hacerEncuesta() {

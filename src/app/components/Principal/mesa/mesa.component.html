@@ -1,6 +1,14 @@
-<mat-card class="card" [class.ponerBorde]="mesa.estado =='Llamando'" [class.quadrat]="mesa.estado =='Llamando' || mesa.estado == 'Cobrar' || mesa.estado == 'Cobrando'" [style.background-color]="tomarColor()">
+<mat-card class="card" appElevate appElevateSelected [mesa]='mesa.numero' [obs]= 'mesaSeleccionada$' [appHighlight]='mesa.estado'  >
+        <!-- [appElevateSelected]='mesaSelec' [mesa]='mesa.numero'-->
+    <!-- <mat-card class="card" appElevate appElevateSelected [appHighlight]='mesa.estado'  [mesa]='mesa.numero'> -->
+        <!-- [class.ponerBorde]="mesa.estado =='Llamando'" -->
+     <!-- [class.quadrat]="mesa.estado =='Llamando' || mesa.estado == 'Cobrar' || mesa.estado == 'Cobrando'" -->
+    <!-- [style.background-color]="tomarColor()"> 
+    *ngIf="mesaSelec == 1 | async"
+    -->
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
+     
         <mat-card-title style="font-weight: bold;">{{mesa.numero}}
         </mat-card-title>
         <mat-card-subtitle># {{mesa.codigoQr}}</mat-card-subtitle>
@@ -12,15 +20,16 @@
         </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-mini-fab matTooltip="Asignar cliente" color="primary" (click)="asignarCliente()" *ngIf="mesa.clienteDni == ''">
+        <button mat-mini-fab matTooltip="Asignar cliente" color="primary" (click)="asignarCliente()"
+            *ngIf="mesa.clienteDni == ''">
             <mat-icon>face</mat-icon>
         </button>
-
-        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Libre' || mesa.estado =='Comiendo' || mesa.estado =='Llamando' || mesa.estado =='Cobrar'">
+        <button mat-mini-fab color="primary" matTooltip="Cargar pedido" (click)="agregarPedido()"
+            *ngIf="mesa.estado =='Esperando' || mesa.estado =='Libre' || mesa.estado =='Comiendo' || mesa.estado =='Llamando' || mesa.estado =='Cobrar'">
             <mat-icon>queue</mat-icon>
         </button>
-
-        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()" *ngIf="mesa.estado =='Esperando' || mesa.estado =='Cobrando' || mesa.estado =='Cobrar' || mesa.estado =='Llamando'  || mesa.estado =='Comiendo'">
+        <button mat-mini-fab color="primary" matTooltip="Ver pedidos" (click)="verPedidos()"
+            *ngIf="mesa.estado =='Esperando' || mesa.estado =='Cobrando' || mesa.estado =='Cobrar' || mesa.estado =='Llamando'  || mesa.estado =='Comiendo'">
             <mat-icon>search</mat-icon>
         </button>
     </mat-card-actions>

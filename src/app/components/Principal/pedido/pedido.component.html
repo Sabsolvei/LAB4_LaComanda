@@ -1,12 +1,16 @@
 <mat-card class="example-card">
     <mat-card-header>
-        <mat-card-title class="titulo">Pedido <b>#{{comanda.pedidos[index].codigoPedido}}</b> - Estado: <b>{{comanda.pedidos[index].estado}}</b>
-            <mat-label>
+        <mat-card-title class="titulo"><b>#{{comanda.pedidos[index].codigoPedido}}</b> -
+            <b>{{comanda.pedidos[index].estado}}</b>
+            <mat-label *ngIf="comanda.pedidos[index].estado == 'Derivado'"> -
+                {{comanda.pedidos[index].horaDerivado | formatoHora: comanda.pedidos[index].horaDerivado }} hs
             </mat-label>
         </mat-card-title>
-        <mat-card-subtitle [ngStyle]="{'background-color':sumarMinutos() < 5 && comanda.pedidos[index].estado =='Derivado' ? 'orangered' : '#FCA731' }">
+        <mat-card-subtitle
+            [ngStyle]="{'background-color':sumarMinutos() < 5 && comanda.pedidos[index].estado =='Derivado' ? 'orangered' : '#FCA731' }">
             <h2>{{comanda.pedidos[index].tiempoMayorEstimado}} minutos
-                <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">- (restan {{sumarMinutos()}} min)</mat-label>
+                <mat-label *ngIf="comanda.pedidos[index].estado=='Derivado'">- (restan {{sumarMinutos()}} min)
+                </mat-label>
             </h2>
         </mat-card-subtitle>
     </mat-card-header>
@@ -17,7 +21,9 @@
                 <div mat-card-avatar mat-list-icon class="cocina"></div>
                 <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
                 <span class="spacer"></span>
-                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'">{{comanda.pedidos[index].subPedidosCocina.estado}}</h4>
+                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'"
+                    [hidden]="comanda.pedidos[index].estado == 'Entregado'">
+                    {{comanda.pedidos[index].subPedidosCocina.estado}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
@@ -27,7 +33,9 @@
                 <div mat-card-avatar mat-list-icon class="bebida"></div>
                 <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
                 <span class="spacer "></span>
-                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'">{{comanda.pedidos[index].subPedidosBebida.estado}}</h4>
+                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosBebida.estado =='Preparado'"
+                    [hidden]="comanda.pedidos[index].estado == 'Entregado'">
+                    {{comanda.pedidos[index].subPedidosBebida.estado}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
@@ -37,7 +45,9 @@
                 <div mat-card-avatar mat-list-icon class="cerveza"></div>
                 <h4 mat-line>({{item.cantidad * item.precio | currency}}) - {{item.cantidad}} - {{item.nombre}}</h4>
                 <span class="spacer "></span>
-                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCocina.estado =='Preparado'">{{comanda.pedidos[index].subPedidosCerveza.estado}}</h4>
+                <h4 [class.colorVerde]="comanda.pedidos[index].subPedidosCerveza.estado =='Preparado'"
+                    [hidden]="comanda.pedidos[index].estado == 'Entregado'">
+                    {{comanda.pedidos[index].subPedidosCerveza.estado}}</h4>
                 <mat-divider></mat-divider>
             </mat-list-item>
         </mat-list>
@@ -49,10 +59,14 @@
             <span>Esperando...</span>
         </div>
 
-        <button mat-fab color="primary" (click)="derivar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Derivar</button>
-        <button mat-fab color="primary" (click)="entregar()" *ngIf="comanda.pedidos[index].estado=='Preparado' && verBotones()">Entregar</button>
-        <button mat-fab color="accent" (click)="editar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Editar</button>
-        <button mat-fab color="warn" (click)="eliminar()" *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Quitar</button>
+        <button mat-fab color="primary" (click)="derivar()"
+            *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Derivar</button>
+        <button mat-fab color="primary" (click)="entregar()"
+            *ngIf="comanda.pedidos[index].estado=='Preparado' && verBotones()">Entregar</button>
+        <button mat-fab color="accent" (click)="editar()"
+            *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Editar</button>
+        <button mat-fab color="warn" (click)="eliminar()"
+            *ngIf="comanda.pedidos[index].estado=='Pendiente' && verBotones()">Quitar</button>
 
     </mat-card-actions>
 </mat-card>

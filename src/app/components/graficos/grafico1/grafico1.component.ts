@@ -11,7 +11,7 @@ export class Grafico1Component implements OnInit{
   public barChartLabels: string[] = ['Mas vendidos'];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
-
+  public fechaHoy: Date;
   // public barChartData2:any[] = [
   //   {data: [65], label: 'Carne'},
   //   {data: [28], label: 'Pollo'}
@@ -21,6 +21,7 @@ export class Grafico1Component implements OnInit{
 
 
    constructor(private _graf: GraficosService) {
+     this.fechaHoy = new Date();
   }
 
   ngOnInit() {
