@@ -8,6 +8,7 @@
                 <!-- <div (click)="matMenuTrigger.closeMenu()"> -->
                 <button mat-menu-item [routerLink]="['/mesas']">Mesas</button>
                 <button mat-menu-item [routerLink]="['/registroEmpleados']">Registrar empleado</button>
+                <button mat-menu-item (click)="descargarExcel()">Descargar listado Empleados</button>
                 <button mat-menu-item [matMenuTriggerFor]="reportes">Reportes</button>
                 <!-- </div> -->
             </mat-menu>

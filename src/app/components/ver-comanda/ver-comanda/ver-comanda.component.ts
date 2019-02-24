@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { IComanda } from 'src/app/clases/IComanda';
 import { IMesa } from 'src/app/clases/IMesa';
 import { ComandasService } from '../../../providers/comandas/comandas.service';
 import { MatSnackBar } from '@angular/material';
 import { MesaService } from '../../../providers/mesa/mesa.service';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-ver-comanda',
@@ -11,18 +12,30 @@ import { MesaService } from '../../../providers/mesa/mesa.service';
   styleUrls: ['./ver-comanda.component.scss']
 })
 export class VerComandaComponent implements OnInit {
-
+  @ViewChild("content") content: ElementRef;
   @Input() public comanda: IComanda;
   @Input() public mesa: IMesa;
   public nombreBoton: string;
+  public mostrarCaptcha: boolean = false;
 
   constructor(
     private _comanda: ComandasService,
     private snackBar: MatSnackBar,
-    private _mesa: MesaService) {  }
+    private _mesa: MesaService) { }
 
   ngOnInit() {
     this.definirNombreBoton();
+  }
+
+  permitirCerrarMesa(rta: boolean) {
+    if (rta) {
+      this.mostrarCaptcha = false;
+      this.cerrarCobrarComanda();
+    }
+  }
+
+  confirmarCerrarConCaptcha() {
+    this.mostrarCaptcha = true;
   }
 
   cerrarCobrarComanda() {
@@ -35,7 +48,7 @@ export class VerComandaComponent implements OnInit {
     } else {
 
       this.comanda.estado = "Cerrada";
-      this._comanda.cerrarComanda(this.comanda, this.mesa).then( () => {
+      this._comanda.cerrarComanda(this.comanda, this.mesa).then(() => {
         this.comanda = null;
         this.mesa = null;
         this.openSnackBar("La comanda fue cerrada", " ");
@@ -80,11 +93,30 @@ export class VerComandaComponent implements OnInit {
     } else if (perfil == "admin") {
       return true;
     } else {
-      if(this.mesa.estado != "Cobrando") {
+      if (this.mesa.estado != "Cobrando") {
         return true;
       } else {
         return false;
       }
     }
+  }
+
+  exportPDF() {
+    const doc = new jsPDF();
+
+    const spetialELementHandlers = {
+      "#editor": function(element, renderer) {
+        return true;
+      }
+    };
+
+    let content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': spetialELementHandlers
+    });
+
+    doc.save("grafico1.pdf");
   }
 }

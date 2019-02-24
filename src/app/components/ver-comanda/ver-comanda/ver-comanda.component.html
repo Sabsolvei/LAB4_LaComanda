@@ -1,4 +1,4 @@
-<div *ngIf="comanda != null else noComanda">
+<div id="content" #content *ngIf="comanda != null else noComanda">
     <div *ngFor="let pedido of comanda.pedidos; index as i">
         <app-pedido [index]=i [comanda]='comanda' [mesa]='mesa'></app-pedido>
     </div>
@@ -13,12 +13,18 @@
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-            <button mat-fab color="primary" *ngIf="verBotones()" (click)="cerrarCobrarComanda()"
-                [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
+            <button mat-fab color="primary" *ngIf="verBotones()" (click)="confirmarCerrarConCaptcha()" [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
+            <!-- <button mat-fab color="primary" *ngIf="verBotones()" (click)="cerrarCobrarComanda()" [disabled]="habilitarBoton()"> {{nombreBoton}} </button> -->
+            <button (click)="exportPDF()">Exportar a PDF </button>
         </mat-card-actions>
+        <div *ngIf="mostrarCaptcha" class="divCaptcha">
+            <app-captcha-propio (enviarResultado)='permitirCerrarMesa($event)' (cerrarCaptcha)="mostrarCaptcha=false"></app-captcha-propio>
+        </div>
     </mat-card>
 </div>
 
 <ng-template #noComanda>
-    <p style="color:#dfdfdf; text-align: center; margin-top:40%; font-size: 180%; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">NO HAY COMANDA SELECCIONADA</p>
+    <p
+        style="color:#dfdfdf; text-align: center; margin-top:40%; font-size: 180%; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+        NO HAY COMANDA SELECCIONADA</p>
 </ng-template>

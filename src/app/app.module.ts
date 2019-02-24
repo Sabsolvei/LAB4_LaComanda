@@ -59,6 +59,10 @@ import { ElevateDirective } from './directives/elevate.directive';
 import { ElevateSelectedDirective } from './directives/elevate-selected.directive';
 import { CaptchaPropioComponent } from './components/captcha-propio/captcha-propio.component';
 
+import { AgmCoreModule } from '@agm/core';            // @agm/core
+import { AgmDirectionModule } from 'agm-direction';
+import { MapaComponent } from './components/mapa/mapa.component';   // agm-direction
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -96,13 +100,13 @@ export const firebaseConfig = {
     LlamandoMozoPipe,
     AppHeaderComponent,
     Grafico1Component,
+    MapaComponent,
     FormatoHoraPipe,
     FormatoFechaPipe,
     HighlightDirective,
     ElevateDirective,
     ElevateSelectedDirective,
-    CaptchaPropioComponent,
-    
+    CaptchaPropioComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +121,10 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     ChartsModule,
+    AgmCoreModule.forRoot({ // @agm/core
+      apiKey: 'AIzaSyDBOE9pA2a1TtVGGdreh6U485Knv81aor4',
+    }),
+    AgmDirectionModule,
     RecaptchaModule, //.forRoot()
     RecaptchaFormsModule
   ],
