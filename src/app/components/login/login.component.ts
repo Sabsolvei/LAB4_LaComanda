@@ -1,6 +1,6 @@
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { Validators, FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import * as firebase from "firebase";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Iusuario } from 'src/app/clases/usuario';
@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   public usuario;
   public pass;
+  public captcha;
+  public loginForm: FormGroup;
 
   constructor(
     public _auth: AuthProvider,
@@ -27,7 +29,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-   console.log("LOGIN!!!!!!!!!!!!");
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      pass: new FormControl('', [Validators.required])
+      //    captcha: new FormControl('', [Validators.required])
+    });
+
+    console.log("LOGIN!!!!!!!!!!!!");
     this._auth.Session.subscribe(_session => {
       if (!_session) {
         // console.log('SESION CERRADA');
@@ -46,48 +54,53 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public agregar(email: string) {
-    this.usuario = email;
-    this.pass = '123456';
+  public hasError = (controlName: string, errorName: string) => {
+    return this.loginForm.controls[controlName].hasError(errorName);
   }
 
-  public ingresar() {
-    this._auth.loadingOn();
-    this._auth.loginUser(this.usuario, this.pass)
-      .catch(err => Promise.reject(err))
-      .then((user: Iusuario) => {
-        if (user.perfil == 'admin') {
-          this._auth.mostrarMenu();
-        }
-        else {
-          this._auth.ocultarMenu();
-        }
-        this._auth.cargarLocalStorage(user);
-        this._auth.redireccionar(user);
-        this._auth.loadingOff();
-      });
+
+  resolved(captchaResponse: any) {
+    this.captcha = captchaResponse;
+    console.log(`Resolved captcha with response ${captchaResponse}:`);
+  }
+  // 6Ldya5MUAAAAAO9vNRR9uxBbKrkiKaBK4vQE6FHR
+  // 6LeXa5MUAAAAAEnlTOFoCgVUyGjqtTYOs845t7wD
+  // 6LcbbJMUAAAAADIMnlI3hH-bpn1WL5We30CGfXoy
+
+  public agregar(email: string) {
+    this.loginForm.setValue({ email: email, pass: '123456' });
+
+  }
+
+  public login(loginFormValues: any) {
+    if (this.loginForm.valid) {
+      this.ingresar(loginFormValues);
+    }
+  }
+
+  public ingresar(loginFormValues: any) {
+    console.log(this.captcha);
+    if (this.captcha) {
+      this._auth.loadingOn();
+      this._auth.loginUser(loginFormValues.email, loginFormValues.pass)
+        .catch(err => Promise.reject(err))
+        .then((user: Iusuario) => {
+          if (user.perfil == 'admin') {
+            this._auth.mostrarMenu();
+          }
+          else {
+            this._auth.ocultarMenu();
+          }
+          this._auth.cargarLocalStorage(user);
+          this._auth.redireccionar(user);
+          this._auth.loadingOff();
+        });
+    }
   }
 
   public ingresarComoAnonimo() {
+    console.log("ingresr como anonimo");
     localStorage.setItem('perfil', 'anonimo');
     this._router.navigate(['../consulta']);
   }
 }
-
-
-  // registrar() {
-  //   this._auth.loadingOn();
-  //   return this._auth.registerUser(this.usuario, this.pass)
-  //     .catch(err => Promise.reject(err))
-  //     .then(
-  //       () => {
-  //         this._auth.loadingOff();
-  //         let user = firebase.auth().currentUser;
-  //         user
-  //           .sendEmailVerification()
-  //           .then(user => Promise.resolve(user))
-  //           .catch(error => Promise.reject(error));
-  //       },
-  //       () => Promise.reject("Reintente por favor")
-  //     );
-  // }

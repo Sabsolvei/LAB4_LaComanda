@@ -7,18 +7,31 @@
                 <p class="tituloLogin">¡ BIENVENIDO !</p>
             </mat-card-header>
             <mat-card-content>
-                <mat-form-field class="inputLargo" appearance="outline">
-                    <mat-label>Ingrese el Email</mat-label>
-                    <input matInput placeholder='Email' [(ngModel)]="usuario" required />
-                </mat-form-field>
-                <mat-form-field class="inputLargo" appearance="outline">
-                    <mat-label>Ingrese la contraseña</mat-label>
-                    <input matInput type="password" placeholder='Contraseña' [(ngModel)]="pass" required />
-                </mat-form-field>
+                <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="login(loginForm.value)"
+                    fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+                    <mat-form-field class="inputLargo" appearance="outline">
+                        <mat-label>Ingrese el Email</mat-label>
+                        <input matInput placeholder='Email' formControlName="email" id="email" placeholder="Email" />
+                        <mat-hint align="end">usuario@ejemplo.com</mat-hint>
+                        <mat-error *ngIf="hasError('email', 'required')">Email es obligatorio</mat-error>
+                        <mat-error *ngIf="hasError('email', 'email')">Email inválido</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="inputLargo" appearance="outline">
+                        <mat-label>Ingrese la contraseña</mat-label>
+                        <input matInput type="password" formControlName="pass" id="pass" placeholder="Contraseña" />
+                        <mat-error *ngIf="hasError('pass', 'required')">Contraseña es obligatorio</mat-error>
+                    </mat-form-field>
+                    <div class="inputLargo">
+                        <re-captcha (resolved)="resolved($event)" siteKey="6LcbbJMUAAAAAHALWn0lgUZoHaduKPvHnWKEVUAw">
+                        </re-captcha>
+                    </div>
+                    <button mat-raised-button type="submit" color="primary" class="botonIngresar">INGRESAR</button>
+                    <button mat-stroked-button type="button" color='basic' class="botonIngresar"
+                        (click)='ingresarComoAnonimo()'>INGRESAR ANONIMO</button>
+                    <!-- 6LeXa5MUAAAAAJ8WQncjEe1UESgCTD5am3Q2f_IR -->
+                    <!-- 6Ldya5MUAAAAAFBM8b0K4KTF2WMZ3zLPMKwCm9I4 -->
+                </form>
 
-                <button mat-raised-button color="primary" class="botonIngresar" [disabled]="loading" (click)='ingresar()'>INGRESAR</button>
-                <button mat-stroked-button color='basic' class="botonIngresar" (click)='ingresarComoAnonimo()'>INGRESAR
-                    ANONIMO</button>
             </mat-card-content>
             <mat-divider></mat-divider>
             <div class='separar'>

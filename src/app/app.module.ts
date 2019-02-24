@@ -50,6 +50,14 @@ import { AppHeaderComponent } from './components/app-header/app-header/app-heade
 
 import { ChartsModule } from 'ng2-charts';
 import { Grafico1Component } from './components/graficos/grafico1/grafico1.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaFormsModule} from 'ng-recaptcha/forms';
+import { FormatoHoraPipe } from './pipes/formato-hora.pipe';
+import { FormatoFechaPipe } from './pipes/formato-fecha.pipe';
+import { HighlightDirective } from './directives/highlight.directive';
+import { ElevateDirective } from './directives/elevate.directive';
+import { ElevateSelectedDirective } from './directives/elevate-selected.directive';
+import { CaptchaPropioComponent } from './components/captcha-propio/captcha-propio.component';
 
 
 export const firebaseConfig = {
@@ -87,7 +95,14 @@ export const firebaseConfig = {
     ConfirmacionDialog,
     LlamandoMozoPipe,
     AppHeaderComponent,
-    Grafico1Component
+    Grafico1Component,
+    FormatoHoraPipe,
+    FormatoFechaPipe,
+    HighlightDirective,
+    ElevateDirective,
+    ElevateSelectedDirective,
+    CaptchaPropioComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -101,7 +116,9 @@ export const firebaseConfig = {
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    RecaptchaModule, //.forRoot()
+    RecaptchaFormsModule
   ],
   entryComponents: [
     AltaComandaComponent,
