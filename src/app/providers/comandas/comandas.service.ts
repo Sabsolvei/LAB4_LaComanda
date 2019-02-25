@@ -188,6 +188,12 @@ export class ComandasService {
     return this.lista;
   }
 
+  buscarComanda$ (idComanda: number) {
+    return this.afDB
+        .object("/mesa_comandas/" + idComanda.toString())
+        .valueChanges();
+  }
+
   buscarComanda(idComanda: number): Promise<IComanda> {
 
     return new Promise<IComanda>((resolve, reject) => {
@@ -195,6 +201,7 @@ export class ComandasService {
       const obs = this.afDB
         .object("/mesa_comandas/" + idComanda.toString())
         .valueChanges().subscribe((com: IComanda) => {
+          console.log("ENTRA COMANDA SERVICE");
           resolve(com);
         });
 

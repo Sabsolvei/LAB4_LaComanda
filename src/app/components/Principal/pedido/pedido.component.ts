@@ -27,7 +27,6 @@ export class PedidoComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   sumarMinutos() {
