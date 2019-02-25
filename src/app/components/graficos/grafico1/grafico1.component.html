@@ -1,10 +1,10 @@
-<div id="contentToConvert">
-    <h2 style="padding-bottom: 5%">Productos mas vendidos</h2>
-    <p>{{fechaHoy | formatoFecha: fechaHoy}}</p>
+<div style="text-align: center; padding-bottom: 10px" id="contentToConvert">
+    <h2>Productos mas vendidos hasta la fecha {{fechaHoy | formatoFecha: fechaHoy}}</h2>
     <div>
-        <div style="height: 100vh;" *ngIf="barChartData.length > 0">
+        <div style="height: 70vh;" *ngIf="barChartData.length > 0">
             <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
         </div>
     </div>
 </div>
-<button (click)="generatePDF()">Exportar a PDF </button>
+<br>
+<button mat-raised-button style="position: fixed" color="primary" (click)="generatePDF()">Exportar a PDF</button>

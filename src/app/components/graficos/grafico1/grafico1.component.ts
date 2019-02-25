@@ -74,7 +74,7 @@ export class Grafico1Component implements OnInit{
   let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
   var position = 0;
   pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-  pdf.save('MYPdf.pdf'); // Generated PDF
+  pdf.save('masVendidos.pdf'); // Generated PDF
   });
   }
 
