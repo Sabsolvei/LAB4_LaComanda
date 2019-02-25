@@ -16,14 +16,26 @@ export class VerComandaComponent implements OnInit {
   @Input() public comanda: IComanda;
   @Input() public mesa: IMesa;
   public nombreBoton: string;
+  public mostrarCaptcha: boolean = false;
 
   constructor(
     private _comanda: ComandasService,
     private snackBar: MatSnackBar,
-    private _mesa: MesaService) {  }
+    private _mesa: MesaService) { }
 
   ngOnInit() {
     this.definirNombreBoton();
+  }
+
+  permitirCerrarMesa(rta: boolean) {
+    if (rta) {
+      this.mostrarCaptcha = false;
+      this.cerrarCobrarComanda();
+    }
+  }
+
+  confirmarCerrarConCaptcha() {
+    this.mostrarCaptcha = true;
   }
 
   cerrarCobrarComanda() {
@@ -36,7 +48,7 @@ export class VerComandaComponent implements OnInit {
     } else {
 
       this.comanda.estado = "Cerrada";
-      this._comanda.cerrarComanda(this.comanda, this.mesa).then( () => {
+      this._comanda.cerrarComanda(this.comanda, this.mesa).then(() => {
         this.comanda = null;
         this.mesa = null;
         this.openSnackBar("La comanda fue cerrada", " ");
@@ -81,7 +93,7 @@ export class VerComandaComponent implements OnInit {
     } else if (perfil == "admin") {
       return true;
     } else {
-      if(this.mesa.estado != "Cobrando") {
+      if (this.mesa.estado != "Cobrando") {
         return true;
       } else {
         return false;

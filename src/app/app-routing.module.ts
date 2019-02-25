@@ -1,3 +1,4 @@
+import { CaptchaPropioComponent } from './components/captcha-propio/captcha-propio.component';
 import { AccessGuard } from './access.guard';
 import { AppComponent } from './app.component';
 import { PedidosPorSectorComponent } from './components/pedidos-por-sector/pedidos-por-sector.component';
