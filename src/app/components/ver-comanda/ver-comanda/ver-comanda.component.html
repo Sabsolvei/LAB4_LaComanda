@@ -14,7 +14,6 @@
         </mat-card-header>
         <mat-card-actions>
             <button mat-fab color="primary" *ngIf="verBotones()" (click)="cerrarCobrarComanda()" [disabled]="habilitarBoton()"> {{nombreBoton}} </button>
-            <button (click)="exportPDF()">Exportar a PDF </button>
         </mat-card-actions>
     </mat-card>
 </div>

@@ -61,10 +61,15 @@ export class MesasComponent implements OnInit {
   }
 
   buscarComanda(mesa: IMesa) {
-    this._comanda.buscarComanda(mesa.comanda).then(com => {
+    this._comanda.buscarComanda$(mesa.comanda).subscribe((com: IComanda) => {
       this.mesa = mesa;
       this.comanda = com;
     });
+
+    // this._comanda.buscarComanda(mesa.comanda).then(com => {
+    //   this.mesa = mesa;
+    //   this.comanda = com;
+    // });
   }
 
   asignarMesa(mesa: IMesa) {
