@@ -7,6 +7,7 @@ $comanda-primary: mat-palette($mat-deep-purple);
 $comanda-accent: mat-palette($mat-orange, 300, A100, A400);
 // The warn palette is optional (defaults to red).
 $comanda-warn: mat-palette($mat-red);
+$comanda-warn: mat-palette($mat-red);
 $comanda-theme: mat-light-theme($comanda-primary, $comanda-accent, $comanda-warn);
 @include angular-material-theme($comanda-theme);
 .alternate-theme {
