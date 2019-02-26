@@ -45,6 +45,7 @@ export class ConsultaClienteComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.isLoggedIn$ = this._auth.isLoggedIn;
     this.perfil = localStorage.getItem('perfil');
 
@@ -67,6 +68,8 @@ export class ConsultaClienteComponent implements OnInit {
         this.traerMozoAsociado(comanda.mozoId).then(() => {
           this.mesa = mesa;
           this.comanda = comanda;
+          console.log("MESA ESTADOOOOOOOOOOOOOOOOOOOOOO");
+          console.log(this.mesa.estado);
         });
       });
     });

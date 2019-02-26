@@ -5,13 +5,26 @@
 // hue. Available color palettes: https://material.io/design/color/
 $comanda-primary: mat-palette($mat-deep-purple);
 $comanda-accent: mat-palette($mat-orange, 300, A100, A400);
-// The warn palette is optional (defaults to red).
 $comanda-warn: mat-palette($mat-red);
-$comanda-theme: mat-light-theme($comanda-primary, $comanda-accent, $comanda-warn);
-@include angular-material-theme($comanda-theme);
-.alternate-theme {
-    $alternate-primary: mat-palette($mat-light-blue);
-    $alternate-accent: mat-palette($mat-yellow, 400);
-    $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+
+$comanda-theme: mat-light-theme(
+    $comanda-primary, 
+    $comanda-accent, 
+    $comanda-warn
+);
+
+$comanda-dark-theme: mat-dark-theme(
+    $comanda-primary,
+    $comanda-accent,
+    $comanda-warn
+);
+
+ @include angular-material-theme($comanda-theme);
+// @include angular-material-theme($comanda-dark-theme);
+// @include angular-material-theme($comanda-light-theme);
+$alternate-primary: mat-palette($mat-deep-purple, 200);
+$alternate-accent: mat-palette($mat-orange, 100);
+$alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+.alternativo {
     @include angular-material-theme($alternate-theme);
 }

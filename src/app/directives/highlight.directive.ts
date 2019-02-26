@@ -16,10 +16,10 @@ export class HighlightDirective {
         this.renderer.setStyle(this.elem.nativeElement, 'background-color', 'white');
         break;
       case "Esperando":
-        this.renderer.setStyle(this.elem.nativeElement, 'background-color', '#FCE155');
+        this.renderer.setStyle(this.elem.nativeElement, 'background-color', '#ffc947');
         break;
       case "Comiendo":
-        this.renderer.setStyle(this.elem.nativeElement, 'background-color', '#90ABD7');
+        this.renderer.setStyle(this.elem.nativeElement, 'background-color', '#b085f5');
         break;
       case "Cobrar":
       case "Cobrando":

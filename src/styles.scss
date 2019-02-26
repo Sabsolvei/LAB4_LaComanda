@@ -4,3 +4,22 @@
 // .theme {
 //     @include angular-material-theme($theme);
 // }
+@import '~@angular/material/theming';
+
+// always include only once per project
+@include mat-core();
+
+// import our custom themes
+@import 'theme.scss';
+
+.comanda-theme {
+  @include angular-material-theme($comanda-theme);
+}
+
+// additional css classes
+// you can hardcode one of them on the <body> tag 
+// or switch dynamically during runtime with [class]
+
+.comanda-dark-theme {
+  @include angular-material-theme($comanda-dark-theme);
+}

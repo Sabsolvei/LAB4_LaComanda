@@ -1,7 +1,7 @@
 <mat-card class="example-card">
     <mat-card-header>
         <mat-card-title class="titulo"><b>#{{comanda.pedidos[index].codigoPedido}}</b> -
-            <b>{{comanda.pedidos[index].estado}}</b>
+            {{comanda.pedidos[index].estado | uppercase}}
             <mat-label *ngIf="comanda.pedidos[index].estado == 'Derivado'"> -
                 {{comanda.pedidos[index].horaDerivado | formatoHora: comanda.pedidos[index].horaDerivado }} hs
             </mat-label>
