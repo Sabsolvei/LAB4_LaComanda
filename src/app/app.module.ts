@@ -132,7 +132,8 @@ export const firebaseConfig = {
     AltaComandaComponent,
     MenuCartaComponent,
     AsignarClienteComponent,
-    ConfirmacionDialog
+    ConfirmacionDialog,
+    MapaComponent
   ],
   providers: [
     AuthProvider,

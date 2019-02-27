@@ -3,7 +3,8 @@ import { AuthProvider } from '../../../providers/auth/auth';
 import { Observable } from 'rxjs';
 import { UsuarioService } from '../../../providers/usuarios/usuario.service';
 import { ExcelService } from '../../../providers/excel/excel.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
+import { MapaComponent } from '../../mapa/mapa.component';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,8 @@ export class AppHeaderComponent implements OnInit {
     private _auth: AuthProvider,
     private _usuario: UsuarioService,
     private _excel: ExcelService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.isLoggedIn$ = this._auth.isLoggedIn;
@@ -71,4 +73,14 @@ export class AppHeaderComponent implements OnInit {
       });
   }
 
+  asignarMesa() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(MapaComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+    });
+  }
 }

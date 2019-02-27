@@ -62,20 +62,20 @@ export class Grafico1Component implements OnInit{
 
   public generatePDF()
   {
-  var data = document.getElementById('contentToConvert');
-  html2canvas(data).then(canvas => {
-  // Few necessary setting options
-  const imgWidth = 208;
-  const pageHeight = 295;
-  const imgHeight = canvas.height * imgWidth / canvas.width;
-  const heightLeft = imgHeight;
+    var data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+    // Few necessary setting options
+    const imgWidth = 208;
+    const pageHeight = 295;
+    const imgHeight = canvas.height * imgWidth / canvas.width;
+    const heightLeft = imgHeight;
 
-  const contentDataURL = canvas.toDataURL('image/png');
-  let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
-  var position = 0;
-  pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-  pdf.save('masVendidos.pdf'); // Generated PDF
-  });
+    const contentDataURL = canvas.toDataURL('image/png');
+    let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+    var position = 0;
+    pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+    pdf.save('masVendidos.pdf'); // Generated PDF
+    });
   }
 
   // exportPDF() {

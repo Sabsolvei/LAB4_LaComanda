@@ -20,6 +20,8 @@ export class GraficosService {
           for (let i = 0; i < data.length; i++) {
             const com = data[i];
 
+
+            if(com.pedidos != null) {
             for (let j = 0; j < com.pedidos.length; j++) {
               const pedido = com.pedidos[j];
 
@@ -84,6 +86,10 @@ export class GraficosService {
               }
 
             }
+          }
+
+
+
           }
 
           resolve(productos);

@@ -160,7 +160,6 @@ export class AuthProvider {
                     reject(false);
                 })
                 .then((u: Iusuario) => {
-                    console.log('DENTRO DE CORROBORAR USUARIO. Usuario: ');
                     resolve(u);
                 });
         })
@@ -190,7 +189,6 @@ export class AuthProvider {
     public redireccionar(user: Iusuario) {
         let destinoPage: string;
         destinoPage = this.buscarDestino(user.perfil);
-        console.log('REDIRECCIONAR: Pagina destino: ' + destinoPage);
         this.router.navigate(['/' + destinoPage]);
     }
 
