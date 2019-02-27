@@ -23,9 +23,20 @@ export class AuthGuard implements CanActivate {
         if (!s) {
           resolve(false);
         } else {
-
           // para cuando está logueado, al no entrar al login, le explicito que puede cargarme el menú
+          console.log("DEJAR PASAR!");
           this.auth.dejarPasar();
+
+          if (localStorage.getItem("perfil") != null) {
+            if (localStorage.getItem("perfil") == "admin") {
+              this.auth.mostrarMenu();
+            } else {
+              this.auth.ocultarMenu();
+            }
+          } else {
+            this.auth.ocultarMenu();
+          }
+
           resolve(true);
         }
       });

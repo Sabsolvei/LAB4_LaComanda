@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
       //    captcha: new FormControl('', [Validators.required])
     });
 
-    console.log("LOGIN!!!!!!!!!!!!");
     this._auth.Session.subscribe(_session => {
       if (!_session) {
         // console.log('SESION CERRADA');
@@ -61,7 +60,6 @@ export class LoginComponent implements OnInit {
 
   resolved(captchaResponse: any) {
     this.captcha = captchaResponse;
-    console.log(`Resolved captcha with response ${captchaResponse}:`);
   }
   // 6Ldya5MUAAAAAO9vNRR9uxBbKrkiKaBK4vQE6FHR
   // 6LeXa5MUAAAAAEnlTOFoCgVUyGjqtTYOs845t7wD
@@ -79,7 +77,6 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresar(loginFormValues: any) {
-    console.log(this.captcha);
     if (this.captcha) {
       this._auth.loadingOn();
       this._auth.loginUser(loginFormValues.email, loginFormValues.pass)
@@ -99,7 +96,6 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresarComoAnonimo() {
-    console.log("ingresr como anonimo");
     localStorage.setItem('perfil', 'anonimo');
     this._router.navigate(['../consulta']);
   }

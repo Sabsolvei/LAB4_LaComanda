@@ -116,8 +116,6 @@ export class ComandasService {
     const promesa = new Promise<Boolean>((resolve, reject) => {
       // Me devuelve una referencia al objeto de la lista, asi me aseguro de Updatear y no generar una nueva Comanda
 
-      console.log("ActualizarComanda");
-      console.log(comanda);
       this.afDB
         .object("/mesa_comandas/" + comanda.id)
         .update(comanda)
@@ -201,7 +199,6 @@ export class ComandasService {
       const obs = this.afDB
         .object("/mesa_comandas/" + idComanda.toString())
         .valueChanges().subscribe((com: IComanda) => {
-          console.log("ENTRA COMANDA SERVICE");
           resolve(com);
         });
 

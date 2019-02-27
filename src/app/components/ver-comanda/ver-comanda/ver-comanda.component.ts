@@ -65,11 +65,13 @@ export class VerComandaComponent implements OnInit {
   habilitarBoton(): boolean {
     let deshabilitar: boolean = false;
 
-    this.comanda.pedidos.forEach(pedido => {
-      if (pedido.estado != "Entregado") {
-        deshabilitar = true;
-      }
-    });
+    if (this.comanda.pedidos != null) {
+      this.comanda.pedidos.forEach(pedido => {
+        if (pedido.estado != "Entregado") {
+          deshabilitar = true;
+        }
+      });
+    }
 
     return deshabilitar;
   }

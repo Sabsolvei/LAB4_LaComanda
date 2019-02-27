@@ -42,8 +42,6 @@ export class UplodadFilesService {
       () => {
         // success
         uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          console.log('Archivo disponible en: ');
-          console.log(downloadURL);
           fileUpload.url = downloadURL;
      //     fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload);
