@@ -27,13 +27,13 @@ _El proyecto es desarrollado para Google Chrome, Internet explorer y Mozilla Fir
 ## MOZO
 
 ![MOZO](/src/assets/mozo_mesas.JPG)
-_Visualizar el estado de cada mesa. Libre, esperando, comiendo y pagando.
-_Cargar una nueva comanda asociada a una mesa. Dicha comanda tiene todos los pedidos hechos por el cliente.
-_Cargar cada pedido del cliente de forma independiente para poder gestionarlo en distintos momentos: Modiricarlo o eliminarlo mientras no haya sido derivado al sector (cocina, bar, cervecería), derivarlo al sector cuando quiera que se ponga en marcha, y entregarlo cuando todos los sectores involucrados en el pedido hayan modificado el estado a Listo.
-_Visualizar el detalle del valor de cada producto, cantidad y el monto gastado.
-_Buscar o registrar un cliente para asociarlo a la mesa.
-_Cuando el cliente lo llama, el mozo es notificado por colores titilantes.
-_Cuando el cliente solicita pagar, el mozo debe modificar el estado de la mesa a Cobrar para que el socio cobre y cierre la mesa.
+ - ### Visualizar el estado de cada mesa. Libre, esperando, comiendo y pagando.
+ - ### Cargar una nueva comanda asociada a una mesa. Dicha comanda tiene todos los pedidos hechos por el cliente.
+ - ### Cargar cada pedido del cliente de forma independiente para poder gestionarlo en distintos momentos: Modiricarlo o eliminarlo mientras no haya sido derivado al sector (cocina, bar, cervecería), derivarlo al sector cuando quiera que se ponga en marcha, y entregarlo cuando todos los sectores involucrados en el pedido hayan modificado el estado a Listo.
+ - ### Visualizar el detalle del valor de cada producto, cantidad y el monto gastado.
+ - ### Buscar o registrar un cliente para asociarlo a la mesa.
+ - ### Cuando el cliente lo llama, el mozo es notificado por colores titilantes.
+ - ### Cuando el cliente solicita pagar, el mozo debe modificar el estado de la mesa a Cobrar para que el socio cobre y cierre la mesa.
 
 
 ## SOCIO -> ADMIN
@@ -50,19 +50,19 @@ _Descargar el excel con los datos de los empleados
 ## COCINERO | BARTENDER | CERVECERO
 
 ![COCINERO](/src/assets/Cocinero_Bartender_Cervecero.JPG)
-_Visualizar la lista de pedidos que tiene en pendiente. Puede aumentar o disminuir el tiempo estimado de a 5 min. Cuando lo ponga en marcha debe cambiar su estado a En Preparación.
-_Visualizar la lista de pedidos en preparacion. Cuando termine de prepararlo debe cambiar su estado a Listo.
-_Visualizar la lista de pedidos listos que no hayan sido entregados por el mozo.
+ - ### Visualizar la lista de pedidos que tiene en pendiente. Puede aumentar o disminuir el tiempo estimado de a 5 min. Cuando lo ponga en marcha debe cambiar su estado a En Preparación.
+ - ### Visualizar la lista de pedidos en preparacion. Cuando termine de prepararlo debe cambiar su estado a Listo.
+ - ### Visualizar la lista de pedidos listos que no hayan sido entregados por el mozo.
 
 
 ## CLIENTE
 
 ![CLIENTE](/src/assets/Cliente_suComanda.JPG)
 
-_Ingresar a la aplicacion como cliente anónimo o como cliente registrado.
-_En caso de ingresar como cliente anónimo, su comanda debe ser buscada por el código de mesa.
-_Visualizar su comanda con el detalle de cada pedido y del monto total gastado hasta el momento.
-_Llamar al mozo o solicitarle la cuenta.
-_Completar una encuesta sobre los distintos aspectos del restaurant
+ - ## Ingresar a la aplicacion como cliente anónimo o como cliente registrado.
+ - ## En caso de ingresar como cliente anónimo, su comanda debe ser buscada por el código de mesa.
+ - ## Visualizar su comanda con el detalle de cada pedido y del monto total gastado hasta el momento.
+ - ## Llamar al mozo o solicitarle la cuenta.
+ - ## Completar una encuesta sobre los distintos aspectos del restaurant
 
  
