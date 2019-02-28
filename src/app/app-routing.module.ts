@@ -61,8 +61,18 @@ const routes: Routes = [
       rolesPermitidos: ['admin', 'mozo']
     }
   },
-  { path: 'masVendidos', component: Grafico1Component },
-  { path: 'mapa', component: MapaComponent }
+  { path: 'masVendidos', component: Grafico1Component,
+    canActivate: [AuthGuard, AccessGuard],
+    data: {
+      rolesPermitidos: ['admin']
+    }
+  },
+  { path: 'mapa', component: MapaComponent,
+  canActivate: [AuthGuard, AccessGuard],
+  data: {
+    rolesPermitidos: ['admin']
+  }
+}
 ];
 
 @NgModule({
