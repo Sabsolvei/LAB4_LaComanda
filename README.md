@@ -32,11 +32,10 @@ _Buscar o registrar un cliente para asociarlo a la mesa.
 _Cuando el cliente lo llama, el mozo es notificado por colores titilantes.
 _Cuando el cliente solicita pagar, el mozo debe modificar el estado de la mesa a Cobrar para que el socio cobre y cierre la mesa.
 
-## lista de espera (cliente)
+## SOCIO -> ADMIN
 
-![espera](/src/assets/admin_mesas.JPG)
+![ADMIN](\src\assets\admin_mesas.JPG)
 
-SOCIO:
 _Tiene todos los mismos permisos del mozo para gestionar los pedidos, excepto el de Cobrar. En su lugar es tiene la función de cerrar la mesa para que quede en estado Libre.
 _Registrar empleados con sus respectivos perfiles
 _Visualizar el gráfico que indica los productos más vendidos.
