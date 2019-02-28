@@ -18,7 +18,7 @@ export class AuthProvider {
     public perfil$ = new BehaviorSubject("");
     private loggedIn = new BehaviorSubject<boolean>(false);
     private loading = new BehaviorSubject<boolean>(false);
-    private itemsMenu = new BehaviorSubject<boolean>(false);
+    private itemsMenu = new BehaviorSubject<boolean>(true);
     private perfilNombre$ = new BehaviorSubject<string>(null);
 
     constructor(
