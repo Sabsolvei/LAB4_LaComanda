@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { AuthProvider } from './providers/auth/auth';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
 import { Iusuario } from './clases/usuario';
@@ -11,13 +11,14 @@ import { Iusuario } from './clases/usuario';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   public title = 'LaComanda';
   public perfil: string;
   public isLoading$: Observable<boolean>;                  // {1}
   constructor(
     public _auth: AuthProvider,
-    public _router: Router
+    public _router: Router,
+    private cdRef: ChangeDetectorRef
   ) {
     let config = {
       apiKey: "AIzaSyDAVAzNO0VC2-Rh5enNGQgfnO9Fie5pY2A",
@@ -28,6 +29,10 @@ export class AppComponent {
       messagingSenderId: "176807941599"
     };
 
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
   }
 
   ngOnInit() {
@@ -41,7 +46,4 @@ export class AppComponent {
         localStorage.clear();
       });
   }
-
-
-
 }

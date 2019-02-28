@@ -77,11 +77,13 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresar(loginFormValues: any) {
-    if (this.captcha) {
+  //  if (this.captcha) {
+
       this._auth.loadingOn();
       this._auth.loginUser(loginFormValues.email, loginFormValues.pass)
         .catch(err => Promise.reject(err))
         .then((user: Iusuario) => {
+          this._auth.guardarPerfilNombre(user.nombre + ' (' + user.perfil + ') ' );
           if (user.perfil == 'admin') {
             this._auth.mostrarMenu();
           }
@@ -92,7 +94,7 @@ export class LoginComponent implements OnInit {
           this._auth.redireccionar(user);
           this._auth.loadingOff();
         });
-    }
+  //  }
   }
 
   public ingresarComoAnonimo() {

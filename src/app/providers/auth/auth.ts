@@ -19,6 +19,7 @@ export class AuthProvider {
     private loggedIn = new BehaviorSubject<boolean>(false);
     private loading = new BehaviorSubject<boolean>(false);
     private itemsMenu = new BehaviorSubject<boolean>(false);
+    private perfilNombre$ = new BehaviorSubject<string>(null);
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -26,6 +27,9 @@ export class AuthProvider {
         public router: Router
     ) { }
 
+    get perfilNombre() {
+        return this.perfilNombre$.asObservable();
+    }
 
     get isLoggedIn() {
         return this.loggedIn.asObservable();
@@ -37,6 +41,10 @@ export class AuthProvider {
 
     get hasMenu() {
         return this.itemsMenu.asObservable();
+    }
+
+    guardarPerfilNombre(nombre: string){
+        this.perfilNombre$.next(nombre);
     }
 
     mostrarMenu() {

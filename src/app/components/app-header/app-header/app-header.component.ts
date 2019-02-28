@@ -16,17 +16,26 @@ export class AppHeaderComponent implements OnInit {
   public perfil: string = null;
   public isLoggedIn$: Observable<boolean>;
   public hasMenu$: Observable<boolean>;
+  public nombrePerfil$: Observable<string>;
+  public nombre: string = null;
+  public foto: string = null;
 
   constructor(
     private _auth: AuthProvider,
     private _usuario: UsuarioService,
     private _excel: ExcelService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+     }
 
   ngOnInit() {
+    this.nombrePerfil$ = this._auth.perfilNombre;
     this.isLoggedIn$ = this._auth.isLoggedIn;
     this.hasMenu$ = this._auth.hasMenu;
+    this.nombre= localStorage.getItem('nombre');
+    this.perfil = localStorage.getItem('perfil');
+    this.foto = localStorage.getItem('url');
+    console.log("foto" + this.foto);
   }
 
   public lista: any = [];
@@ -73,7 +82,7 @@ export class AppHeaderComponent implements OnInit {
       });
   }
 
-  asignarMesa() {
+  verMapa() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
