@@ -23,7 +23,7 @@ _El proyecto es desarrollado para Google Chrome, Internet explorer y Mozilla Fir
 
 # Funcionalidades:
 
-MOZO:
+## MOZO:
 _Visualizar el estado de cada mesa. Libre, esperando, comiendo y pagando.
 _Cargar una nueva comanda asociada a una mesa. Dicha comanda tiene todos los pedidos hechos por el cliente.
 _Cargar cada pedido del cliente de forma independiente para poder gestionarlo en distintos momentos: Modiricarlo o eliminarlo mientras no haya sido derivado al sector (cocina, bar, cervecería), derivarlo al sector cuando quiera que se ponga en marcha, y entregarlo cuando todos los sectores involucrados en el pedido hayan modificado el estado a Listo.
@@ -31,6 +31,10 @@ _Visualizar el detalle del valor de cada producto, cantidad y el monto gastado.
 _Buscar o registrar un cliente para asociarlo a la mesa.
 _Cuando el cliente lo llama, el mozo es notificado por colores titilantes.
 _Cuando el cliente solicita pagar, el mozo debe modificar el estado de la mesa a Cobrar para que el socio cobre y cierre la mesa.
+
+## lista de espera (cliente)
+
+![espera](/src/assets/admin_mesas.jpg)
 
 SOCIO:
 _Tiene todos los mismos permisos del mozo para gestionar los pedidos, excepto el de Cobrar. En su lugar es tiene la función de cerrar la mesa para que quede en estado Libre.
