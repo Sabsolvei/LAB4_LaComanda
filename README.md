@@ -34,7 +34,7 @@ _Cuando el cliente solicita pagar, el mozo debe modificar el estado de la mesa a
 
 ## SOCIO -> ADMIN
 
-![ADMIN](\src\assets\admin_mesas.JPG)
+![ADMIN](/src/assets/admin_mesas.JPG)
 
 _Tiene todos los mismos permisos del mozo para gestionar los pedidos, excepto el de Cobrar. En su lugar es tiene la función de cerrar la mesa para que quede en estado Libre.
 _Registrar empleados con sus respectivos perfiles
