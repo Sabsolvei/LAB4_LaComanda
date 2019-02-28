@@ -12,7 +12,7 @@ _El proyecto es desarrollado para Google Chrome, Internet explorer y Mozilla Fir
 ***
 
 ### Perfiles de usuarios:
--  #### Socio
+- ##### Socio
 - ##### Mozo
 - ##### Cocinero
 - ##### Cervecero
@@ -40,11 +40,11 @@ _El proyecto es desarrollado para Google Chrome, Internet explorer y Mozilla Fir
 
 ![ADMIN](/src/assets/admin_mesas.JPG)
 
-_Tiene todos los mismos permisos del mozo para gestionar los pedidos, excepto el de Cobrar. En su lugar es tiene la función de cerrar la mesa para que quede en estado Libre.
-_Registrar empleados con sus respectivos perfiles
-_Visualizar el gráfico que indica los productos más vendidos.
-_Descargar en pdf el gráfico.
-_Descargar el excel con los datos de los empleados
+ - ### Tiene todos los mismos permisos del mozo para gestionar los pedidos, excepto el de Cobrar. En su lugar es tiene la función de cerrar la mesa para que quede en estado Libre.
+ - ### Registrar empleados con sus respectivos perfiles
+ - ### Visualizar el gráfico que indica los productos más vendidos.
+ - ### Descargar en pdf el gráfico.
+ - ### Descargar el excel con los datos de los empleados
 
 
 ## COCINERO | BARTENDER | CERVECERO
