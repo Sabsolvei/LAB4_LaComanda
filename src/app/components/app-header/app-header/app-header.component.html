@@ -1,7 +1,8 @@
 <div>
     <mat-toolbar style="background-color:#7e57c2; color: white" *ngIf="isLoggedIn$ | async">
         <mat-toolbar-row>
-            <button mat-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger" (click)="matMenuTrigger.openMenu()" *ngIf="hasMenu$ | async">
+            <button mat-button [matMenuTriggerFor]="menu" #matMenuTrigger="matMenuTrigger"
+                (click)="matMenuTrigger.openMenu()" *ngIf="hasMenu$ | async">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" [overlapTrigger]="false">
@@ -28,10 +29,19 @@
 
             <span class="spacer"></span>
 
+            <div *ngIf="nombrePerfil$ | async" style="padding-right: 5px">
+                <p>{{nombrePerfil$ | async}}</p>
+            </div>
+
+            <!-- <div *ngIf="foto== null">
+                <img class="circular--square" src="assets/camarero.JPG" />
+            </div> -->
+
+
             <div style="padding-right: 5px">
-                <button mat-mini-fab (click)="asignarMesa()">
-              <mat-icon>place</mat-icon>
-            </button>
+                <button mat-mini-fab (click)="verMapa()">
+                    <mat-icon>place</mat-icon>
+                </button>
             </div>
             <button mat-mini-fab (click)="salir()">
                 <mat-icon>power_settings_new</mat-icon>

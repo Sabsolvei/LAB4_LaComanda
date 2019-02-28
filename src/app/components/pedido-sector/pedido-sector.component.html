@@ -1,15 +1,18 @@
 <mat-card class="example-card">
     <mat-card-header>
         <!-- AGREGAR FOTO DE MOZO -->
-        <div mat-card-avatar class='example-header-image' [ngStyle]="{ 'background-image': 'url(' + itemPedido.fotoMozo + ')'}"></div>
+        <div *ngIf="itemPedido.fotoMozo!= null" mat-card-avatar class='example-header-image'
+            [ngStyle]="{ 'background-image': 'url(' + itemPedido.fotoMozo + ')'}"></div>
+        <div *ngIf="itemPedido.fotoMozo== null" mat-card-avatar class='example-header-image'
+            [ngStyle]="{ 'background-image': 'url(' + 'assets/camarero.JPG'+')'}"></div>
         <mat-card-title># {{itemPedido.mozo}}</mat-card-title>
         <mat-card-subtitle class='tiempoEstimado'>{{itemPedido.tiempoEstimado}} minutos</mat-card-subtitle>
         <div *ngIf="itemPedido.estadoSubpedido == 'Pendiente'">
             <button mat-icon-button color="primary" class='botonMasCinco' (click)="sumarCincoMinutos()">
-              <mat-icon class='iconoMasCinco' color="accent">forward_5</mat-icon>
+                <mat-icon class='iconoMasCinco' color="accent">forward_5</mat-icon>
             </button>
             <button mat-icon-button color="primary" class='botonMenosCinco' (click)="restarCincoMinutos()">
-              <mat-icon class='iconoMenosCinco' color="accent">replay_5</mat-icon>
+                <mat-icon class='iconoMenosCinco' color="accent">replay_5</mat-icon>
             </button>
         </div>
     </mat-card-header>
@@ -24,9 +27,12 @@
 
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color='primary' (click)="cambiarEstado('En Preparacion')" *ngIf="itemPedido.estadoSubpedido == 'Pendiente'">PREPARAR</button>
-        <button mat-raised-button color='primary' (click)="cambiarEstado('Preparado')" *ngIf="itemPedido.estadoSubpedido == 'En Preparacion'">LISTO</button>
-        <button mat-raised-button color='secondary' *ngIf="itemPedido.estado == 'Derivado' && itemPedido.estadoSubpedido == 'Preparado'">A ENTREGAR</button>
+        <button mat-raised-button color='primary' (click)="cambiarEstado('En Preparacion')"
+            *ngIf="itemPedido.estadoSubpedido == 'Pendiente'">PREPARAR</button>
+        <button mat-raised-button color='primary' (click)="cambiarEstado('Preparado')"
+            *ngIf="itemPedido.estadoSubpedido == 'En Preparacion'">LISTO</button>
+        <button mat-raised-button color='secondary'
+            *ngIf="itemPedido.estado == 'Derivado' && itemPedido.estadoSubpedido == 'Preparado'">A ENTREGAR</button>
         <!-- <button mat-raised-button color='secondary' *ngIf="itemPedido.estado == 'Entregado'">ENTREGADO</button> -->
     </mat-card-actions>
 </mat-card>

@@ -107,8 +107,9 @@ export class UsuarioService {
             .valueChanges().subscribe((data: FileUpload[]) => {
               if (data.length > 0) {
                 resolve(data[0].url);
-              } else {
-                reject("No se encontró su foto");
+              }
+              else {
+                resolve(null);
               }
             });
         })
