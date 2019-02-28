@@ -34,7 +34,7 @@ _Cuando el cliente solicita pagar, el mozo debe modificar el estado de la mesa a
 
 ## lista de espera (cliente)
 
-![espera](/src/assets/admin_mesas.jpg)
+![espera](/src/assets/admin_mesas.JPG)
 
 SOCIO:
 _Tiene todos los mismos permisos del mozo para gestionar los pedidos, excepto el de Cobrar. En su lugar es tiene la función de cerrar la mesa para que quede en estado Libre.
